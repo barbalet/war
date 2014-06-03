@@ -58,7 +58,7 @@ extern void	plat_winner(n_byte	winner);
 #endif
 
 
-extern void sketch_number(n_byte * stat, u_int value, n_int py);
+extern void sketch_number(n_byte * stat, n_int value, n_int py);
 
 extern    void battle_fill(n_unit * un);
 
@@ -104,7 +104,7 @@ static n_uint   memory_allocated;
 static n_uint	memory_used;
 
 
-n_int draw_error(n_string error_text)
+n_int draw_error(n_constant_string error_text, n_constant_string location, n_int line_number)
 {
 	return -1;
 }
@@ -352,7 +352,7 @@ n_int engine_update(n_byte update_condition) {
 
 
 void engine_exit() {
-	io_free(memory_buffer);
+	io_free(&memory_buffer);
 }
 
 

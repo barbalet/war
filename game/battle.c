@@ -42,7 +42,7 @@
 
 #include "battle.h"
 
-extern n_byte   math_turn_towards(n_int px, n_int py, n_byte fac, n_byte turn);
+extern n_byte   math_turn_towards(n_vect2 * p, n_byte fac, n_byte turn);
 extern n_byte2  math_random(n_byte2 * local);
 
 void battle_fill(n_unit * un);
@@ -79,15 +79,14 @@ void  battle_loop_gvar(battle_function_gvar func, n_unit * un,
 }
 
 
+#define D_CNST (1024+512+128)
+
 void battle_fill(n_unit * un) {
 	const n_int     loc_order  = UNIT_ORDER(un);
 	const n_byte    loc_wounds = GET_TYPE(un)->wounds_per_combatant;
 	const n_int		loc_angle  = (un->angle);
 	const n_int     loc_number = (un->number_combatants);
-
-#define D_CNST (1024+512+128)
-	const n_int	local_cos = ((D_CNST * VECT_X( loc_angle ))/840);
-	const n_int	local_sin = ((D_CNST * VECT_Y( loc_angle ))/840);
+    n_vect2         local;
 
 	n_int dx = (UNIT_SIZE(un)+2)/2;
 	n_int dy = (UNIT_SIZE(un)+3)/2;
@@ -102,6 +101,9 @@ void battle_fill(n_unit * un) {
 	n_int           loop = 0;
 	n_int	        line = 0;
 
+    vect2_direction(&local, loc_angle, D_CNST/840);
+    
+    
 	if(loc_width > loc_number){
 		loc_width = loc_number; 
 	}
@@ -282,51 +284,67 @@ static void battle_combatant_declare(n_combatant * comb, n_byte2 * gvar,
 
 	/* if the attacking combatant isn't dead */
 	/* cache the important values locally */
-	n_int	loc_x = comb->location_x;
-	n_int	loc_y = comb->location_y;
 	n_int	loc_f = comb->direction_facing;
-  n_int loc_s = comb->speed_current;
+    n_int   loc_s = comb->speed_current;
 	/* the initial condition sets up "nothing to attack" and the
 	   maximum distance to attack squared */
 	n_byte2 loc_attack = NUNIT_NO_ATTACK;
 	n_byte2 max_distance_squared = gvar[GVAR_DECLARE_MAX_START_DSQ];	/* val3 */
 
-
-	n_int	at_x = un_at->average_x;
-	n_int at_y = un_at->average_y;
-
 	n_combatant *comb_at = un_at->combatants;
+    
+    n_vect2 loc, at_av, difference;
 
-	n_int	distance_centre_squ = ((loc_x - at_x)*(loc_x - at_x)) + ((loc_y - at_y)*(loc_y - at_y));
+	n_int	distance_centre_squ;
+    
+    vect2_byte2(&loc, &comb->location_x);
+    vect2_byte2(&at_av, &un_at->average_x);
+    
+    vect2_subtract(&difference, &loc, &at_av);
+    
+    distance_centre_squ = vect2_dot(&difference, &difference, 1, 1);
 
 
-	if (comb->wounds == NUNIT_DEAD) {
+	if (comb->wounds == NUNIT_DEAD)
+    {
 		return;
 	}
 
 
-	if(distance_centre_squ < gvar[GVAR_DECLARE_ONE_TO_ONE_DSQ]) {							               /* val4 */
+	if(distance_centre_squ < gvar[GVAR_DECLARE_ONE_TO_ONE_DSQ]) /* val4 */
+    {
+        
 		/* the direction facing vector */
-		n_int fx = VECT_X( loc_f );
-		n_int fy = VECT_Y( loc_f );
+        
+        n_vect2 facing;
+        n_byte2 loop2 = 0;
+
+        vect2_direction(&facing, loc_f, 1);
+
 		/* if the combatant is more than half way through,
 			switch the direction back on the closest-checking loop */
 
-		n_byte2 loop2 = 0;
-		while (loop2 < un_at->number_combatants) {
+		while (loop2 < un_at->number_combatants)
+        {
 			n_byte2	loc_test = loop2;
 			
 			if (reverso){
 				loc_test = (n_byte2) ((un_at->number_combatants) - 1 - loop2);
 			}
 
-			if (comb_at[ loc_test ].wounds != NUNIT_DEAD) {
-				n_int	dx = comb_at[ loc_test ].location_x - loc_x;
-				n_int	dy = comb_at[ loc_test ].location_y - loc_y;
-				n_int   distance_squared = (dx * dx) + (dy * dy);
-
+			if (comb_at[ loc_test ].wounds != NUNIT_DEAD)
+            {
+                n_vect2 delta, local_test;
+                n_int   distance_squared;
+                
+                vect2_byte2(&local_test, &comb_at[ loc_test ].location_x);
+                
+                vect2_subtract(&delta, &local_test, &loc);
+                
+                distance_squared = vect2_dot(&delta, &delta, 1, 1);
+                
 				/* if the combatant is closer than the previous lot AND visible (ie in front) */
-				if ((distance_squared < max_distance_squared) && (((fx * dx) + (fy * dy)) > 0)) {
+				if ((distance_squared < max_distance_squared) && ((vect2_dot(&delta, &facing, 1, 1)) > 0)) {
 					/* it is the prefered attacked combatant and the distance and instance is
 						stored */
 					max_distance_squared = (n_byte2)distance_squared;
@@ -345,14 +363,20 @@ static void battle_combatant_declare(n_combatant * comb, n_byte2 * gvar,
 	comb->distance_squ = max_distance_squared;
 
 
-	if(group_facing == -1) {
-		if(loc_attack != NUNIT_NO_ATTACK) {
-			n_int	delta_x = comb_at[ loc_attack ].location_x - loc_x;
-			n_int	delta_y = comb_at[ loc_attack ].location_y - loc_y;
+	if(group_facing == -1)
+    {
+		if(loc_attack != NUNIT_NO_ATTACK)
+        {
+            n_vect2 delta, local_test;
+            
+            vect2_byte2(&local_test, &comb_at[ loc_attack ].location_x);
+            vect2_subtract(&delta, &local_test, &loc);
 	
-			group_facing = math_turn_towards(delta_x, delta_y, comb->direction_facing, 0) ;
-		} else {
-      loc_s = 0;
+			group_facing = math_turn_towards(&delta,comb->direction_facing, 0) ;
+		}
+        else
+        {
+            loc_s = 0;
 		}
 	}
   
@@ -374,11 +398,16 @@ void battle_declare(n_unit *un, n_byte2 * gvar) {
 	
 	{
 		/* the combatants being attacked */
-		n_int	delta_x = un_at->average_x - un->average_x;
-		n_int	delta_y = un_at->average_y - un->average_y;
+        
+        n_vect2 attacker, attackee, delta;
+        
+        vect2_byte2(&attacker, &un_at->average_x);
+        vect2_byte2(&attackee, &un->average_x);
+        
+        vect2_subtract(&delta, &attacker, &attackee);
     
-		if((delta_x * delta_x) + (delta_y * delta_y) >= gvar[GVAR_DECLARE_GROUP_FACING_DSQ]){		                   /* val2 */
-      group_facing = math_turn_towards(delta_x, delta_y,group_facing, 2);
+		if(vect2_dot(&delta, &delta, 1, 1) >= gvar[GVAR_DECLARE_GROUP_FACING_DSQ]){		                   /* val2 */
+        group_facing = math_turn_towards(&delta,group_facing, 2);
     }
 	}
 	while (loop < loc_number) {
@@ -392,19 +421,32 @@ void battle_declare(n_unit *un, n_byte2 * gvar) {
 static void battle_combatant_move(n_combatant * comb, n_byte2 * gvar){
 	n_int loc_s = comb->speed_current;
 	n_int loc_f = comb->direction_facing;
-	n_int tx = comb->location_x;
-	n_int ty = comb->location_y;
-	n_int otx = tx;
-	n_int oty = ty;
-	
-	if (comb->wounds == NUNIT_DEAD) {
+    
+    n_vect2 location, old_location;
+    
+    vect2_byte2(&location, &comb->location_x);
+    
+    vect2_copy(&location, &old_location);
+    
+    
+	if (comb->wounds == NUNIT_DEAD)
+    {
 		return;
 	}
   
-	tx += (loc_s * VECT_X(loc_f)) / 840;
-	ty += (loc_s * VECT_Y(loc_f)) / 840;
+    
+    if (loc_s)
+    {
+        if (840/loc_s)
+        {
+            n_vect2 facing;
+            vect2_direction(&facing, loc_f, 840/loc_s);
+            
+            vect2_add(&location, &location, &facing);
+        }
+    }
   
-	if(board_move(otx,oty,&tx,&ty)) {
+	if(board_move(&old_location, &location)) {
 		comb->location_x = (n_byte2) tx;
 		comb->location_y = (n_byte2) ty;
 	}

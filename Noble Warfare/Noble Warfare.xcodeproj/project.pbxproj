@@ -9,15 +9,29 @@
 /* Begin PBXBuildFile section */
 		5A1D4EF9193CC1A500FD3B74 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5A1D4EF8193CC1A500FD3B74 /* Cocoa.framework */; };
 		5A1D4F03193CC1A500FD3B74 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 5A1D4F01193CC1A500FD3B74 /* InfoPlist.strings */; };
-		5A1D4F05193CC1A500FD3B74 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A1D4F04193CC1A500FD3B74 /* main.m */; };
 		5A1D4F09193CC1A500FD3B74 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 5A1D4F07193CC1A500FD3B74 /* Credits.rtf */; };
-		5A1D4F0C193CC1A500FD3B74 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A1D4F0B193CC1A500FD3B74 /* AppDelegate.m */; };
 		5A1D4F0F193CC1A500FD3B74 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5A1D4F0D193CC1A500FD3B74 /* MainMenu.xib */; };
 		5A1D4F11193CC1A500FD3B74 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5A1D4F10193CC1A500FD3B74 /* Images.xcassets */; };
 		5A1D4F18193CC1A500FD3B74 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5A1D4F17193CC1A500FD3B74 /* XCTest.framework */; };
 		5A1D4F19193CC1A500FD3B74 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5A1D4EF8193CC1A500FD3B74 /* Cocoa.framework */; };
 		5A1D4F21193CC1A500FD3B74 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 5A1D4F1F193CC1A500FD3B74 /* InfoPlist.strings */; };
 		5A1D4F23193CC1A500FD3B74 /* Noble_WarfareTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A1D4F22193CC1A500FD3B74 /* Noble_WarfareTests.m */; };
+		5A7DAB30193D7E190058064F /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A7DAB2B193D7E190058064F /* AppDelegate.m */; };
+		5A7DAB31193D7E190058064F /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A7DAB2C193D7E190058064F /* main.m */; };
+		5A7DAB32193D7E190058064F /* NobleMacView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A7DAB2E193D7E190058064F /* NobleMacView.m */; };
+		5A7DAB3E193D7E520058064F /* audio.c in Sources */ = {isa = PBXBuildFile; fileRef = 5A7DAB34193D7E520058064F /* audio.c */; };
+		5A7DAB3F193D7E520058064F /* compress.c in Sources */ = {isa = PBXBuildFile; fileRef = 5A7DAB35193D7E520058064F /* compress.c */; };
+		5A7DAB40193D7E520058064F /* execute.c in Sources */ = {isa = PBXBuildFile; fileRef = 5A7DAB36193D7E520058064F /* execute.c */; };
+		5A7DAB41193D7E520058064F /* interpret.c in Sources */ = {isa = PBXBuildFile; fileRef = 5A7DAB37193D7E520058064F /* interpret.c */; };
+		5A7DAB42193D7E520058064F /* io.c in Sources */ = {isa = PBXBuildFile; fileRef = 5A7DAB38193D7E520058064F /* io.c */; };
+		5A7DAB43193D7E520058064F /* land.c in Sources */ = {isa = PBXBuildFile; fileRef = 5A7DAB39193D7E520058064F /* land.c */; };
+		5A7DAB44193D7E520058064F /* math.c in Sources */ = {isa = PBXBuildFile; fileRef = 5A7DAB3A193D7E520058064F /* math.c */; };
+		5A7DAB45193D7E520058064F /* network.c in Sources */ = {isa = PBXBuildFile; fileRef = 5A7DAB3B193D7E520058064F /* network.c */; };
+		5A7DAB46193D7E520058064F /* parse.c in Sources */ = {isa = PBXBuildFile; fileRef = 5A7DAB3D193D7E520058064F /* parse.c */; };
+		5A7DAB4D193D7E6C0058064F /* battle.c in Sources */ = {isa = PBXBuildFile; fileRef = 5A7DAB48193D7E6C0058064F /* battle.c */; };
+		5A7DAB4E193D7E6C0058064F /* battle.txt in Resources */ = {isa = PBXBuildFile; fileRef = 5A7DAB4A193D7E6C0058064F /* battle.txt */; };
+		5A7DAB4F193D7E6C0058064F /* board.c in Sources */ = {isa = PBXBuildFile; fileRef = 5A7DAB4B193D7E6C0058064F /* board.c */; };
+		5A7DAB50193D7E6C0058064F /* engine.c in Sources */ = {isa = PBXBuildFile; fileRef = 5A7DAB4C193D7E6C0058064F /* engine.c */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -38,11 +52,8 @@
 		5A1D4EFD193CC1A500FD3B74 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		5A1D4F00193CC1A500FD3B74 /* Noble Warfare-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Noble Warfare-Info.plist"; sourceTree = "<group>"; };
 		5A1D4F02193CC1A500FD3B74 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		5A1D4F04193CC1A500FD3B74 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		5A1D4F06193CC1A500FD3B74 /* Noble Warfare-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Noble Warfare-Prefix.pch"; sourceTree = "<group>"; };
 		5A1D4F08193CC1A500FD3B74 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = en; path = en.lproj/Credits.rtf; sourceTree = "<group>"; };
-		5A1D4F0A193CC1A500FD3B74 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
-		5A1D4F0B193CC1A500FD3B74 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		5A1D4F0E193CC1A500FD3B74 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		5A1D4F10193CC1A500FD3B74 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		5A1D4F16193CC1A500FD3B74 /* Noble WarfareTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Noble WarfareTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -50,6 +61,27 @@
 		5A1D4F1E193CC1A500FD3B74 /* Noble WarfareTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Noble WarfareTests-Info.plist"; sourceTree = "<group>"; };
 		5A1D4F20193CC1A500FD3B74 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		5A1D4F22193CC1A500FD3B74 /* Noble_WarfareTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Noble_WarfareTests.m; sourceTree = "<group>"; };
+		5A7DAB2A193D7E190058064F /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		5A7DAB2B193D7E190058064F /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		5A7DAB2C193D7E190058064F /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		5A7DAB2D193D7E190058064F /* NobleMacView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NobleMacView.h; sourceTree = "<group>"; };
+		5A7DAB2E193D7E190058064F /* NobleMacView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NobleMacView.m; sourceTree = "<group>"; };
+		5A7DAB2F193D7E190058064F /* shared.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = shared.h; sourceTree = "<group>"; };
+		5A7DAB34193D7E520058064F /* audio.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = audio.c; sourceTree = "<group>"; };
+		5A7DAB35193D7E520058064F /* compress.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = compress.c; sourceTree = "<group>"; };
+		5A7DAB36193D7E520058064F /* execute.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = execute.c; sourceTree = "<group>"; };
+		5A7DAB37193D7E520058064F /* interpret.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = interpret.c; sourceTree = "<group>"; };
+		5A7DAB38193D7E520058064F /* io.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = io.c; sourceTree = "<group>"; };
+		5A7DAB39193D7E520058064F /* land.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = land.c; sourceTree = "<group>"; };
+		5A7DAB3A193D7E520058064F /* math.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = math.c; sourceTree = "<group>"; };
+		5A7DAB3B193D7E520058064F /* network.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = network.c; sourceTree = "<group>"; };
+		5A7DAB3C193D7E520058064F /* noble.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = noble.h; sourceTree = "<group>"; };
+		5A7DAB3D193D7E520058064F /* parse.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = parse.c; sourceTree = "<group>"; };
+		5A7DAB48193D7E6C0058064F /* battle.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = battle.c; sourceTree = "<group>"; };
+		5A7DAB49193D7E6C0058064F /* battle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = battle.h; sourceTree = "<group>"; };
+		5A7DAB4A193D7E6C0058064F /* battle.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = battle.txt; sourceTree = "<group>"; };
+		5A7DAB4B193D7E6C0058064F /* board.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = board.c; sourceTree = "<group>"; };
+		5A7DAB4C193D7E6C0058064F /* engine.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = engine.c; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -76,6 +108,9 @@
 		5A1D4EEC193CC1A500FD3B74 = {
 			isa = PBXGroup;
 			children = (
+				5A7DAB47193D7E6C0058064F /* game */,
+				5A7DAB33193D7E520058064F /* noble */,
+				5A7DAB29193D7E190058064F /* mac */,
 				5A1D4EFE193CC1A500FD3B74 /* Noble Warfare */,
 				5A1D4F1C193CC1A500FD3B74 /* Noble WarfareTests */,
 				5A1D4EF7193CC1A500FD3B74 /* Frameworks */,
@@ -115,8 +150,6 @@
 		5A1D4EFE193CC1A500FD3B74 /* Noble Warfare */ = {
 			isa = PBXGroup;
 			children = (
-				5A1D4F0A193CC1A500FD3B74 /* AppDelegate.h */,
-				5A1D4F0B193CC1A500FD3B74 /* AppDelegate.m */,
 				5A1D4F0D193CC1A500FD3B74 /* MainMenu.xib */,
 				5A1D4F10193CC1A500FD3B74 /* Images.xcassets */,
 				5A1D4EFF193CC1A500FD3B74 /* Supporting Files */,
@@ -129,7 +162,6 @@
 			children = (
 				5A1D4F00193CC1A500FD3B74 /* Noble Warfare-Info.plist */,
 				5A1D4F01193CC1A500FD3B74 /* InfoPlist.strings */,
-				5A1D4F04193CC1A500FD3B74 /* main.m */,
 				5A1D4F06193CC1A500FD3B74 /* Noble Warfare-Prefix.pch */,
 				5A1D4F07193CC1A500FD3B74 /* Credits.rtf */,
 			);
@@ -152,6 +184,51 @@
 				5A1D4F1F193CC1A500FD3B74 /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		5A7DAB29193D7E190058064F /* mac */ = {
+			isa = PBXGroup;
+			children = (
+				5A7DAB2A193D7E190058064F /* AppDelegate.h */,
+				5A7DAB2B193D7E190058064F /* AppDelegate.m */,
+				5A7DAB2C193D7E190058064F /* main.m */,
+				5A7DAB2D193D7E190058064F /* NobleMacView.h */,
+				5A7DAB2E193D7E190058064F /* NobleMacView.m */,
+				5A7DAB2F193D7E190058064F /* shared.h */,
+			);
+			name = mac;
+			path = ../../nobleape/sim/mac;
+			sourceTree = "<group>";
+		};
+		5A7DAB33193D7E520058064F /* noble */ = {
+			isa = PBXGroup;
+			children = (
+				5A7DAB34193D7E520058064F /* audio.c */,
+				5A7DAB35193D7E520058064F /* compress.c */,
+				5A7DAB36193D7E520058064F /* execute.c */,
+				5A7DAB37193D7E520058064F /* interpret.c */,
+				5A7DAB38193D7E520058064F /* io.c */,
+				5A7DAB39193D7E520058064F /* land.c */,
+				5A7DAB3A193D7E520058064F /* math.c */,
+				5A7DAB3B193D7E520058064F /* network.c */,
+				5A7DAB3C193D7E520058064F /* noble.h */,
+				5A7DAB3D193D7E520058064F /* parse.c */,
+			);
+			name = noble;
+			path = ../../nobleape/sim/noble;
+			sourceTree = "<group>";
+		};
+		5A7DAB47193D7E6C0058064F /* game */ = {
+			isa = PBXGroup;
+			children = (
+				5A7DAB48193D7E6C0058064F /* battle.c */,
+				5A7DAB49193D7E6C0058064F /* battle.h */,
+				5A7DAB4A193D7E6C0058064F /* battle.txt */,
+				5A7DAB4B193D7E6C0058064F /* board.c */,
+				5A7DAB4C193D7E6C0058064F /* engine.c */,
+			);
+			name = game;
+			path = ../game;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -233,6 +310,7 @@
 				5A1D4F03193CC1A500FD3B74 /* InfoPlist.strings in Resources */,
 				5A1D4F11193CC1A500FD3B74 /* Images.xcassets in Resources */,
 				5A1D4F09193CC1A500FD3B74 /* Credits.rtf in Resources */,
+				5A7DAB4E193D7E6C0058064F /* battle.txt in Resources */,
 				5A1D4F0F193CC1A500FD3B74 /* MainMenu.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -252,8 +330,21 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5A1D4F0C193CC1A500FD3B74 /* AppDelegate.m in Sources */,
-				5A1D4F05193CC1A500FD3B74 /* main.m in Sources */,
+				5A7DAB31193D7E190058064F /* main.m in Sources */,
+				5A7DAB4D193D7E6C0058064F /* battle.c in Sources */,
+				5A7DAB40193D7E520058064F /* execute.c in Sources */,
+				5A7DAB41193D7E520058064F /* interpret.c in Sources */,
+				5A7DAB46193D7E520058064F /* parse.c in Sources */,
+				5A7DAB32193D7E190058064F /* NobleMacView.m in Sources */,
+				5A7DAB43193D7E520058064F /* land.c in Sources */,
+				5A7DAB44193D7E520058064F /* math.c in Sources */,
+				5A7DAB50193D7E6C0058064F /* engine.c in Sources */,
+				5A7DAB3E193D7E520058064F /* audio.c in Sources */,
+				5A7DAB42193D7E520058064F /* io.c in Sources */,
+				5A7DAB4F193D7E6C0058064F /* board.c in Sources */,
+				5A7DAB45193D7E520058064F /* network.c in Sources */,
+				5A7DAB30193D7E190058064F /* AppDelegate.m in Sources */,
+				5A7DAB3F193D7E520058064F /* compress.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -466,6 +557,7 @@
 				5A1D4F28193CC1A500FD3B74 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		5A1D4F29193CC1A500FD3B74 /* Build configuration list for PBXNativeTarget "Noble WarfareTests" */ = {
 			isa = XCConfigurationList;
@@ -474,6 +566,7 @@
 				5A1D4F2B193CC1A500FD3B74 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
