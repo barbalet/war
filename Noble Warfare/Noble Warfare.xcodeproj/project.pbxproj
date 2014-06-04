@@ -32,6 +32,7 @@
 		5A7DAB4E193D7E6C0058064F /* battle.txt in Resources */ = {isa = PBXBuildFile; fileRef = 5A7DAB4A193D7E6C0058064F /* battle.txt */; };
 		5A7DAB4F193D7E6C0058064F /* board.c in Sources */ = {isa = PBXBuildFile; fileRef = 5A7DAB4B193D7E6C0058064F /* board.c */; };
 		5A7DAB50193D7E6C0058064F /* engine.c in Sources */ = {isa = PBXBuildFile; fileRef = 5A7DAB4C193D7E6C0058064F /* engine.c */; };
+		5AF04982193EFCC900568A55 /* shared.c in Sources */ = {isa = PBXBuildFile; fileRef = 5AF04981193EFCC900568A55 /* shared.c */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -82,6 +83,7 @@
 		5A7DAB4A193D7E6C0058064F /* battle.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = battle.txt; sourceTree = "<group>"; };
 		5A7DAB4B193D7E6C0058064F /* board.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = board.c; sourceTree = "<group>"; };
 		5A7DAB4C193D7E6C0058064F /* engine.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = engine.c; sourceTree = "<group>"; };
+		5AF04981193EFCC900568A55 /* shared.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = shared.c; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -108,6 +110,7 @@
 		5A1D4EEC193CC1A500FD3B74 = {
 			isa = PBXGroup;
 			children = (
+				5AF04980193EFCC900568A55 /* gui */,
 				5A7DAB47193D7E6C0058064F /* game */,
 				5A7DAB33193D7E520058064F /* noble */,
 				5A7DAB29193D7E190058064F /* mac */,
@@ -231,6 +234,15 @@
 			path = ../game;
 			sourceTree = "<group>";
 		};
+		5AF04980193EFCC900568A55 /* gui */ = {
+			isa = PBXGroup;
+			children = (
+				5AF04981193EFCC900568A55 /* shared.c */,
+			);
+			name = gui;
+			path = ../gui;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -330,6 +342,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5AF04982193EFCC900568A55 /* shared.c in Sources */,
 				5A7DAB31193D7E190058064F /* main.m in Sources */,
 				5A7DAB4D193D7E6C0058064F /* battle.c in Sources */,
 				5A7DAB40193D7E520058064F /* execute.c in Sources */,

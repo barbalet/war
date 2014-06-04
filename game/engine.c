@@ -57,7 +57,7 @@ extern void	plat_winner(n_byte	winner);
 
 #endif
 
-
+extern void    board_init(n_byte * value);
 extern void sketch_number(n_byte * stat, n_int value, n_int py);
 
 extern    void battle_fill(n_unit * un);
@@ -124,7 +124,7 @@ static n_byte * mem_use(n_uint size) {
 	n_byte * val = 0L;
 	if(size > (memory_allocated - memory_used)) {
 		engine_exit();
-		plat_close();
+		/*plat_close();*/
 	}
 	val = &memory_buffer[memory_used];
 	memory_used += size;
@@ -256,7 +256,7 @@ n_int engine_conditions() {
   } while(ret_val == 0);
 
 	
-	io_file_free(file_pass);
+	io_file_free(&file_pass);
         
   /* resolve the units with types and check the alignments */
 	{
@@ -304,11 +304,9 @@ void * engine_init(n_uint random_init) {
 
 n_byte sm_down = 0, sm_last = 0;
 n_int startx = 0, starty = 0, endx = 0, endy = 0;
-/*
-static void engine_drag() {}
-*/
 
-unsigned char engine_mouse(short px, short py) {
+unsigned char engine_mouse(short px, short py)
+{
 	sm_down = 1;
 
 	if(sm_last == 0) {
@@ -325,7 +323,8 @@ unsigned char engine_mouse(short px, short py) {
 
 static n_int count = 0;
 
-n_int engine_update(n_byte update_condition) {
+n_int engine_update(n_byte update_condition)
+{
 	if(update_condition == 1){
 		
 		count++;
@@ -350,9 +349,9 @@ n_int engine_update(n_byte update_condition) {
 	return 0;
 }
 
-
-void engine_exit() {
-	io_free(&memory_buffer);
+void engine_exit()
+{
+	io_free((void **)&memory_buffer);
 }
 
 

@@ -60,9 +60,9 @@ void  battle_loop_gvar(battle_function_gvar func, n_unit * un,
 n_byte battle_opponent(n_unit * un, n_uint	num);
 
 extern n_byte	board_add(n_int * ptx, n_int * pty);
-extern n_byte	board_move(n_int frx, n_int fry, n_int * ptx, n_int * pty);
+extern n_byte	board_move(n_vect2 * fr, n_vect2 * pt);
 
-extern void board_remove(n_int ptx, n_int pty);
+extern void board_clear(n_int ptx, n_int pty);
 
 void  battle_loop(battle_function func, n_unit * un, const n_uint count) {
 	n_uint loop = 0;
@@ -103,7 +103,6 @@ void battle_fill(n_unit * un) {
 
     vect2_direction(&local, loc_angle, D_CNST/840);
     
-    
 	if(loc_width > loc_number){
 		loc_width = loc_number; 
 	}
@@ -118,18 +117,19 @@ void battle_fill(n_unit * un) {
 			dx = dy;
 		}
 	}
+    
+	/* rewrite in vectors */
+	px0 = (local.x*dx);
+	px1 = (local.y*dx);
 	
-	px0 = (local_sin*dx);
-	px1 = (local_cos*dx);
-	
-	py0 = (local_cos*dy);
-	py1 = (local_sin*dy);
+	py0 = (local.y*dy);
+	py1 = (local.x*dy);
 
 	dx = (loc_width*dx);
 	dy = (loc_height*dy);
 	
-	edgex = (un->average_x) - (((local_sin*dx) + (local_cos*dy)) >> 10);
-	edgey = (un->average_y) - (((local_cos*dx) - (local_sin*dy)) >> 10);
+	edgex = (un->average_x) - (((local.x*dx) + (local.y*dy)) >> 10);
+	edgey = (un->average_y) - (((local.y*dx) - (local.x*dy)) >> 10);
 	
 
 	while(loop < loc_number) {
@@ -447,11 +447,10 @@ static void battle_combatant_move(n_combatant * comb, n_byte2 * gvar){
     }
   
 	if(board_move(&old_location, &location)) {
-		comb->location_x = (n_byte2) tx;
-		comb->location_y = (n_byte2) ty;
+        
+        vect2_back_byte2(&location, &comb->location_x);
 	}
-  comb->speed_current = loc_s;
-
+    comb->speed_current = loc_s;
 }
 
 
@@ -486,7 +485,7 @@ void battle_remove_dead(n_unit *un) {
 				comb[ loop ].wounds = NUNIT_DEAD;
 				comb[ loop ].attacking = NUNIT_NO_ATTACK;
 
-				board_remove(comb[ loop ].location_x, comb[ loop ].location_y);
+				board_clear(comb[ loop ].location_x, comb[ loop ].location_y);
 
 			} else {
 				sum_x += comb[ loop ].location_x;

@@ -47,25 +47,31 @@ static n_byte	*board;
 void    board_init(n_byte * value);
 
 n_byte	board_add(n_int * ptx, n_int * pty);
-n_byte	board_move(n_int frx, n_int fry, n_int * ptx, n_int * pty);
+n_byte	board_move(n_vect2 * fr, n_vect2 * pt);
 
-void    board_remove(n_int ptx, n_int pty);
+void    board_clear(n_int ptx, n_int pty);
 
 #define		XY_BOARD(px, py)		board[((px)>>3 | ((py)<<6))]
-
-#define		FILL_BOARD(px, py)		XY_BOARD(px, py) |= 128 >> (px&7)
-#define		CLEAR_BOARD(px,py)		XY_BOARD(px, py) &= (0xff ^ (128 >> (px&7)))
-
-#define		OCCUPIED_BOARD(px,py)	(((XY_BOARD(px, py)<<(px&7))&128) == 128)
-
 
 void    board_init(n_byte * value)
 {
 	board = value;
 }
 
-void board_remove(n_int ptx, n_int pty){
-	CLEAR_BOARD(ptx, pty);
+
+static void board_fill(n_int px, n_int py)
+{
+    XY_BOARD(px, py) |= 128 >> (px&7);
+}
+
+void board_clear(n_int px, n_int py)
+{
+    XY_BOARD(px, py) &= (0xff ^ (128 >> (px&7)));
+}
+
+static n_int board_occupied(n_int px, n_int py)
+{
+    return (((XY_BOARD(px, py)<<(px&7))&128) == 128);
 }
 
 static	n_byte	board_find(n_int * ptx, n_int * pty) {
@@ -78,7 +84,7 @@ static	n_byte	board_find(n_int * ptx, n_int * pty) {
 	px = (px + 512)&511;
 	py = (py + 512)&511;
 
-	if(OCCUPIED_BOARD(px,py)==0) {
+	if(board_occupied(px,py)==0) {
 		*ptx = px;
 		*pty = py;
 		return 1;
@@ -88,7 +94,7 @@ static	n_byte	board_find(n_int * ptx, n_int * pty) {
 		n_int y_val = (py+ly+512)&511;
 		while(lx<2) {
 			n_int x_val = (px+lx+512)&511;
-			if(OCCUPIED_BOARD(x_val,y_val)==0) {
+			if(board_occupied(x_val,y_val)==0) {
 				n_int dx = (px - lx);
 				n_int dy = (py - ly);
 				n_uint	dsqu = (dx*dx) + (dy*dy);
@@ -112,16 +118,21 @@ static	n_byte	board_find(n_int * ptx, n_int * pty) {
 
 n_byte	board_add(n_int * ptx, n_int * pty) {
 	if(board_find(ptx, pty)) {
-		FILL_BOARD(*ptx, *pty);
+		board_fill(*ptx, *pty);
 		return 1;
 	}
 	return 0;
 }
 
-n_byte	board_move(n_int frx, n_int fry, n_int * ptx, n_int * pty) {
-	if(board_find(ptx, pty)) {
-		CLEAR_BOARD(frx,fry);
-		FILL_BOARD(*ptx, *pty);
+n_byte	board_move(n_vect2 * fr, n_vect2 * pt) {
+    n_int ptx = pt->x;
+    n_int pty = pt->y;
+	if(board_find(&ptx, &pty))
+    {
+		board_clear(fr->x,fr->y);
+		board_fill(ptx, pty);
+        pt->x = ptx;
+        pt->y = pty;
 		return 1;
 	}
 	return 0;
