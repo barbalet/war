@@ -239,7 +239,6 @@ void battle_attack(n_unit *un, n_byte2 * gvar) {
 	}
 
 	{
-
 		/* the range of the missile weapons */
 		n_int	  rang_missile = 0;
 		n_type   *typ = un->unit_type;
@@ -425,33 +424,25 @@ static void battle_combatant_move(n_combatant * comb, n_byte2 * gvar){
     
     n_vect2 location, old_location;
     
-    vect2_byte2(&location, &comb->location_x);
-    
-    vect2_copy(&location, &old_location);
-    
+    vect2_populate(&location, comb->location_x, comb->location_y);
+    vect2_copy(&old_location, &location);
     
 	if (comb->wounds == NUNIT_DEAD)
     {
 		return;
 	}
-  
-    
     if (loc_s)
     {
-        if (840/loc_s)
-        {
-            n_vect2 facing;
-            vect2_direction(&facing, loc_f, 840/loc_s);
-            
-            vect2_add(&location, &location, &facing);
+        n_vect2 facing;
+        vect2_direction(&facing, loc_f, 1);
+        vect2_d(&location, &facing, loc_s, 4000);
+        
+        if(board_move(&old_location, &location)) {
+            vect2_back_byte2(&location, &comb->location_x);
         }
     }
   
-	if(board_move(&old_location, &location)) {
-        
-        vect2_back_byte2(&location, &comb->location_x);
-	}
-    comb->speed_current = loc_s;
+
 }
 
 

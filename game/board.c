@@ -170,6 +170,18 @@ n_byte	board_add(n_int * ptx, n_int * pty) {
 n_byte	board_move(n_vect2 * fr, n_vect2 * pt) {
     n_int ptx = pt->x;
     n_int pty = pt->y;
+    
+    if ((ptx< 0) || (ptx > 511))
+    {
+        (void)SHOW_ERROR("px out of bounds");
+        return 1;
+    }
+    if ((pty< 0) || (pty > 511))
+    {
+        (void)SHOW_ERROR("py out of bounds");
+        return 1;
+    }
+    
 	if(board_find(&ptx, &pty))
     {
 		board_clear(fr->x,fr->y);

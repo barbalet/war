@@ -327,21 +327,19 @@ unsigned char engine_mouse(short px, short py)
 	return 1;
 }
 
-/*static n_int count = 0;*/
+static n_int count = 0;
 
 n_int engine_update(n_byte update_condition)
 {
 	if(update_condition == 1){
         
-        
-        /*
 		count++;
 
 		if ((count & 15) != 1)
 		{
 			return 0;
 		}
-		
+
 		n_byte	result = battle_opponent(units, number_units);
 		if(result != 0){
 			if(engine_conditions("~/github/war/game/battle.txt") != 0){
@@ -350,11 +348,10 @@ n_int engine_update(n_byte update_condition)
 		}
 
 		battle_loop_gvar(&battle_move, units, number_units, game_vars);
+
 		battle_loop_gvar(&battle_declare,units,number_units, game_vars);
 		battle_loop_gvar(&battle_attack, units, number_units, game_vars);
 		battle_loop(&battle_remove_dead,units,number_units);
-        */
-   
         
 	}
 	return 0;
