@@ -33,7 +33,10 @@
 
  ****************************************************************/
 
+#include "battle.h"
 #include "shared.h"
+
+static n_byte * graphics_buffer = 0L;
 
 shared_cycle_state shared_cycle(n_uint ticks, n_byte fIdentification, n_int dim_x, n_int dim_y)
 {
@@ -42,12 +45,18 @@ shared_cycle_state shared_cycle(n_uint ticks, n_byte fIdentification, n_int dim_
 
 n_int shared_init(n_byte view, n_uint random)
 {
-    return 0;
+    graphics_buffer = engine_init(random);
+    if (graphics_buffer)
+    {
+        return 0;
+    }
+    
+    return -1;
 }
 
 void shared_close(void)
 {
-    
+    engine_exit();
 }
 
 n_int shared_menu(n_int menuValue)
@@ -77,7 +86,7 @@ void shared_mouseOption(n_byte option)
 
 void shared_mouseReceived(n_int valX, n_int valY, n_byte fIdentification)
 {
-    
+    engine_mouse(valX, valY);
 }
 void shared_mouseUp(void)
 {
@@ -91,12 +100,23 @@ void shared_about(n_constant_string value)
 
 n_byte * shared_draw(n_byte fIdentification)
 {
-    return 0L;
+    engine_update(1);
+    
+    return graphics_buffer;
 }
 
 void shared_color(n_byte2 * fit, n_int fIdentification)
 {
-    
+    n_int loop = 0;
+    n_int fitloop = 0;
+    while (loop < 256)
+    {
+        fit[fitloop++] = loop << 8;
+        fit[fitloop++] = loop << 8;
+        fit[fitloop++] = loop << 8;
+        
+        loop++;
+    }
 }
 
 n_int shared_new(n_uint seed)
@@ -104,7 +124,7 @@ n_int shared_new(n_uint seed)
     return 0;
 }
 
-n_byte shared_openFileName(n_string cStringFileName,n_byte isScript)
+n_byte shared_openFileName(n_string cStringFileName, n_byte isScript)
 {
     return 0;
 }

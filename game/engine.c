@@ -33,6 +33,7 @@
  
  ****************************************************************/
 
+#include "stdio.h"
 
 #ifdef	_WIN32
 #include "../noble/noble.h"
@@ -57,12 +58,14 @@ extern void	plat_winner(n_byte	winner);
 
 #endif
 
+
+n_byte          *local_board;
+
+
 extern void    board_init(n_byte * value);
 extern void sketch_number(n_byte * stat, n_int value, n_int py);
 
 extern    void battle_fill(n_unit * un);
-
-/*extern    void sketch_draw(n_unit * un);*/
 
 extern    void sketch_unit(n_unit * un, n_int offset);
 
@@ -82,13 +85,6 @@ extern 	  void  battle_loop_gvar(battle_function_gvar func, n_unit * un,
 
 extern   n_byte battle_opponent(n_unit * un, n_uint	num);
 
-unsigned char engine_mouse(short px, short py);
-
-void * engine_init(n_uint random_init);
-n_int engine_update(n_byte update_condition);
-void engine_exit();
-n_int engine_conditions();
-
 static n_byte2     game_vars[ 7 ] = { 12345, 4321, 5, 0x7fff, 0xffff, 0xffff, 5
                         };
 
@@ -97,7 +93,7 @@ static n_byte2	    number_units;
 static n_type     *types;
 static n_byte2     number_types;
 
-#define	SIZEOF_MEMORY	 (8*1024*1024)
+#define	SIZEOF_MEMORY	 (16*1024*1024)
 
 static n_byte	*memory_buffer;
 static n_uint   memory_allocated;
@@ -106,6 +102,7 @@ static n_uint	memory_used;
 
 n_int draw_error(n_constant_string error_text, n_constant_string location, n_int line_number)
 {
+    printf("ERROR: %s, %s line: %ld\n", error_text, location, line_number);
 	return -1;
 }
 
@@ -206,19 +203,29 @@ static n_byte	engine_filein(n_file * file_pass, n_byte val) {
 	return 0;
 }
 
-n_int engine_conditions() {
+static n_int engine_conditions(n_string location)
+{
 	n_byte    		ret_val;
 	n_file			*file_pass = io_file_new();
-	n_byte          *local_board;
 	number_units = 0;
 	number_types = 0;
 
 	mem_init(0);
 
-	local_board = (n_byte *)mem_use(L_SIZE_SCREEN);	
+	local_board = (n_byte *)mem_use(L_SIZE_SCREEN);
+    
+    if (local_board == 0L)
+    {
+        return SHOW_ERROR("Local board not allocated");
+    }
+    
 	io_erase(local_board,L_SIZE_SCREEN);
 	board_init(local_board);
-	if(io_disk_read(file_pass, "battle.txt") != 0) {
+    
+    
+    return 0; /* Fall through */
+    
+	if(io_disk_read(file_pass, location) != 0) {
 		return SHOW_ERROR("Read file failed");
 	}
 
@@ -290,16 +297,18 @@ n_int engine_conditions() {
 	return 0;
 }
 
-void * engine_init(n_uint random_init) {
+void * engine_init(n_uint random_init)
+{
 
 	game_vars[ GVAR_RANDOM_0 ] = (n_byte2) (random_init & 0xFFFF);
 	game_vars[ GVAR_RANDOM_1 ] = (n_byte2) (random_init >> 16);
 
 	mem_init(1);
-	if(engine_conditions() != 0)
+
+	if(engine_conditions("/Users/tbarbalet/github/war/game/battle.txt") != 0)
 		return 0L;
 
-	return ((void *) memory_buffer);
+	return ((void *) local_board);
 }
 
 n_byte sm_down = 0, sm_last = 0;
@@ -321,14 +330,35 @@ unsigned char engine_mouse(short px, short py)
 	return 1;
 }
 
-static n_int count = 0;
+/*static n_int count = 0;*/
 
 n_int engine_update(n_byte update_condition)
 {
 	if(update_condition == 1){
-		
+        
+        n_int loopx = 0;
+        while (loopx < 512)
+        {
+            n_int loopy = 0;
+            while (loopy < 512)
+            {
+                if ((loopx + loopy) & 1)
+                {
+                    board_clear(loopx, loopy);
+                }
+                else
+                {
+                    board_fill(loopx, loopy);
+                }
+                
+                loopy++;
+            }
+            loopx++;
+        }
+        
+                 /*
 		count++;
-		
+
 		if ((count & 15) != 1)
 		{
 			return 0;
@@ -336,15 +366,19 @@ n_int engine_update(n_byte update_condition)
 		
 		n_byte	result = battle_opponent(units, number_units);
 		if(result != 0){
-			if(engine_conditions() != 0){
+			if(engine_conditions("/Users/tbarbalet/github/war/game/battle.txt") != 0){
 				return SHOW_ERROR("Update conditions failed");
 			}
 		}
+
 		battle_loop_gvar(&battle_move, units, number_units, game_vars);
 		battle_loop_gvar(&battle_declare,units,number_units, game_vars);
 		battle_loop_gvar(&battle_attack, units, number_units, game_vars);
 		battle_loop(&battle_remove_dead,units,number_units);
-/*		battle_loop(&sketch_draw,units,number_units);*/
+*/
+        
+        
+        
 	}
 	return 0;
 }

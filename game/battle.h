@@ -33,6 +33,7 @@
  
  ****************************************************************/
 
+#include "noble.h"
 
 #define MELEE_ATTACK_DISTANCE_SQUARED	5
 #define LARGEST_DISTANCE_SQUARED 	    0xffff
@@ -121,9 +122,7 @@ typedef void (*battle_function)(n_unit * un);
 typedef void (*battle_function_gvar)(n_unit * un, n_byte2 * gvar);
 
 
-#define L_SIZE_SCREEN      ((512*512)>>3)
-
-#define L_SIZE_SCREEN4     (L_SIZE_SCREEN>>2)
+#define L_SIZE_SCREEN      (512*512)
 
 
 #define NUMBER_COMBATANTS_A     1024
@@ -135,3 +134,19 @@ typedef void (*battle_function_gvar)(n_unit * un, n_byte2 * gvar);
 #define	TYPE_MEMORY	  (sizeof(n_type) * 2)
 
 #define SIZEOF_BUFFER (COMB_MEMORY + engine_MEMORY + UNIT_MEMORY + TYPE_MEMORY)
+
+
+void board_clear(n_int ptx, n_int pty);
+void board_fill(n_int px, n_int py);
+
+void * engine_init(n_uint random_init);
+
+unsigned char engine_mouse(short px, short py);
+
+n_int engine_update(n_byte update_condition);
+
+void engine_exit();
+
+
+
+

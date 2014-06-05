@@ -62,7 +62,6 @@ n_byte battle_opponent(n_unit * un, n_uint	num);
 extern n_byte	board_add(n_int * ptx, n_int * pty);
 extern n_byte	board_move(n_vect2 * fr, n_vect2 * pt);
 
-extern void board_clear(n_int ptx, n_int pty);
 
 void  battle_loop(battle_function func, n_unit * un, const n_uint count) {
 	n_uint loop = 0;

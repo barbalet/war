@@ -42,36 +42,77 @@
 
 #include "battle.h"
 
-static n_byte	*board;
+static n_byte	*board = 0L;
 
-void    board_init(n_byte * value);
-
-n_byte	board_add(n_int * ptx, n_int * pty);
-n_byte	board_move(n_vect2 * fr, n_vect2 * pt);
-
-void    board_clear(n_int ptx, n_int pty);
-
-#define		XY_BOARD(px, py)		board[((px)>>3 | ((py)<<6))]
+#define		XY_BOARD(px, py)		board[(px) | ((py) << 9)]
 
 void    board_init(n_byte * value)
 {
 	board = value;
 }
 
-
-static void board_fill(n_int px, n_int py)
+void board_fill(n_int px, n_int py)
 {
-    XY_BOARD(px, py) |= 128 >> (px&7);
+    if (board == 0L)
+    {
+        (void)SHOW_ERROR("board not initialized");
+        return;
+    }
+    
+    if ((px< 0) || (px > 511))
+    {
+        (void)SHOW_ERROR("px out of bounds");
+        return;
+    }
+    if ((py< 0) || (py > 511))
+    {
+        (void)SHOW_ERROR("py out of bounds");
+        return;
+    }
+    
+    XY_BOARD(px, py) = 0;
 }
 
 void board_clear(n_int px, n_int py)
 {
-    XY_BOARD(px, py) &= (0xff ^ (128 >> (px&7)));
+    if (board == 0L)
+    {
+        (void)SHOW_ERROR("board not initialized");
+        return;
+    }
+    
+    if ((px< 0) || (px > 511))
+    {
+        (void)SHOW_ERROR("px out of bounds");
+        return;
+    }
+    if ((py< 0) || (py > 511))
+    {
+        (void)SHOW_ERROR("py out of bounds");
+        return;
+    }
+    XY_BOARD(px, py) = 255;
 }
 
 static n_int board_occupied(n_int px, n_int py)
 {
-    return (((XY_BOARD(px, py)<<(px&7))&128) == 128);
+    if (board == 0L)
+    {
+        (void)SHOW_ERROR("board not initialized");
+        return 1;
+    }
+    
+    if ((px< 0) || (px > 511))
+    {
+        (void)SHOW_ERROR("px out of bounds");
+        return 1;
+    }
+    if ((py< 0) || (py > 511))
+    {
+        (void)SHOW_ERROR("py out of bounds");
+        return 1;
+    }
+    return (XY_BOARD(px, py) == 0);
 }
 
 static	n_byte	board_find(n_int * ptx, n_int * pty) {
