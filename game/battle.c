@@ -66,7 +66,9 @@ extern n_byte	board_move(n_vect2 * fr, n_vect2 * pt);
 void  battle_loop(battle_function func, n_unit * un, const n_uint count) {
 	n_uint loop = 0;
 	while(loop < count)
+    {
 		(*func)(&un[loop++]);
+    }
 }
 
 
@@ -99,8 +101,8 @@ void battle_fill(n_unit * un) {
 	n_int	        edgex, edgey, px0, px1, py0, py1;
 	n_int           loop = 0;
 	n_int	        line = 0;
-
-    vect2_direction(&local, loc_angle, D_CNST/840);
+    
+    vect2_direction(&local, loc_angle, 20);
     
 	if(loc_width > loc_number){
 		loc_width = loc_number; 
@@ -134,7 +136,7 @@ void battle_fill(n_unit * un) {
 	while(loop < loc_number) {
 		n_int	pos_x = ((((pxx + pyx) >> 9) + edgex)&511);
 		n_int   pos_y = ((((pxy - pyy) >> 9) + edgey)&511);
-
+        
 		if(board_add(&pos_x, &pos_y)) {
 
 			comb[loop].location_x = (n_byte2)(pos_x);

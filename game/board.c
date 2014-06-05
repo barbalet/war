@@ -70,7 +70,7 @@ void board_fill(n_int px, n_int py)
         return;
     }
     
-    XY_BOARD(px, py) = 0;
+    XY_BOARD(px, py) = 255;
 }
 
 void board_clear(n_int px, n_int py)
@@ -91,7 +91,7 @@ void board_clear(n_int px, n_int py)
         (void)SHOW_ERROR("py out of bounds");
         return;
     }
-    XY_BOARD(px, py) = 255;
+    XY_BOARD(px, py) = 0;
 }
 
 static n_int board_occupied(n_int px, n_int py)
@@ -112,7 +112,7 @@ static n_int board_occupied(n_int px, n_int py)
         (void)SHOW_ERROR("py out of bounds");
         return 1;
     }
-    return (XY_BOARD(px, py) == 0);
+    return (XY_BOARD(px, py) == 255);
 }
 
 static	n_byte	board_find(n_int * ptx, n_int * pty) {
@@ -125,6 +125,8 @@ static	n_byte	board_find(n_int * ptx, n_int * pty) {
 	px = (px + 512)&511;
 	py = (py + 512)&511;
 
+
+    
 	if(board_occupied(px,py)==0) {
 		*ptx = px;
 		*pty = py;

@@ -222,9 +222,6 @@ static n_int engine_conditions(n_string location)
 	io_erase(local_board,L_SIZE_SCREEN);
 	board_init(local_board);
     
-    
-    return 0; /* Fall through */
-    
 	if(io_disk_read(file_pass, location) != 0) {
 		return SHOW_ERROR("Read file failed");
 	}
@@ -291,7 +288,7 @@ static n_int engine_conditions(n_string location)
 		}
 	}
 	/* get the drawing ready, fill the units with spaced combatants and draw it all */
-
+    
 	battle_loop(&battle_fill, units, number_units);
 	engine_update(1);
 	return 0;
@@ -336,27 +333,8 @@ n_int engine_update(n_byte update_condition)
 {
 	if(update_condition == 1){
         
-        n_int loopx = 0;
-        while (loopx < 512)
-        {
-            n_int loopy = 0;
-            while (loopy < 512)
-            {
-                if ((loopx + loopy) & 1)
-                {
-                    board_clear(loopx, loopy);
-                }
-                else
-                {
-                    board_fill(loopx, loopy);
-                }
-                
-                loopy++;
-            }
-            loopx++;
-        }
         
-                 /*
+        /*
 		count++;
 
 		if ((count & 15) != 1)
@@ -366,7 +344,7 @@ n_int engine_update(n_byte update_condition)
 		
 		n_byte	result = battle_opponent(units, number_units);
 		if(result != 0){
-			if(engine_conditions("/Users/tbarbalet/github/war/game/battle.txt") != 0){
+			if(engine_conditions("~/github/war/game/battle.txt") != 0){
 				return SHOW_ERROR("Update conditions failed");
 			}
 		}
@@ -375,9 +353,8 @@ n_int engine_update(n_byte update_condition)
 		battle_loop_gvar(&battle_declare,units,number_units, game_vars);
 		battle_loop_gvar(&battle_attack, units, number_units, game_vars);
 		battle_loop(&battle_remove_dead,units,number_units);
-*/
-        
-        
+        */
+   
         
 	}
 	return 0;
