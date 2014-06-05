@@ -666,8 +666,8 @@
                 </menuItem>
             </items>
         </menu>
-        <window title="Noble Warfare" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" oneShot="NO" releasedWhenClosed="NO" animationBehavior="default" id="QvC-M9-y7g">
-            <windowStyleMask key="styleMask" titled="YES" closable="YES"/>
+        <window title="Noble Warfare" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" showsToolbarButton="NO" animationBehavior="default" id="QvC-M9-y7g">
+            <windowStyleMask key="styleMask" titled="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
             <rect key="contentRect" x="284" y="188" width="512" height="512"/>
             <rect key="screenRect" x="0.0" y="0.0" width="1440" height="878"/>
@@ -677,10 +677,10 @@
                 <rect key="frame" x="0.0" y="0.0" width="512" height="512"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <openGLView fixedFrame="YES" useAuxiliaryDepthBufferStencil="NO" allowOffline="YES" translatesAutoresizingMaskIntoConstraints="NO" id="9XS-IT-qYq" customClass="NobleMacView">
+                    <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="PWw-Ie-hEs" customClass="NobleMacView">
                         <rect key="frame" x="0.0" y="0.0" width="512" height="512"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    </openGLView>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                    </customView>
                 </subviews>
             </view>
         </window>

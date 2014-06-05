@@ -16,6 +16,7 @@
 		5A1D4F19193CC1A500FD3B74 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5A1D4EF8193CC1A500FD3B74 /* Cocoa.framework */; };
 		5A1D4F21193CC1A500FD3B74 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 5A1D4F1F193CC1A500FD3B74 /* InfoPlist.strings */; };
 		5A1D4F23193CC1A500FD3B74 /* Noble_WarfareTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A1D4F22193CC1A500FD3B74 /* Noble_WarfareTests.m */; };
+		5A2EDEE419402B200013B073 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5A2EDEE319402B200013B073 /* OpenGL.framework */; };
 		5A7DAB30193D7E190058064F /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A7DAB2B193D7E190058064F /* AppDelegate.m */; };
 		5A7DAB31193D7E190058064F /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A7DAB2C193D7E190058064F /* main.m */; };
 		5A7DAB32193D7E190058064F /* NobleMacView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A7DAB2E193D7E190058064F /* NobleMacView.m */; };
@@ -62,6 +63,7 @@
 		5A1D4F1E193CC1A500FD3B74 /* Noble WarfareTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Noble WarfareTests-Info.plist"; sourceTree = "<group>"; };
 		5A1D4F20193CC1A500FD3B74 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		5A1D4F22193CC1A500FD3B74 /* Noble_WarfareTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Noble_WarfareTests.m; sourceTree = "<group>"; };
+		5A2EDEE319402B200013B073 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
 		5A7DAB2A193D7E190058064F /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		5A7DAB2B193D7E190058064F /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		5A7DAB2C193D7E190058064F /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -91,6 +93,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5A2EDEE419402B200013B073 /* OpenGL.framework in Frameworks */,
 				5A1D4EF9193CC1A500FD3B74 /* Cocoa.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -133,6 +136,7 @@
 		5A1D4EF7193CC1A500FD3B74 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				5A2EDEE319402B200013B073 /* OpenGL.framework */,
 				5A1D4EF8193CC1A500FD3B74 /* Cocoa.framework */,
 				5A1D4F17193CC1A500FD3B74 /* XCTest.framework */,
 				5A1D4EFA193CC1A500FD3B74 /* Other Frameworks */,
