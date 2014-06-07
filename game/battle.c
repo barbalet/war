@@ -79,9 +79,6 @@ void  battle_loop_gvar(battle_function_gvar func, n_unit * un,
 		(*func)((&un[loop++]),gvar);
 }
 
-
-#define D_CNST (1024+512+128)
-
 void battle_fill(n_unit * un) {
 	const n_int     loc_order  = UNIT_ORDER(un);
 	const n_byte    loc_wounds = GET_TYPE(un)->wounds_per_combatant;
@@ -134,8 +131,8 @@ void battle_fill(n_unit * un) {
 	
 
 	while(loop < loc_number) {
-		n_int	pos_x = ((((pxx + pyx) >> 9) + edgex)&511);
-		n_int   pos_y = ((((pxy - pyy) >> 9) + edgey)&511);
+		n_int	pos_x = ((((pxx + pyx) >> 9) + edgex) % BATTLE_BOARD_WIDTH);
+		n_int   pos_y = ((((pxy - pyy) >> 9) + edgey) % BATTLE_BOARD_HEIGHT);
         
 		if(board_add(&pos_x, &pos_y)) {
 

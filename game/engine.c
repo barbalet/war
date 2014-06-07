@@ -50,7 +50,8 @@
  If wartext.c is not used
  */ 
 #undef VER_WARTEXT
- 
+
+#define BATTLE_FILE_LOCATION "/Users/tbarbalet/github/war/game/battle.txt"
 
 #ifdef	VER_WARTEXT
 
@@ -111,7 +112,7 @@ static void mem_init(n_byte start) {
 		memory_buffer = 0L;
 		memory_allocated = SIZEOF_MEMORY;
 		
-		memory_buffer = io_new_range((512*784), &memory_allocated);
+		memory_buffer = io_new_range((SIZEOF_MEMORY/4), &memory_allocated);
 	}
 	memory_used = 0;
 }
@@ -212,14 +213,14 @@ static n_int engine_conditions(n_string location)
 
 	mem_init(0);
 
-	local_board = (n_byte *)mem_use(L_SIZE_SCREEN);
+	local_board = (n_byte *)mem_use(BATTLE_BOARD_SIZE);
     
     if (local_board == 0L)
     {
         return SHOW_ERROR("Local board not allocated");
     }
     
-	io_erase(local_board,L_SIZE_SCREEN);
+	io_erase(local_board, BATTLE_BOARD_SIZE);
 	board_init(local_board);
     
 	if(io_disk_read(file_pass, location) != 0) {
@@ -302,7 +303,7 @@ void * engine_init(n_uint random_init)
 
 	mem_init(1);
 
-	if(engine_conditions("/Users/tbarbalet/github/war/game/battle.txt") != 0)
+	if(engine_conditions(BATTLE_FILE_LOCATION) != 0)
 		return 0L;
 
 	return ((void *) local_board);
@@ -342,7 +343,7 @@ n_int engine_update(n_byte update_condition)
 
 		n_byte	result = battle_opponent(units, number_units);
 		if(result != 0){
-			if(engine_conditions("~/github/war/game/battle.txt") != 0){
+			if(engine_conditions(BATTLE_FILE_LOCATION) != 0){
 				return SHOW_ERROR("Update conditions failed");
 			}
 		}

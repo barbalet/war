@@ -38,12 +38,14 @@
 #define MELEE_ATTACK_DISTANCE_SQUARED	5
 #define LARGEST_DISTANCE_SQUARED 	    0xffff
 
-#define NUNIT_NO_ATTACK          0xffff
-#define NUNIT_BOUNDARIES         511
-#define NUNIT_EDGE               512
-#define NUNIT_AROUND             511
+#define BATTLE_BOARD_WIDTH              (1024)
+#define BATTLE_BOARD_HEIGHT             (768)
 
-#define NUNIT_DEAD			         255
+#define BATTLE_BOARD_SIZE               (BATTLE_BOARD_WIDTH*BATTLE_BOARD_HEIGHT)
+
+#define NUNIT_NO_ATTACK                 0xffff
+
+#define NUNIT_DEAD			            (255)
 
 
 typedef struct n_combatant {
@@ -120,10 +122,6 @@ n_unit;
 
 typedef void (*battle_function)(n_unit * un);
 typedef void (*battle_function_gvar)(n_unit * un, n_byte2 * gvar);
-
-
-#define L_SIZE_SCREEN      (512*512)
-
 
 #define NUMBER_COMBATANTS_A     1024
 #define NUMBER_COMBATANTS_B     1024

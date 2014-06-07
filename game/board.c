@@ -51,44 +51,38 @@ void    board_init(n_byte * value)
 	board = value;
 }
 
-void board_fill(n_int px, n_int py)
+static n_int board_location_check(n_int px, n_int py)
 {
     if (board == 0L)
     {
-        (void)SHOW_ERROR("board not initialized");
-        return;
+        return SHOW_ERROR("board not initialized");
     }
     
-    if ((px< 0) || (px > 511))
+    if ((px< 0) || (px >= BATTLE_BOARD_WIDTH))
     {
-        (void)SHOW_ERROR("px out of bounds");
-        return;
+        return SHOW_ERROR("px out of bounds");
     }
-    if ((py< 0) || (py > 511))
+    if ((py< 0) || (py >= BATTLE_BOARD_HEIGHT))
     {
-        (void)SHOW_ERROR("py out of bounds");
-        return;
+        return SHOW_ERROR("py out of bounds");
     }
     
+    return 0;
+}
+
+void board_fill(n_int px, n_int py)
+{
+    if (board_location_check(px, py) == -1)
+    {
+        return;
+    }
     XY_BOARD(px, py) = 255;
 }
 
 void board_clear(n_int px, n_int py)
 {
-    if (board == 0L)
+    if (board_location_check(px, py) == -1)
     {
-        (void)SHOW_ERROR("board not initialized");
-        return;
-    }
-    
-    if ((px< 0) || (px > 511))
-    {
-        (void)SHOW_ERROR("px out of bounds");
-        return;
-    }
-    if ((py< 0) || (py > 511))
-    {
-        (void)SHOW_ERROR("py out of bounds");
         return;
     }
     XY_BOARD(px, py) = 0;
@@ -96,20 +90,8 @@ void board_clear(n_int px, n_int py)
 
 static n_int board_occupied(n_int px, n_int py)
 {
-    if (board == 0L)
+    if (board_location_check(px, py) == -1)
     {
-        (void)SHOW_ERROR("board not initialized");
-        return 1;
-    }
-    
-    if ((px< 0) || (px > 511))
-    {
-        (void)SHOW_ERROR("px out of bounds");
-        return 1;
-    }
-    if ((py< 0) || (py > 511))
-    {
-        (void)SHOW_ERROR("py out of bounds");
         return 1;
     }
     return (XY_BOARD(px, py) == 255);
@@ -121,9 +103,10 @@ static	n_byte	board_find(n_int * ptx, n_int * pty) {
 	n_uint	best_dsqu = 0xffffffff;
 	n_int	best_x = 0, best_y = 0;
 	n_int ly = -1;
-
-	px = (px + 512)&511;
-	py = (py + 512)&511;
+    
+    
+	px = (px + BATTLE_BOARD_WIDTH) % BATTLE_BOARD_WIDTH;
+	py = (py + BATTLE_BOARD_HEIGHT) % BATTLE_BOARD_HEIGHT;
 
 
     
@@ -132,16 +115,18 @@ static	n_byte	board_find(n_int * ptx, n_int * pty) {
 		*pty = py;
 		return 1;
 	}
-	while(ly<2) {
+	while(ly < 2)
+    {
 		n_int	lx = -1;
-		n_int y_val = (py+ly+512)&511;
-		while(lx<2) {
-			n_int x_val = (px+lx+512)&511;
+		n_int y_val = (py + ly + BATTLE_BOARD_HEIGHT) % BATTLE_BOARD_HEIGHT;
+		while(lx < 2)
+        {
+			n_int x_val = (px + lx + BATTLE_BOARD_WIDTH) % BATTLE_BOARD_WIDTH;
 			if(board_occupied(x_val,y_val)==0) {
 				n_int dx = (px - lx);
 				n_int dy = (py - ly);
 				n_uint	dsqu = (dx*dx) + (dy*dy);
-				if(dsqu<best_dsqu) {
+				if(dsqu < best_dsqu) {
 					best_dsqu = dsqu;
 					best_x = x_val;
 					best_y = y_val;
@@ -171,15 +156,9 @@ n_byte	board_move(n_vect2 * fr, n_vect2 * pt) {
     n_int ptx = pt->x;
     n_int pty = pt->y;
     
-    if ((ptx< 0) || (ptx > 511))
+    if (board_location_check(ptx, pty) == -1)
     {
-        (void)SHOW_ERROR("px out of bounds");
-        return 1;
-    }
-    if ((pty< 0) || (pty > 511))
-    {
-        (void)SHOW_ERROR("py out of bounds");
-        return 1;
+        return 0;
     }
     
 	if(board_find(&ptx, &pty))
