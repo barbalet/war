@@ -64,7 +64,7 @@ n_combatant;
 #define	GET_TYPE(un)		  ((n_type *)((un)->unit_type))
 
 #define	UNIT_SIZE(un)		  ((GET_TYPE(un)->stature) >> 1)
-#define	UNIT_ORDER(un)		((GET_TYPE(un)->stature) &  1)
+#define	UNIT_ORDER(un)		  ((GET_TYPE(un)->stature) &  1)
 
 
 typedef struct n_type {

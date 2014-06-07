@@ -176,7 +176,6 @@ static n_int battle_calc_damage(n_int wounds, n_int damage){
 #define	SPED_MAX	4
 #define	RANG_MIS	5
 
-
 static void battle_combatant_attack(n_combatant * comb, n_combatant * comb_at, 
 							 n_byte2 * gvar, n_int *av){
 	/* which opponent combatant are they attacking */
