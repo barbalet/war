@@ -303,18 +303,9 @@ unsigned char engine_mouse(short px, short py)
 	return 1;
 }
 
-static n_int count = 0;
-
 n_int engine_update(n_byte update_condition)
 {
 	if(update_condition == 1){
-        
-		count++;
-
-		if ((count & 15) != 1)
-		{
-			return 0;
-		}
 
 		n_byte	result = battle_opponent(units, number_units);
 		if(result != 0){

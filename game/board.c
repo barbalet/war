@@ -70,22 +70,27 @@ static n_int board_location_check(n_int px, n_int py)
     return 0;
 }
 
-void board_fill(n_int px, n_int py)
+static void board_fill(n_int px, n_int py, n_byte number)
 {
     if (board_location_check(px, py) == -1)
     {
         return;
     }
-    XY_BOARD(px, py) = 255;
+    XY_BOARD(px, py) = number;
 }
 
-void board_clear(n_int px, n_int py)
+n_byte board_clear(n_int px, n_int py)
 {
+    n_byte value;
     if (board_location_check(px, py) == -1)
     {
-        return;
+        return 0;
     }
+    value = XY_BOARD(px, py);
+    
     XY_BOARD(px, py) = 0;
+    
+    return value;
 }
 
 static n_int board_occupied(n_int px, n_int py)
@@ -94,7 +99,7 @@ static n_int board_occupied(n_int px, n_int py)
     {
         return 1;
     }
-    return (XY_BOARD(px, py) == 255);
+    return (XY_BOARD(px, py) > 127);
 }
 
 static	n_byte	board_find(n_int * ptx, n_int * pty) {
@@ -104,11 +109,8 @@ static	n_byte	board_find(n_int * ptx, n_int * pty) {
 	n_int	best_x = 0, best_y = 0;
 	n_int ly = -1;
     
-    
 	px = (px + BATTLE_BOARD_WIDTH) % BATTLE_BOARD_WIDTH;
 	py = (py + BATTLE_BOARD_HEIGHT) % BATTLE_BOARD_HEIGHT;
-
-
     
 	if(board_occupied(px,py)==0) {
 		*ptx = px;
@@ -144,9 +146,10 @@ static	n_byte	board_find(n_int * ptx, n_int * pty) {
 	return 0;
 }
 
-n_byte	board_add(n_int * ptx, n_int * pty) {
-	if(board_find(ptx, pty)) {
-		board_fill(*ptx, *pty);
+n_byte	board_add(n_int * ptx, n_int * pty, n_byte color) {
+	if(board_find(ptx, pty))
+    {
+		board_fill(*ptx, *pty, color);
 		return 1;
 	}
 	return 0;
@@ -163,8 +166,8 @@ n_byte	board_move(n_vect2 * fr, n_vect2 * pt) {
     
 	if(board_find(&ptx, &pty))
     {
-		board_clear(fr->x,fr->y);
-		board_fill(ptx, pty);
+		n_byte color = board_clear(fr->x,fr->y);
+		board_fill(ptx, pty, color);
         pt->x = ptx;
         pt->y = pty;
 		return 1;

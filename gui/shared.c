@@ -117,6 +117,14 @@ void shared_color(n_byte2 * fit, n_int fIdentification)
         
         loop++;
     }
+    
+    fit[ (128 * 3) + 0 ] = 255 << 8;
+    fit[ (128 * 3) + 1 ] = 200 << 8;
+    fit[ (128 * 3) + 2 ] = 200 << 8;
+
+    fit[ (255 * 3) + 0 ] = 200 << 8;
+    fit[ (255 * 3) + 1 ] = 200 << 8;
+    fit[ (255 * 3) + 2 ] = 255 << 8;
 }
 
 n_int shared_new(n_uint seed)

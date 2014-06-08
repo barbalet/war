@@ -77,6 +77,14 @@ void  battle_loop_gvar(battle_function_gvar func, n_unit * un,
 		(*func)((&un[loop++]),gvar);
 }
 
+n_byte battle_alignment_color(n_unit * un)
+{
+    if (un->alignment == 0)
+    {
+        return 128;
+    }
+    return 255;
+}
 
 void battle_fill(n_unit * un) {
 	const n_int     loc_order  = UNIT_ORDER(un);
@@ -90,6 +98,8 @@ void battle_fill(n_unit * un) {
     
 	n_int dx = (UNIT_SIZE(un)+2)/2;
 	n_int dy = (UNIT_SIZE(un)+3)/2;
+    
+    n_byte          color = battle_alignment_color(un);
     
 	n_combatant    *comb  = (un->combatants);
     
@@ -132,10 +142,8 @@ void battle_fill(n_unit * un) {
 	while(loop < loc_number) {
 		n_int	pos_x = ((((pxx + pyx) >> 9) + edgex)&511);
 		n_int   pos_y = ((((pxy - pyy) >> 9) + edgey)&511);
-        
-        
-        
-		if(board_add(&pos_x, &pos_y)) {
+                
+		if(board_add(&pos_x, &pos_y, color)) {
             
 			comb[loop].location_x = (n_byte2)(pos_x);
 			comb[loop].location_y = (n_byte2)(pos_y);
@@ -351,9 +359,9 @@ static void battle_combatant_declare(n_combatant * comb, n_byte2 * gvar,
 			group_facing = math_turn_towards(&delta, comb->direction_facing, 2) ;
 		} else {
 			if(math_random(&gvar[GVAR_RANDOM_0]) &1)
-				group_facing = (n_byte)((loc_f + 1) & 63);
+				group_facing = (n_byte)((loc_f + 1) & 255);
 			else
-				group_facing = (n_byte)((loc_f + 63) & 63);
+				group_facing = (n_byte)((loc_f + 255) & 255);
 		}
 	}
 	comb->direction_facing = group_facing;
@@ -400,6 +408,9 @@ static void battle_combatant_move(n_combatant * comb, n_byte2 * gvar){
 	n_int tx = comb->location_x;
 	n_int ty = comb->location_y;
     
+    n_vect2 ot, t;
+    
+    vect2_populate(&ot, tx, ty);
 	
 	if (comb->wounds == NUNIT_DEAD) {
 		return;
@@ -411,9 +422,9 @@ static void battle_combatant_move(n_combatant * comb, n_byte2 * gvar){
 
     
 	if (loc_r == 1)
-		loc_f = (loc_f + 1) & 63;
+		loc_f = (loc_f + 1) & 255;
 	if (loc_r == 2)
-		loc_f = (loc_f + 63) & 63;
+		loc_f = (loc_f + 255) & 255;
     
 	tx += (loc_s * VECT_X(loc_f)) / 840;
 	ty += (loc_s * VECT_Y(loc_f)) / 840;
@@ -441,15 +452,14 @@ static void battle_combatant_move(n_combatant * comb, n_byte2 * gvar){
 
     
     {
-        n_vect2 ot, t;
-        
         vect2_populate(&t, tx, ty);
-        vect2_copy(&ot, &t);
-        
-        if(board_move(&ot,&t))
+        if (vect2_equal(&ot, &t) == 0)
         {
-            comb->location_x = (n_byte2) t.x;
-            comb->location_y = (n_byte2) t.y;
+            if(board_move(&ot,&t))
+            {
+                comb->location_x = (n_byte2) t.x;
+                comb->location_y = (n_byte2) t.y;
+            }
         }
     }
 	comb->direction_facing = (n_byte) loc_f;
@@ -486,7 +496,7 @@ void battle_remove_dead(n_unit *un) {
 				comb[ loop ].wounds = NUNIT_DEAD;
 				comb[ loop ].attacking = NUNIT_NO_ATTACK;
                 
-				board_clear(comb[ loop ].location_x, comb[ loop ].location_y);
+				(void)board_clear(comb[ loop ].location_x, comb[ loop ].location_y);
                 
 			} else {
 				sum_x += comb[ loop ].location_x;

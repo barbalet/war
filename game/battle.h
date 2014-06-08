@@ -133,9 +133,7 @@ typedef void (*battle_function_gvar)(n_unit * un, n_byte2 * gvar);
 
 #define SIZEOF_BUFFER (COMB_MEMORY + engine_MEMORY + UNIT_MEMORY + TYPE_MEMORY)
 
-
-void board_clear(n_int ptx, n_int pty);
-void board_fill(n_int px, n_int py);
+n_byte board_clear(n_int ptx, n_int pty);
 
 void * engine_init(n_uint random_init);
 
@@ -158,7 +156,7 @@ void  battle_loop_gvar(battle_function_gvar func, n_unit * un,
 n_byte battle_opponent(n_unit * un, n_uint	num);
 
 void board_init(n_byte * value);
-n_byte board_add(n_int * ptx, n_int * pty);
+n_byte board_add(n_int * ptx, n_int * pty, n_byte color);
 n_byte board_move(n_vect2 * fr, n_vect2 * pt);
 
 
