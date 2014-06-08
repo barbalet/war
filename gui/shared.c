@@ -129,6 +129,8 @@ void shared_color(n_byte2 * fit, n_int fIdentification)
 
 n_int shared_new(n_uint seed)
 {
+    engine_update(0);
+    
     return 0;
 }
 

@@ -319,6 +319,12 @@ n_int engine_update(n_byte update_condition)
 		battle_loop_gvar(&battle_attack, units, number_units, game_vars);
 		battle_loop(&battle_remove_dead,units,number_units);
 	}
+    else
+    {
+        if(engine_conditions(BATTLE_FILE_LOCATION) != 0){
+            return SHOW_ERROR("Update conditions failed");
+        }
+    }
 	return 0;
 }
 
