@@ -44,9 +44,9 @@
 
 static n_byte	*board = 0L;
 
-#define		XY_BOARD(px, py)		board[(px) | ((py) << 9)]
+#define		XY_BOARD(px, py)		board[(px) | ((py) * BATTLE_BOARD_WIDTH)]
 
-void    board_init(n_byte * value)
+void board_init(n_byte * value)
 {
 	board = value;
 }

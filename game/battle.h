@@ -145,6 +145,22 @@ n_int engine_update(n_byte update_condition);
 
 void engine_exit();
 
+void battle_fill(n_unit * un);
+
+void battle_move(n_unit *un, n_byte2 * gvar);
+void battle_declare(n_unit *un, n_byte2 * gvar);
+void battle_attack(n_unit *un, n_byte2 * gvar);
+void battle_remove_dead(n_unit *un);
+
+void  battle_loop(battle_function func, n_unit * un, const n_uint count);
+void  battle_loop_gvar(battle_function_gvar func, n_unit * un,
+                       const n_uint count , n_byte2 * gvar);
+n_byte battle_opponent(n_unit * un, n_uint	num);
+
+void board_init(n_byte * value);
+n_byte board_add(n_int * ptx, n_int * pty);
+n_byte board_move(n_vect2 * fr, n_vect2 * pt);
+
 
 
 

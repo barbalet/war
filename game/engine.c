@@ -59,32 +59,7 @@ extern void	plat_winner(n_byte	winner);
 
 #endif
 
-
 n_byte          *local_board;
-
-
-extern void    board_init(n_byte * value);
-extern void sketch_number(n_byte * stat, n_int value, n_int py);
-
-extern    void battle_fill(n_unit * un);
-
-extern    void sketch_unit(n_unit * un, n_int offset);
-
-/* this is the battle order with the single entry function */
-
-extern    void battle_move(n_unit *un, n_byte2 * gvar);
-extern    void battle_declare(n_unit *un, n_byte2 * gvar);
-extern    void battle_attack(n_unit *un, n_byte2 * gvar);
-extern    void battle_remove_dead(n_unit *un);
-/*
-extern 	  void battle_click(n_int px, n_int py);
-extern 	  void battle_drag(n_int sx, n_int sy, n_int ex, n_int ey);
-*/
-extern 	  void  battle_loop(battle_function func, n_unit * un, const n_uint count);
-extern 	  void  battle_loop_gvar(battle_function_gvar func, n_unit * un,
-	                                   const n_uint count , n_byte2 * gvar);
-
-extern   n_byte battle_opponent(n_unit * un, n_uint	num);
 
 static n_byte2     game_vars[ 7 ] = { 12345, 4321, 5, 0x7fff, 0xffff, 0xffff, 5
                         };
@@ -347,13 +322,11 @@ n_int engine_update(n_byte update_condition)
 				return SHOW_ERROR("Update conditions failed");
 			}
 		}
-
 		battle_loop_gvar(&battle_move, units, number_units, game_vars);
 
 		battle_loop_gvar(&battle_declare,units,number_units, game_vars);
 		battle_loop_gvar(&battle_attack, units, number_units, game_vars);
 		battle_loop(&battle_remove_dead,units,number_units);
-        
 	}
 	return 0;
 }

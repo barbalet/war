@@ -39,29 +39,10 @@
 #include "noble.h"
 #endif
 
-
 #include "battle.h"
 
-extern n_byte   math_turn_towards(n_vect2 * p, n_byte fac, n_byte turn);
-extern n_byte2  math_random(n_byte2 * local);
-
-void battle_fill(n_unit * un);
 
 /* this is the battle order with the single entry function */
-
-void battle_move(n_unit *un, n_byte2 * gvar);
-void battle_declare(n_unit *un, n_byte2 * gvar);
-void battle_attack(n_unit *un, n_byte2 * gvar);
-void battle_remove_dead(n_unit *un);
-
-void  battle_loop(battle_function func, n_unit * un, const n_uint count);
-void  battle_loop_gvar(battle_function_gvar func, n_unit * un,
-                         const n_uint count , n_byte2 * gvar);
-n_byte battle_opponent(n_unit * un, n_uint	num);
-
-extern n_byte	board_add(n_int * ptx, n_int * pty);
-extern n_byte	board_move(n_vect2 * fr, n_vect2 * pt);
-
 
 void  battle_loop(battle_function func, n_unit * un, const n_uint count) {
 	n_uint loop = 0;
@@ -71,9 +52,9 @@ void  battle_loop(battle_function func, n_unit * un, const n_uint count) {
     }
 }
 
-
 void  battle_loop_gvar(battle_function_gvar func, n_unit * un,
-                         const n_uint count , n_byte2 * gvar) {
+                         const n_uint count , n_byte2 * gvar)
+{
 	n_uint loop = 0;
 	while(loop < count)
 		(*func)((&un[loop++]),gvar);
@@ -101,7 +82,8 @@ void battle_fill(n_unit * un) {
     
     vect2_direction(&local, loc_angle, 20);
     
-	if(loc_width > loc_number){
+	if(loc_width > loc_number)
+    {
 		loc_width = loc_number; 
 	}
 
@@ -117,11 +99,11 @@ void battle_fill(n_unit * un) {
 	}
     
 	/* rewrite in vectors */
-	px0 = (local.x*dx);
-	px1 = (local.y*dx);
+	px0 = (local.x * dx);
+	px1 = (local.y * dx);
 	
-	py0 = (local.y*dy);
-	py1 = (local.x*dy);
+	py0 = (local.y * dy);
+	py1 = (local.x * dy);
 
 	dx = (loc_width*dx);
 	dy = (loc_height*dy);
@@ -141,7 +123,7 @@ void battle_fill(n_unit * un) {
 			comb[loop].direction_facing = (n_byte)loc_angle;
 			comb[loop].attacking = NUNIT_NO_ATTACK;
 			comb[loop].wounds = loc_wounds;
-			comb[loop].speed_current = 0;
+			comb[loop].speed_current = 5;
 			loop ++;
 		}
 
@@ -151,6 +133,7 @@ void battle_fill(n_unit * un) {
 			line = 0;
 			pxx = 0;
 			pxy = 0;
+            
 			pyx += py0;
 			pyy += py1;
 		} else {
@@ -165,7 +148,9 @@ void battle_fill(n_unit * un) {
 static n_int battle_calc_damage(n_int wounds, n_int damage){
 	wounds -= damage;
 	if(wounds < 1)
+    {
 		wounds = 0;
+    }
 	return wounds;
 }
 
@@ -213,10 +198,10 @@ static void battle_combatant_attack(n_combatant * comb, n_combatant * comb_at,
 			comb_at->wounds = (n_byte) battle_calc_damage(comb_at->wounds,av[DAMA_MIS]);
 		}
 	} else {
-    if (comb->speed_current <= (n_byte)av[SPED_MAX])
-    {
-      comb->speed_current++;
-    }
+        if (comb->speed_current <= (n_byte)av[SPED_MAX])
+        {
+          comb->speed_current++;
+        }
 	}
 }
 
@@ -427,18 +412,18 @@ static void battle_combatant_move(n_combatant * comb, n_byte2 * gvar){
     {
 		return;
 	}
+    
     if (loc_s)
     {
         n_vect2 facing;
-        vect2_direction(&facing, loc_f, 1);
-        vect2_d(&location, &facing, loc_s, 4000);
+        vect2_direction(&facing, loc_f, 40);
+        vect2_d(&location, &facing, loc_s, 2000);
         
-        if(board_move(&old_location, &location)) {
+        if(board_move(&old_location, &location))
+        {
             vect2_back_byte2(&location, &comb->location_x);
         }
     }
-  
-
 }
 
 
@@ -446,7 +431,8 @@ static void battle_combatant_move(n_combatant * comb, n_byte2 * gvar){
    in the future... honest... */
 
 /* DEPRECATED */
-void battle_move(n_unit *un, n_byte2 * gvar) {
+void battle_move(n_unit *un, n_byte2 * gvar)
+{
 	n_combatant *comb       = un->combatants;
 	n_byte2      loc_number = un->number_combatants;
 	n_uint      loop = 0;
@@ -467,15 +453,20 @@ void battle_remove_dead(n_unit *un) {
 	n_uint sum_y = 0;
 	n_byte2 sum = 0;
 	n_byte2 loop = 0;
-	while (loop < un->number_combatants) {
-		if (comb[ loop ].wounds != NUNIT_DEAD) {
-			if (comb[ loop ].wounds == 0) {
+	while (loop < un->number_combatants)
+    {
+		if (comb[ loop ].wounds != NUNIT_DEAD)
+        {
+			if (comb[ loop ].wounds == 0)
+            {
 				comb[ loop ].wounds = NUNIT_DEAD;
 				comb[ loop ].attacking = NUNIT_NO_ATTACK;
 
 				board_clear(comb[ loop ].location_x, comb[ loop ].location_y);
 
-			} else {
+			}
+            else
+            {
 				sum_x += comb[ loop ].location_x;
 				sum_y += comb[ loop ].location_y;
 				sum++;
@@ -483,7 +474,8 @@ void battle_remove_dead(n_unit *un) {
 		}
 		loop++;
 	}
-	if(sum != 0) {
+	if(sum != 0)
+    {
 		un->average_x = (n_byte2)(sum_x / sum);
 		un->average_y = (n_byte2)(sum_y / sum);
 	}
@@ -499,28 +491,37 @@ void battle_remove_dead(n_unit *un) {
 n_byte battle_opponent(n_unit * un, n_uint	num) {
 	n_uint	loop = 0;
 	n_uint	unit_count[2] = {0};
-	while(loop < num) {
-		if(un[loop].number_living > 0) {
+	while(loop < num)
+    {
+		if(un[loop].number_living > 0)
+        {
 			n_unit	*un_att = un[loop].unit_attacking;
 			n_int	local_alignment = (un[loop].alignment) & 1;
 			
 			unit_count[local_alignment]++;
 
       /* if they are all dead, there is nothing left to attack */
-			if(un_att != 0L) {
+			if(un_att != 0L)
+            {
 				if(un_att->number_living == 0)
+                {
 					un_att = 0L;
+                }
 			}
 
       /* this selects the attacking unit */
-			if(un_att == 0L) {
+			if(un_att == 0L)
+            {
 				n_int	px = un[loop].average_x;
 				n_int	py = un[loop].average_y;
 				n_uint	min_dist_squ = 0xffffffff;
 				n_uint	loop2 = 0;
-				while(loop2 < num) {
-					if((loop != loop2) && (un[loop2].number_living!= 0)) {
-						if(((un[loop2].alignment)&1) != local_alignment) {
+				while(loop2 < num)
+                {
+					if((loop != loop2) && (un[loop2].number_living!= 0))
+                    {
+						if(((un[loop2].alignment)&1) != local_alignment)
+                        {
 							n_int	tx = un[loop2].average_x;
 							n_int	ty = un[loop2].average_y;
 							n_uint   dist_squ;
@@ -528,7 +529,8 @@ n_byte battle_opponent(n_unit * un, n_uint	num) {
 							ty -= py;
 
 							dist_squ = (n_uint)((tx*tx) + (ty*ty));
-							if(dist_squ < min_dist_squ) {
+							if(dist_squ < min_dist_squ)
+                            {
 								min_dist_squ = dist_squ;
 								un_att = (n_unit *)&un[loop2];
 							}
