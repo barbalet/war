@@ -408,7 +408,7 @@ static void battle_combatant_move(n_combatant * comb, n_byte2 * gvar){
 	n_int tx = comb->location_x;
 	n_int ty = comb->location_y;
     
-    n_vect2 ot, t;
+    n_vect2 ot;
     
     vect2_populate(&ot, tx, ty);
 	
@@ -450,18 +450,19 @@ static void battle_combatant_move(n_combatant * comb, n_byte2 * gvar){
         return;
     }
 
-    
+    if (ot.x != tx || ot.y != ty)
     {
+        n_vect2 t;
+
         vect2_populate(&t, tx, ty);
-        if (vect2_equal(&ot, &t) == 0)
+
+        if(board_move(&ot,&t))
         {
-            if(board_move(&ot,&t))
-            {
-                comb->location_x = (n_byte2) t.x;
-                comb->location_y = (n_byte2) t.y;
-            }
+            comb->location_x = (n_byte2) t.x;
+            comb->location_y = (n_byte2) t.y;
         }
     }
+
 	comb->direction_facing = (n_byte) loc_f;
 	comb->speed_current    = (n_byte) loc_s;
 }
