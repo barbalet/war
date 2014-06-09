@@ -39,36 +39,18 @@
 #include "noble.h"
 #endif
 
-
 #include "battle.h"
 
-#define		OLD_SD_NEW_SD(x)	((math_sine((x)&255,1)))
+#define	OLD_SD_NEW_SD(x)	((math_sine((x)&255,1)))
 
-#define VECT_X(f)         		(OLD_SD_NEW_SD(((f)) + 64))
-#define VECT_Y(f)         		(OLD_SD_NEW_SD((f)))
-
-void battle_fill(n_unit * un);
-
-/* this is the battle order with the single entry function */
-
-void battle_move(n_unit *un, n_byte2 * gvar);
-void battle_declare(n_unit *un, n_byte2 * gvar);
-void battle_attack(n_unit *un, n_byte2 * gvar);
-void battle_remove_dead(n_unit *un);
-
-void  battle_loop(battle_function func, n_unit * un, const n_uint count);
-void  battle_loop_gvar(battle_function_gvar func, n_unit * un,
-                       const n_uint count , n_byte2 * gvar);
-n_byte battle_opponent(n_unit * un, n_uint	num);
-
-extern void board_remove(n_int ptx, n_int pty);
+#define VECT_X(f)         	(OLD_SD_NEW_SD(((f)) + 64))
+#define VECT_Y(f)         	(OLD_SD_NEW_SD((f)))
 
 void  battle_loop(battle_function func, n_unit * un, const n_uint count) {
 	n_uint loop = 0;
 	while(loop < count)
 		(*func)(&un[loop++]);
 }
-
 
 void  battle_loop_gvar(battle_function_gvar func, n_unit * un,
                        const n_uint count , n_byte2 * gvar) {
@@ -290,11 +272,9 @@ static void battle_combatant_declare(n_combatant * comb, n_byte2 * gvar,
 	n_int	loc_x = comb->location_x;
 	n_int	loc_y = comb->location_y;
 	n_int	loc_f = comb->direction_facing;
-	/* the initial condition sets up "nothing to attack" and the
-     maximum distance to attack squared */
+	/* the initial condition sets up "nothing to attack" and the maximum distance to attack squared */
 	n_byte2 loc_attack = NUNIT_NO_ATTACK;
 	n_byte2 max_distance_squared = gvar[GVAR_DECLARE_MAX_START_DSQ];	/* val3 */
-    
     
 	n_int	at_x = un_at->average_x;
 	n_int   at_y = un_at->average_y;
@@ -304,18 +284,15 @@ static void battle_combatant_declare(n_combatant * comb, n_byte2 * gvar,
 	n_int	distance_centre_squ = ((loc_x - at_x)*(loc_x - at_x)) +
     ((loc_y - at_y)*(loc_y - at_y));
     
-    
 	if (comb->wounds == NUNIT_DEAD) {
 		return;
 	}
-    
     
 	if(distance_centre_squ < gvar[GVAR_DECLARE_ONE_TO_ONE_DSQ]) {							               /* val4 */
 		/* the direction facing vector */
 		n_int fx = VECT_X( loc_f ) / 32;
 		n_int fy = VECT_Y( loc_f ) / 32;
-		/* if the combatant is more than half way through,
-         switch the direction back on the closest-checking loop */
+		/* if the combatant is more than half way through, switch the direction back on the closest-checking loop */
         
 		n_byte2 loop2 = 0;
 		while (loop2 < un_at->number_combatants) {
@@ -352,16 +329,19 @@ static void battle_combatant_declare(n_combatant * comb, n_byte2 * gvar,
 	comb->attacking    = loc_attack;
 	comb->distance_squ = max_distance_squared;
     
-    
-	if(group_facing == 255) {
-		if(loc_attack != NUNIT_NO_ATTACK) {
+	if(group_facing == 255)
+    {
+		if(loc_attack != NUNIT_NO_ATTACK)
+        {
 			n_int	delta_x = comb_at[ loc_attack ].location_x - loc_x;
 			n_int	delta_y = comb_at[ loc_attack ].location_y - loc_y;
             n_vect2 delta;
             vect2_populate(&delta, delta_x, delta_y);
             
 			group_facing = math_turn_towards(&delta, comb->direction_facing, 2) ;
-		} else {
+		}
+        else
+        {
 			if(math_random(&gvar[GVAR_RANDOM_0]) &1)
 				group_facing = (n_byte)((loc_f + 1) & 255);
 			else
@@ -408,50 +388,45 @@ static void battle_combatant_move(n_combatant * comb, n_byte2 * gvar){
 	n_int   loc_s = comb->speed_current;
 	n_int   loc_f = comb->direction_facing;
 	n_byte2 loc_r = (n_byte2)(math_random(&gvar[GVAR_RANDOM_0]) & 31);
-    
-	n_int tx = comb->location_x;
-	n_int ty = comb->location_y;
-    
+	n_int   tx = comb->location_x;
+	n_int   ty = comb->location_y;
     n_vect2 ot;
     
     vect2_populate(&ot, tx, ty);
 	
-	if (comb->wounds == NUNIT_DEAD) {
+	if (comb->wounds == NUNIT_DEAD)
+    {
 		return;
 	}
 
-    if (loc_s == 0) {
+    if (loc_s == 0)
+    {
 		return;
 	}
     
 	if (loc_r == 1)
+    {
 		loc_f = (loc_f + 1) & 255;
+    }
 	if (loc_r == 2)
+    {
 		loc_f = (loc_f + 255) & 255;
+    }
 	if (loc_r == 3)
+    {
 		loc_f = (loc_f + 2) & 255;
+    }
 	if (loc_r == 4)
+    {
 		loc_f = (loc_f + 254) & 255;
+    }
     
 	tx += (loc_s * VECT_X(loc_f)) / 26880;
 	ty += (loc_s * VECT_Y(loc_f)) / 26880;
 
-	if (tx >= BATTLE_BOARD_WIDTH)
-    {
-        comb->wounds = 0;
-        return;
-    }
-	if (ty >= BATTLE_BOARD_HEIGHT)
-    {
-        comb->wounds = 0;
-        return;
-    }
-	if (tx < 0)
-    {
-        comb->wounds = 0;
-        return;
-    }
-	if (ty < 0)
+	if ((tx >= BATTLE_BOARD_WIDTH) ||
+        (ty >= BATTLE_BOARD_HEIGHT) ||
+        (tx < 0) || (ty < 0))
     {
         comb->wounds = 0;
         return;
@@ -460,9 +435,7 @@ static void battle_combatant_move(n_combatant * comb, n_byte2 * gvar){
     if (ot.x != tx || ot.y != ty)
     {
         n_vect2 t;
-
         vect2_populate(&t, tx, ty);
-
         if(board_move(&ot,&t))
         {
             comb->location_x = (n_byte2) t.x;
@@ -482,7 +455,7 @@ void battle_move(n_unit *un, n_byte2 * gvar) {
 	n_byte2      loc_number = un->number_combatants;
 	n_uint      loop = 0;
 	while (loop < loc_number) {
-		battle_combatant_move(&comb[loop],gvar);
+		battle_combatant_move(&comb[loop], gvar);
 		loop++;
 	}
 }
@@ -529,26 +502,35 @@ void battle_remove_dead(n_unit *un) {
 n_byte battle_opponent(n_unit * un, n_uint	num) {
 	n_uint	loop = 0;
 	n_uint	unit_count[2] = {0};
-	while(loop < num) {
-		if(un[loop].number_living > 0) {
+	while (loop < num)
+    {
+		if (un[loop].number_living > 0)
+        {
 			n_unit	*un_att = un[loop].unit_attacking;
 			n_int	local_alignment = (un[loop].alignment) & 1;
 			
 			unit_count[local_alignment]++;
             
-			if(un_att != 0L) {
-				if(un_att->number_living == 0)
+			if (un_att != 0L)
+            {
+				if (un_att->number_living == 0)
+                {
 					un_att = 0L;
+                }
 			}
             
-			if(un_att == 0L) {
+			if (un_att == 0L)
+            {
 				n_int	px = un[loop].average_x;
 				n_int	py = un[loop].average_y;
 				n_uint	min_dist_squ = 0xffffffff;
 				n_uint	loop2 = 0;
-				while(loop2 < num) {
-					if(loop != loop2 && un[loop2].number_living) {
-						if(((un[loop2].alignment)&1) != local_alignment) {
+				while (loop2 < num)
+                {
+					if (loop != loop2 && un[loop2].number_living)
+                    {
+						if (((un[loop2].alignment)&1) != local_alignment)
+                        {
 							n_int	tx = un[loop2].average_x;
 							n_int	ty = un[loop2].average_y;
 							n_uint   dist_squ;
@@ -556,7 +538,8 @@ n_byte battle_opponent(n_unit * un, n_uint	num) {
 							ty -= py;
                             
 							dist_squ = (n_uint)((tx*tx) + (ty*ty));
-							if(dist_squ < min_dist_squ) {
+							if(dist_squ < min_dist_squ)
+                            {
 								min_dist_squ = dist_squ;
 								un_att = (n_unit *)&un[loop2];
 							}
@@ -566,8 +549,11 @@ n_byte battle_opponent(n_unit * un, n_uint	num) {
 				}
 			}
 			un[loop].unit_attacking = (void *)un_att;
-		} else
+		}
+        else
+        {
 			un[loop].unit_attacking = (void *)0L;
+        }
 		loop++;
 	}
 	return (n_byte)((unit_count[0] == 0) + ((unit_count[1] == 0)<<1));

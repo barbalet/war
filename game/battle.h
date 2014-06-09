@@ -133,6 +133,14 @@ typedef void (*battle_function_gvar)(n_unit * un, n_byte2 * gvar);
 
 #define SIZEOF_BUFFER (COMB_MEMORY + engine_MEMORY + UNIT_MEMORY + TYPE_MEMORY)
 
+typedef enum{
+    BC_NO_COMMAND = 0,
+    BC_ATTACK,
+    BC_SLOW_DOWN,
+    BC_HALT,
+    BC_REGROUP
+}battle_command;
+
 n_byte board_clear(n_int ptx, n_int pty);
 
 void * engine_init(n_uint random_init);
