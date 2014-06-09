@@ -42,7 +42,7 @@
 
 #include "battle.h"
 
-#define		OLD_SD_NEW_SD(x)	((math_sine((x)&255,1))>>5)
+#define		OLD_SD_NEW_SD(x)	((math_sine((x)&255,1)))
 
 #define VECT_X(f)         		(OLD_SD_NEW_SD(((f)) + 64))
 #define VECT_Y(f)         		(OLD_SD_NEW_SD((f)))
@@ -86,15 +86,15 @@ n_byte battle_alignment_color(n_unit * un)
     return 255;
 }
 
-void battle_fill(n_unit * un) {
+void battle_fill(n_unit * un)
+{
 	const n_int     loc_order  = UNIT_ORDER(un);
 	const n_byte    loc_wounds = GET_TYPE(un)->wounds_per_combatant;
 	const n_int		loc_angle  = (un->angle);
 	const n_int     loc_number = (un->number_combatants);
     
-#define D_CNST (1024+512+128)
-	const n_int	local_cos = ((D_CNST * VECT_X( loc_angle ))/840);
-	const n_int	local_sin = ((D_CNST * VECT_Y( loc_angle ))/840);
+	const n_int	    local_cos = ((13 * VECT_X( loc_angle ))/210);
+	const n_int	    local_sin = ((13 * VECT_Y( loc_angle ))/210);
     
 	n_int dx = (UNIT_SIZE(un)+2)/2;
 	n_int dy = (UNIT_SIZE(un)+3)/2;
@@ -111,7 +111,8 @@ void battle_fill(n_unit * un) {
 	n_int           loop = 0;
 	n_int	        line = 0;
     
-	if(loc_width > loc_number){
+	if(loc_width > loc_number)
+    {
 		loc_width = loc_number;
 	}
     
@@ -311,8 +312,8 @@ static void battle_combatant_declare(n_combatant * comb, n_byte2 * gvar,
     
 	if(distance_centre_squ < gvar[GVAR_DECLARE_ONE_TO_ONE_DSQ]) {							               /* val4 */
 		/* the direction facing vector */
-		n_int fx = VECT_X( loc_f );
-		n_int fy = VECT_Y( loc_f );
+		n_int fx = VECT_X( loc_f ) / 32;
+		n_int fy = VECT_Y( loc_f ) / 32;
 		/* if the combatant is more than half way through,
          switch the direction back on the closest-checking loop */
         
@@ -324,7 +325,8 @@ static void battle_combatant_declare(n_combatant * comb, n_byte2 * gvar,
 				loc_test = (n_byte2) ((un_at->number_combatants) - 1 - loop2);
 			}
             
-			if (comb_at[ loc_test ].wounds != NUNIT_DEAD) {
+			if (comb_at[ loc_test ].wounds != NUNIT_DEAD)
+            {
 				n_int	dx = comb_at[ loc_test ].location_x - loc_x;
 				n_int	dy = comb_at[ loc_test ].location_y - loc_y;
 				n_int   distance_squared = (dx * dx) + (dy * dy);
@@ -337,8 +339,10 @@ static void battle_combatant_declare(n_combatant * comb, n_byte2 * gvar,
 					loc_attack = loc_test;
 					/* if this combatant is within the melee attacking distance,
                      the search is over, end this loop(2) */
-					if (max_distance_squared < gvar[GVAR_DECLARE_CLOSE_ENOUGH_DSQ])					           /* val5 */
+					if (max_distance_squared < gvar[GVAR_DECLARE_CLOSE_ENOUGH_DSQ]) /* val5 */
+                    {
 						loop2 += 0xffff;
+                    }
 				}
 			}
 			loop2++;
@@ -419,15 +423,18 @@ static void battle_combatant_move(n_combatant * comb, n_byte2 * gvar){
     if (loc_s == 0) {
 		return;
 	}
-
     
 	if (loc_r == 1)
 		loc_f = (loc_f + 1) & 255;
 	if (loc_r == 2)
 		loc_f = (loc_f + 255) & 255;
+	if (loc_r == 3)
+		loc_f = (loc_f + 2) & 255;
+	if (loc_r == 4)
+		loc_f = (loc_f + 254) & 255;
     
-	tx += (loc_s * VECT_X(loc_f)) / 840;
-	ty += (loc_s * VECT_Y(loc_f)) / 840;
+	tx += (loc_s * VECT_X(loc_f)) / 26880;
+	ty += (loc_s * VECT_Y(loc_f)) / 26880;
 
 	if (tx >= BATTLE_BOARD_WIDTH)
     {
