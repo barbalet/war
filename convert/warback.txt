@@ -6,7 +6,7 @@
 
 There is no such thing as noble warfare. This development is not designed to glorify war, nor is it designed to provide graphic realism in the reality of war. Noble Warfare can be thought of more like a chess-like war game simulation. Where combatants are pieces rather than people.
 [P]
-Since the mid-1990s, the source code of the Noble Ape Simulation has moved to a level of maturity. It was time for guerilla simulation. I read an article in Develop magazine about the BBC television program, Time Commanders. The main point through the article was the proprietary development of the company associated created the climate for the development of the television program.
+Since the mid-1990s, the source code of the Noble Ape Simulation has moved to a level of maturity. It was time for guerrilla simulation. I read an article in Develop magazine about the BBC television program, Time Commanders. The main point through the article was the proprietary development of the company associated created the climate for the development of the television program.
 [P]
 This threw the gauntlet down to open source development - which through my precursory investigation - to-date has been very poor in creating coherent non-turn based strategy games (to a release level).
 [P]
