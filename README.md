@@ -18,6 +18,14 @@ There were two primary reasons for the Noble Warfare development.
 
 (2) The Noble Warfare primary developer, Tom Barbalet, is an active member of the International Game Developers' Association. This membership was based on Barbalet's earlier work. Barbalet wanted to see how well the Open Source philosophy would translate to a more traditional game development. To this end, the Noble Warfare development is an active experiment.
 
+## NOBLE APE REQUIREMENT
+
+This source requires you to have:
+
+https://github.com/barbalet/nobleape
+
+At the same directory level as /mushroom/
+
 ## LICENSE
 
 http://www.nobleape.com/man/legal.html
