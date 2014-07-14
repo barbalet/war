@@ -47,6 +47,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		5A1222C61973576C003D424F /* shared.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = shared.h; sourceTree = "<group>"; };
 		5A1D4EF5193CC1A500FD3B74 /* Noble Warfare.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Noble Warfare.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		5A1D4EF8193CC1A500FD3B74 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		5A1D4EFB193CC1A500FD3B74 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
@@ -69,7 +70,6 @@
 		5A7DAB2C193D7E190058064F /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		5A7DAB2D193D7E190058064F /* NobleMacView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NobleMacView.h; sourceTree = "<group>"; };
 		5A7DAB2E193D7E190058064F /* NobleMacView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NobleMacView.m; sourceTree = "<group>"; };
-		5A7DAB2F193D7E190058064F /* shared.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = shared.h; sourceTree = "<group>"; };
 		5A7DAB34193D7E520058064F /* audio.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = audio.c; sourceTree = "<group>"; };
 		5A7DAB35193D7E520058064F /* compress.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = compress.c; sourceTree = "<group>"; };
 		5A7DAB36193D7E520058064F /* execute.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = execute.c; sourceTree = "<group>"; };
@@ -201,7 +201,6 @@
 				5A7DAB2C193D7E190058064F /* main.m */,
 				5A7DAB2D193D7E190058064F /* NobleMacView.h */,
 				5A7DAB2E193D7E190058064F /* NobleMacView.m */,
-				5A7DAB2F193D7E190058064F /* shared.h */,
 			);
 			name = mac;
 			path = ../../nobleape/sim/mac;
@@ -220,6 +219,7 @@
 				5A7DAB3B193D7E520058064F /* network.c */,
 				5A7DAB3C193D7E520058064F /* noble.h */,
 				5A7DAB3D193D7E520058064F /* parse.c */,
+				5A1222C61973576C003D424F /* shared.h */,
 			);
 			name = noble;
 			path = ../../nobleape/sim/noble;

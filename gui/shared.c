@@ -98,13 +98,6 @@ void shared_about(n_constant_string value)
     
 }
 
-n_byte * shared_draw(n_byte fIdentification)
-{
-    engine_update(1);
-    
-    return graphics_buffer;
-}
-
 void shared_color(n_byte2 * fit, n_int fIdentification)
 {
     n_int loop = 0;
@@ -121,10 +114,48 @@ void shared_color(n_byte2 * fit, n_int fIdentification)
     fit[ (128 * 3) + 0 ] = 255 << 8;
     fit[ (128 * 3) + 1 ] = 200 << 8;
     fit[ (128 * 3) + 2 ] = 200 << 8;
-
+    
     fit[ (255 * 3) + 0 ] = 200 << 8;
     fit[ (255 * 3) + 1 ] = 200 << 8;
     fit[ (255 * 3) + 2 ] = 255 << 8;
+}
+
+void shared_draw(n_byte * outputBuffer, n_byte fIdentification, n_int dim_x, n_int dim_y)
+{
+    n_int           ly = 0;
+    n_int           loop = 0;
+    n_int			loopColors = 0;
+    n_byte2         fit[256*3];
+    n_byte          colorTable[256][3];
+    n_byte           * index = graphics_buffer;
+    
+    engine_update(1);
+    
+    if (index == 0L) return;
+    
+    shared_color(fit, 0);
+    
+    while(loopColors < 256)
+    {
+        colorTable[loopColors][0] = fit[loop++] >> 8;
+        colorTable[loopColors][1] = fit[loop++] >> 8;
+        colorTable[loopColors][2] = fit[loop++] >> 8;
+        loopColors++;
+    }
+    loop = 0;
+    while(ly < dim_y)
+    {
+        n_int    lx = 0;
+        n_byte * indexLocalX = &index[(dim_y-ly-1)*dim_x];
+        while(lx < dim_x)
+        {
+            unsigned char value = indexLocalX[lx++] ;
+            outputBuffer[loop++] = colorTable[value][0];
+            outputBuffer[loop++] = colorTable[value][1];
+            outputBuffer[loop++] = colorTable[value][2];
+        }
+        ly++;
+    }
 }
 
 n_int shared_new(n_uint seed)
