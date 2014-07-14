@@ -318,6 +318,9 @@ n_int engine_update(n_byte update_condition)
 		battle_loop_gvar(&battle_declare,units,number_units, game_vars);
 		battle_loop_gvar(&battle_attack, units, number_units, game_vars);
 		battle_loop(&battle_remove_dead,units,number_units);
+        
+        battle_draw_init();        
+        battle_loop(&battle_draw,units,number_units);
 	}
     else
     {

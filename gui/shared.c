@@ -33,10 +33,46 @@
 
  ****************************************************************/
 
+#import <OpenGL/gl.h>
+#import <OpenGL/glext.h>
+#import <OpenGL/glu.h>
+#import <OpenGL/OpenGL.h>
+
 #include "battle.h"
 #include "shared.h"
 
 static n_byte * graphics_buffer = 0L;
+
+
+void battle_draw_init(void)
+{
+    glClearColor(0, 0.2, 0, 0);
+    glClear(GL_COLOR_BUFFER_BIT);
+}
+
+void battle_draw(n_unit *un)
+{
+	n_combatant *comb = (n_combatant *)(un->combatants);
+	n_byte2 loop = 0;
+
+    if (un->alignment)
+    {
+        glColor3f(0.9, 0, 0);
+    }
+    else
+    {
+        glColor3f(0, 0, 0.9);
+    }
+    glBegin(GL_POINTS);
+
+	while (loop < un->number_combatants) {
+        if (comb[ loop ].wounds != NUNIT_DEAD) {
+            glVertex2i(comb[loop].location_x, comb[loop].location_y);
+        }
+		loop++;
+	}
+    glEnd();
+}
 
 shared_cycle_state shared_cycle(n_uint ticks, n_byte fIdentification, n_int dim_x, n_int dim_y)
 {
@@ -122,6 +158,10 @@ void shared_color(n_byte2 * fit, n_int fIdentification)
 
 void shared_draw(n_byte * outputBuffer, n_byte fIdentification, n_int dim_x, n_int dim_y)
 {
+    engine_update(1);
+    
+    
+    /*
     n_int           ly = 0;
     n_int           loop = 0;
     n_int			loopColors = 0;
@@ -129,7 +169,7 @@ void shared_draw(n_byte * outputBuffer, n_byte fIdentification, n_int dim_x, n_i
     n_byte          colorTable[256][3];
     n_byte           * index = graphics_buffer;
     
-    engine_update(1);
+    
     
     if (index == 0L) return;
     
@@ -156,6 +196,7 @@ void shared_draw(n_byte * outputBuffer, n_byte fIdentification, n_int dim_x, n_i
         }
         ly++;
     }
+     */
 }
 
 n_int shared_new(n_uint seed)
@@ -184,6 +225,8 @@ n_uint shared_max_fps(void)
 {
     return 30;
 }
+
+
 
 #ifndef	_WIN32
 

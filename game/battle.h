@@ -167,6 +167,9 @@ void board_init(n_byte * value);
 n_byte board_add(n_int * ptx, n_int * pty, n_byte color);
 n_byte board_move(n_vect2 * fr, n_vect2 * pt);
 
+void battle_draw_init(void);
+
+void battle_draw(n_unit *un);
 
 
 
