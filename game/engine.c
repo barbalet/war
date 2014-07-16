@@ -51,7 +51,7 @@
  */ 
 #undef VER_WARTEXT
 
-#define BATTLE_FILE_LOCATION "/Users/tbarbalet/github/war/game/battle.txt"
+#define BATTLE_FILE_LOCATION "./Noble Warfare.app/Contents/Resources/battle.txt"
 
 #ifdef	VER_WARTEXT
 
