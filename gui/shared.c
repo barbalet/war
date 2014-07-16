@@ -43,6 +43,30 @@
 
 static n_byte * graphics_buffer = 0L;
 
+n_string_block open_file;
+
+void shared_saved_string(shared_saved_string_type ssst, n_string value)
+{
+    n_int loop = -1;
+    
+    if (ssst != SSS_OPEN)
+    {
+        return;
+    }
+    
+    if (value == 0L)
+    {
+        open_file[0] = 0;
+        return;
+    }
+    
+    do
+    {
+        loop++;
+        open_file[loop] = value[loop];
+        
+    }while(value[loop]);
+}
 
 void battle_draw_init(void)
 {
