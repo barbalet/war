@@ -154,7 +154,8 @@ void battle_fill(n_unit * un)
 }
 
 
-static n_int battle_calc_damage(n_int wounds, n_int damage){
+static n_int battle_calc_damage(n_int wounds, n_int damage)
+{
 	wounds -= damage;
 	if(wounds < 1)
 		wounds = 0;
@@ -223,7 +224,6 @@ void battle_attack(n_unit *un, n_byte2 * gvar) {
 	}
     
 	{
-        
 		/* the range of the missile weapons */
 		n_int	  rang_missile = 0;
 		n_type   *typ = un->unit_type;

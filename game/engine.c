@@ -42,32 +42,18 @@
 #endif
 #include "battle.h"
 
-/*
- If wartext.c is used
-#define	VER_WARTEXT
- */
-/*
- If wartext.c is not used
- */ 
-#undef VER_WARTEXT
 
 #define BATTLE_FILE_LOCATION "./Noble Warfare.app/Contents/Resources/battle.txt"
 
-#ifdef	VER_WARTEXT
-
-extern void	plat_winner(n_byte	winner);
-
-#endif
 
 n_byte          *local_board;
 
-static n_byte2     game_vars[ 7 ] = { 12345, 4321, 5, 0x7fff, 0xffff, 0xffff, 5
-                        };
+static n_byte2  game_vars[ 7 ] = { 12345, 4321, 5, 0x7fff, 0xffff, 0xffff, 5 };
 
-static n_unit	   *units;
-static n_byte2	    number_units;
-static n_type     *types;
-static n_byte2     number_types;
+static n_unit	*units;
+static n_byte2	number_units;
+static n_type   *types;
+static n_byte2  number_types;
 
 #define	SIZEOF_MEMORY	 (16*1024*1024)
 
@@ -217,7 +203,6 @@ static n_int engine_conditions(n_string location)
 
 	file_pass->location = 0;
 
-	
 	do {
 		ret_val = engine_filein(file_pass, NW_UNIT);
 	} while(ret_val == 0);
@@ -227,18 +212,16 @@ static n_int engine_conditions(n_string location)
 	}
 
 	file_pass->location = 0;
-
 	
 	/* load the game variables last */
   
-  do {
-    ret_val = engine_filein(file_pass, NW_GAME);
-  } while(ret_val == 0);
+    do {
+        ret_val = engine_filein(file_pass, NW_GAME);
+    } while(ret_val == 0);
 
-	
 	io_file_free(&file_pass);
         
-  /* resolve the units with types and check the alignments */
+    /* resolve the units with types and check the alignments */
 	{
 		n_byte	resolve[256] = {0};
 		n_uint	check_alignment[2] = {0};
@@ -259,7 +242,8 @@ static n_int engine_conditions(n_string location)
 		}
 
 		/* if there are none of one of the alignments, there can be no battle */
-		if((check_alignment[0] == 0) || (check_alignment[1] == 0)) {
+		if((check_alignment[0] == 0) || (check_alignment[1] == 0))
+        {
 			SHOW_ERROR("Alignment Logic Failed");
 		}
 	}
@@ -278,8 +262,10 @@ void * engine_init(n_uint random_init)
 
 	mem_init(1);
 
-	if(engine_conditions(BATTLE_FILE_LOCATION) != 0)
+	if (engine_update(0) == -1)
+    {
 		return 0L;
+    }
 
 	return ((void *) local_board);
 }
@@ -305,14 +291,23 @@ unsigned char engine_mouse(short px, short py)
 
 n_int engine_update(n_byte update_condition)
 {
-	if(update_condition == 1){
-
-		n_byte	result = battle_opponent(units, number_units);
-		if(result != 0){
-			if(engine_conditions(BATTLE_FILE_LOCATION) != 0){
-				return SHOW_ERROR("Update conditions failed");
-			}
-		}
+    n_byte result = 1;
+    
+	if (update_condition == 1)
+    {
+		result = battle_opponent(units, number_units);
+    }
+    
+    if (result != 0)
+    {
+        if(engine_conditions(BATTLE_FILE_LOCATION) != 0)
+        {
+            return SHOW_ERROR("Update conditions failed");
+        }
+    }
+    
+    if (update_condition == 1)
+    {
 		battle_loop_gvar(&battle_move, units, number_units, game_vars);
 
 		battle_loop_gvar(&battle_declare,units,number_units, game_vars);
@@ -322,12 +317,7 @@ n_int engine_update(n_byte update_condition)
         battle_draw_init();        
         battle_loop(&battle_draw,units,number_units);
 	}
-    else
-    {
-        if(engine_conditions(BATTLE_FILE_LOCATION) != 0){
-            return SHOW_ERROR("Update conditions failed");
-        }
-    }
+
 	return 0;
 }
 
