@@ -46,14 +46,16 @@
 #define VECT_X(f)         	(OLD_SD_NEW_SD(((f)) + 64))
 #define VECT_Y(f)         	(OLD_SD_NEW_SD((f)))
 
-void  battle_loop(battle_function func, n_unit * un, const n_uint count) {
+void  battle_loop(battle_function func, n_unit * un, const n_uint count)
+{
 	n_uint loop = 0;
 	while(loop < count)
 		(*func)(&un[loop++]);
 }
 
 void  battle_loop_gvar(battle_function_gvar func, n_unit * un,
-                       const n_uint count , n_byte2 * gvar) {
+                       const n_uint count , n_byte2 * gvar)
+{
 	n_uint loop = 0;
 	while(loop < count)
 		(*func)((&un[loop++]),gvar);
@@ -162,13 +164,14 @@ static n_int battle_calc_damage(n_int wounds, n_int damage)
 	return wounds;
 }
 
-#define	PROB_MEL	0
-#define	PROB_MIS	1
-#define	DAMA_MEL	2
-#define	DAMA_MIS	3
-#define	SPED_MAX	4
-#define	RANG_MIS	5
-
+typedef enum{
+    PROB_MEL = 0,
+    PROB_MIS,
+    DAMA_MEL,
+    DAMA_MIS,
+    SPED_MAX,
+    RANG_MIS
+} additional_variable_values;
 
 static void battle_combatant_attack(n_combatant * comb, n_combatant * comb_at,
                                     n_byte2 * gvar, n_int *av){

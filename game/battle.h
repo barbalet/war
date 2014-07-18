@@ -110,15 +110,19 @@ typedef struct n_unit {
 }
 n_unit;
 
-#define GVAR_RANDOM_0                         0
-#define GVAR_RANDOM_1                         1
-																			  
-#define GVAR_ATTACK_MELEE_DSQ                 2 /* val = 5 */
 
-#define GVAR_DECLARE_GROUP_FACING_DSQ         3 /* val = 0x7fff */
-#define GVAR_DECLARE_MAX_START_DSQ            4 /* val = 0xffff */
-#define GVAR_DECLARE_ONE_TO_ONE_DSQ           5 /* val = 0xffff */
-#define GVAR_DECLARE_CLOSE_ENOUGH_DSQ         6 /* val = 5 */
+typedef enum
+{
+    GVAR_RANDOM_0 = 0,
+    GVAR_RANDOM_1,
+																			  
+    GVAR_ATTACK_MELEE_DSQ,         /* val = 5 */
+    
+    GVAR_DECLARE_GROUP_FACING_DSQ, /* val = 0x7fff */
+    GVAR_DECLARE_MAX_START_DSQ,    /* val = 0xffff */
+    GVAR_DECLARE_ONE_TO_ONE_DSQ,   /* val = 0xffff */
+    GVAR_DECLARE_CLOSE_ENOUGH_DSQ  /* val = 5 */
+}general_variables;
 
 typedef void (*battle_function)(n_unit * un);
 typedef void (*battle_function_gvar)(n_unit * un, n_byte2 * gvar);

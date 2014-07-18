@@ -146,19 +146,24 @@ const noble_file_entry   battle_commands[]= { /* (number_commands<<3)|4 */
 static n_byte	engine_filein(n_file * file_pass, n_byte val) {
 	n_byte	temp_store[sizeof(n_unit)+sizeof(n_type)]={0};
 	n_int   ret_val = io_read_buff(file_pass, temp_store, battle_commands);
-	if(ret_val == FILE_EOF) {
+	if(ret_val == FILE_EOF)
+    {
 		return 6;
 	}
-	if(val == ret_val) {
-		if(val == NW_TYPE) { /* type */
+	if(val == ret_val)
+    {
+		if(val == NW_TYPE)
+        { /* type */
 			io_copy(temp_store, (n_byte*)&types[number_types++], sizeof(n_type));
 			(void)mem_use(sizeof(n_type));
 		}
-		if(val == NW_UNIT) { /* unit */
+		if(val == NW_UNIT)
+        { /* unit */
 			io_copy(temp_store, (n_byte *)&units[number_units++], sizeof(n_unit));
 			(void)mem_use(sizeof(n_unit));
 		}
-		if(val == NW_GAME) { /* game_vars */
+		if(val == NW_GAME)
+        { /* game_vars */
 			io_copy(temp_store, (n_byte *)game_vars, ( sizeof(n_byte2) * 7 ) );
 		}
 	}
@@ -184,7 +189,8 @@ static n_int engine_conditions(n_string location)
 	io_erase(local_board, BATTLE_BOARD_SIZE);
 	board_init(local_board);
     
-	if(io_disk_read(file_pass, location) != 0) {
+	if(io_disk_read(file_pass, location) != 0)
+    {
 		return SHOW_ERROR("Read file failed");
 	}
 
@@ -207,7 +213,8 @@ static n_int engine_conditions(n_string location)
 		ret_val = engine_filein(file_pass, NW_UNIT);
 	} while(ret_val == 0);
 
-	if((number_types == 0) || (number_units == 0) || (number_types > 255)) {
+	if((number_types == 0) || (number_units == 0) || (number_types > 255))
+    {
 		SHOW_ERROR("Type/Unit Logic Failed");
 	}
 
@@ -277,7 +284,8 @@ unsigned char engine_mouse(short px, short py)
 {
 	sm_down = 1;
 
-	if(sm_last == 0) {
+	if(sm_last == 0)
+    {
 		startx = px;
 		starty = py;
 		endx = px;
