@@ -284,14 +284,15 @@ static void battle_combatant_declare(n_combatant * comb, n_byte2 * gvar,
     
 	n_combatant *comb_at = un_at->combatants;
     
-	n_int	distance_centre_squ = ((loc_x - at_x)*(loc_x - at_x)) +
-    ((loc_y - at_y)*(loc_y - at_y));
+	n_int	distance_centre_squ = ((loc_x - at_x)*(loc_x - at_x)) + ((loc_y - at_y)*(loc_y - at_y));
     
-	if (comb->wounds == NUNIT_DEAD) {
+	if (comb->wounds == NUNIT_DEAD)
+    {
 		return;
 	}
     
-	if(distance_centre_squ < gvar[GVAR_DECLARE_ONE_TO_ONE_DSQ]) {							               /* val4 */
+	if(distance_centre_squ < gvar[GVAR_DECLARE_ONE_TO_ONE_DSQ])
+    {							               /* val4 */
 		/* the direction facing vector */
 		n_int fx = VECT_X( loc_f ) / 32;
 		n_int fy = VECT_Y( loc_f ) / 32;
@@ -355,7 +356,8 @@ static void battle_combatant_declare(n_combatant * comb, n_byte2 * gvar,
 }
 
 
-void battle_declare(n_unit *un, n_byte2 * gvar) {
+void battle_declare(n_unit *un, n_byte2 * gvar)
+{
 	n_uint		 loop = 0;
 	n_byte		 group_facing = 255;
 	n_combatant *comb      = un->combatants;
@@ -364,7 +366,8 @@ void battle_declare(n_unit *un, n_byte2 * gvar) {
 	n_byte2      loc_number = un->number_combatants;
     
 	/* only worthwhile if the unit is attacking something */
-	if(un_at == 0L) {
+	if(un_at == 0L)
+    {
 		return;
 	}
 	{
@@ -457,7 +460,8 @@ void battle_move(n_unit *un, n_byte2 * gvar) {
 	n_combatant *comb       = un->combatants;
 	n_byte2      loc_number = un->number_combatants;
 	n_uint      loop = 0;
-	while (loop < loc_number) {
+	while (loop < loc_number)
+    {
 		battle_combatant_move(&comb[loop], gvar);
 		loop++;
 	}
@@ -473,8 +477,10 @@ void battle_remove_dead(n_unit *un) {
 	n_uint sum_y = 0;
 	n_byte2 sum = 0;
 	n_byte2 loop = 0;
-	while (loop < un->number_combatants) {
-		if (comb[ loop ].wounds != NUNIT_DEAD) {
+	while (loop < un->number_combatants)
+    {
+		if (comb[ loop ].wounds != NUNIT_DEAD)
+        {
 			if (comb[ loop ].wounds == 0)
             {
 				comb[ loop ].wounds = NUNIT_DEAD;
@@ -490,7 +496,8 @@ void battle_remove_dead(n_unit *un) {
 		}
 		loop++;
 	}
-	if(sum != 0) {
+	if(sum != 0)
+    {
 		un->average_x = (n_byte2)(sum_x / sum);
 		un->average_y = (n_byte2)(sum_y / sum);
 	}
