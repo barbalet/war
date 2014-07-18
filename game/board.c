@@ -79,16 +79,16 @@ static void board_fill(n_int px, n_int py, n_byte number)
     XY_BOARD(px, py) = number;
 }
 
-n_byte board_clear(n_int px, n_int py)
+n_byte board_clear(n_vect2 * pt)
 {
     n_byte value;
-    if (board_location_check(px, py) == -1)
+    if (board_location_check(pt->x, pt->y) == -1)
     {
         return 0;
     }
-    value = XY_BOARD(px, py);
+    value = XY_BOARD(pt->x, pt->y);
     
-    XY_BOARD(px, py) = 0;
+    XY_BOARD(pt->x, pt->y) = 0;
     
     return value;
 }
@@ -166,7 +166,7 @@ n_byte	board_move(n_vect2 * fr, n_vect2 * pt) {
     
 	if(board_find(&ptx, &pty))
     {
-		n_byte color = board_clear(fr->x,fr->y);
+		n_byte color = board_clear(fr);
 		board_fill(ptx, pty, color);
         pt->x = ptx;
         pt->y = pty;

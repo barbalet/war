@@ -130,8 +130,8 @@ void battle_fill(n_unit * un)
                 
 		if(board_add(&pos_x, &pos_y, color)) {
             
-			comb[loop].location_x = (n_byte2)(pos_x);
-			comb[loop].location_y = (n_byte2)(pos_y);
+			comb[loop].location.x = pos_x;
+			comb[loop].location.y = pos_y;
 			comb[loop].direction_facing = (n_byte)loc_angle;
 			comb[loop].attacking = NUNIT_NO_ATTACK;
 			comb[loop].wounds = loc_wounds;
@@ -272,19 +272,23 @@ static void battle_combatant_declare(n_combatant * comb, n_byte2 * gvar,
     
 	/* if the attacking combatant isn't dead */
 	/* cache the important values locally */
-	n_int	loc_x = comb->location_x;
-	n_int	loc_y = comb->location_y;
 	n_int	loc_f = comb->direction_facing;
 	/* the initial condition sets up "nothing to attack" and the maximum distance to attack squared */
 	n_byte2 loc_attack = NUNIT_NO_ATTACK;
 	n_byte2 max_distance_squared = gvar[GVAR_DECLARE_MAX_START_DSQ];	/* val3 */
-    
-	n_int	at_x = un_at->average_x;
-	n_int   at_y = un_at->average_y;
+    n_vect2 *loc = &comb->location;
     
 	n_combatant *comb_at = un_at->combatants;
     
-	n_int	distance_centre_squ = ((loc_x - at_x)*(loc_x - at_x)) + ((loc_y - at_y)*(loc_y - at_y));
+	n_int	distance_centre_squ;
+    n_vect2 average;
+    n_vect2 delta;
+    
+    vect2_populate(&average, un_at->average_x, un_at->average_y);
+    
+    vect2_subtract(&delta, loc, &average);
+    
+    distance_centre_squ = vect2_dot(&delta, &delta, 1, 1);
     
 	if (comb->wounds == NUNIT_DEAD)
     {
@@ -294,11 +298,14 @@ static void battle_combatant_declare(n_combatant * comb, n_byte2 * gvar,
 	if(distance_centre_squ < gvar[GVAR_DECLARE_ONE_TO_ONE_DSQ])
     {							               /* val4 */
 		/* the direction facing vector */
-		n_int fx = VECT_X( loc_f ) / 32;
-		n_int fy = VECT_Y( loc_f ) / 32;
+        n_vect2 facing;
+
 		/* if the combatant is more than half way through, switch the direction back on the closest-checking loop */
         
 		n_byte2 loop2 = 0;
+        
+        vect2_direction(&facing, loc_f, 32);
+        
 		while (loop2 < un_at->number_combatants) {
 			n_byte2	loc_test = loop2;
 			
@@ -308,12 +315,17 @@ static void battle_combatant_declare(n_combatant * comb, n_byte2 * gvar,
             
 			if (comb_at[ loc_test ].wounds != NUNIT_DEAD)
             {
-				n_int	dx = comb_at[ loc_test ].location_x - loc_x;
-				n_int	dy = comb_at[ loc_test ].location_y - loc_y;
-				n_int   distance_squared = (dx * dx) + (dy * dy);
+                n_int    distance_squared;
+                n_int    distance_facing;
+                n_vect2  distance;
+                
+                vect2_subtract(&distance, &comb_at[ loc_test ].location, loc);
+                
+                distance_squared = vect2_dot(&distance, &distance, 1, 1);
+                distance_facing = vect2_dot(&distance, &facing, 1 ,1);
                 
 				/* if the combatant is closer than the previous lot AND visible (ie in front) */
-				if ((distance_squared < max_distance_squared) && (((fx * dx) + (fy * dy)) > 0)) {
+				if ((distance_squared < max_distance_squared) && (distance_facing > 0)) {
 					/* it is the prefered attacked combatant and the distance and instance is
                      stored */
 					max_distance_squared = (n_byte2)distance_squared;
@@ -337,11 +349,8 @@ static void battle_combatant_declare(n_combatant * comb, n_byte2 * gvar,
     {
 		if(loc_attack != NUNIT_NO_ATTACK)
         {
-			n_int	delta_x = comb_at[ loc_attack ].location_x - loc_x;
-			n_int	delta_y = comb_at[ loc_attack ].location_y - loc_y;
             n_vect2 delta;
-            vect2_populate(&delta, delta_x, delta_y);
-            
+            vect2_subtract(&delta, &comb_at[ loc_attack ].location, loc);
 			group_facing = math_turn_towards(&delta, comb->direction_facing, 2) ;
 		}
         else
@@ -394,12 +403,13 @@ static void battle_combatant_move(n_combatant * comb, n_byte2 * gvar){
 	n_int   loc_s = comb->speed_current;
 	n_int   loc_f = comb->direction_facing;
 	n_byte2 loc_r = (n_byte2)(math_random(&gvar[GVAR_RANDOM_0]) & 31);
-	n_int   tx = comb->location_x;
-	n_int   ty = comb->location_y;
-    n_vect2 ot;
+    n_vect2 old_location;
+    n_vect2 temp_location;
+    n_vect2 facing;
+    vect2_copy(&old_location, &comb->location);
+
+    vect2_copy(&temp_location, &old_location);
     
-    vect2_populate(&ot, tx, ty);
-	
 	if (comb->wounds == NUNIT_DEAD)
     {
 		return;
@@ -427,25 +437,23 @@ static void battle_combatant_move(n_combatant * comb, n_byte2 * gvar){
 		loc_f = (loc_f + 254) & 255;
     }
     
-	tx += (loc_s * VECT_X(loc_f)) / 26880;
-	ty += (loc_s * VECT_Y(loc_f)) / 26880;
+    vect2_direction(&facing, loc_f, 1);
+    
+    vect2_d(&temp_location, &facing, loc_s, 26880);
 
-	if ((tx >= BATTLE_BOARD_WIDTH) ||
-        (ty >= BATTLE_BOARD_HEIGHT) ||
-        (tx < 0) || (ty < 0))
+	if ((temp_location.x >= BATTLE_BOARD_WIDTH) ||
+        (temp_location.y >= BATTLE_BOARD_HEIGHT) ||
+        (temp_location.x < 0) || (temp_location.y < 0))
     {
         comb->wounds = 0;
         return;
     }
 
-    if (ot.x != tx || ot.y != ty)
+    if (old_location.x != temp_location.x || old_location.y != temp_location.y)
     {
-        n_vect2 t;
-        vect2_populate(&t, tx, ty);
-        if(board_move(&ot,&t))
+        if(board_move(&old_location,&temp_location))
         {
-            comb->location_x = (n_byte2) t.x;
-            comb->location_y = (n_byte2) t.y;
+            vect2_copy(&comb->location, &temp_location);
         }
     }
 
@@ -473,9 +481,8 @@ void battle_move(n_unit *un, n_byte2 * gvar) {
 
 void battle_remove_dead(n_unit *un) {
 	n_combatant *comb = (n_combatant *)(un->combatants);
-	n_uint sum_x = 0;
-	n_uint sum_y = 0;
-	n_byte2 sum = 0;
+    n_vect2 sum = {0};
+	n_int   count = 0;
 	n_byte2 loop = 0;
 	while (loop < un->number_combatants)
     {
@@ -486,22 +493,20 @@ void battle_remove_dead(n_unit *un) {
 				comb[ loop ].wounds = NUNIT_DEAD;
 				comb[ loop ].attacking = NUNIT_NO_ATTACK;
                 
-				(void)board_clear(comb[ loop ].location_x, comb[ loop ].location_y);
-                
+				(void)board_clear(&comb[ loop ].location);                
 			} else {
-				sum_x += comb[ loop ].location_x;
-				sum_y += comb[ loop ].location_y;
-				sum++;
+                vect2_d(&sum, &comb[ loop ].location, 1, 1);
+				count++;
 			}
 		}
 		loop++;
 	}
-	if(sum != 0)
+	if(count != 0)
     {
-		un->average_x = (n_byte2)(sum_x / sum);
-		un->average_y = (n_byte2)(sum_y / sum);
+		un->average_x = (n_byte2)(sum.x / count);
+		un->average_y = (n_byte2)(sum.y / count);
 	}
-	un->number_living = sum;
+	un->number_living = count;
 }
 
 /* returns 1 if the alignment 0 army is all dead,

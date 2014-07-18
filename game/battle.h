@@ -48,16 +48,17 @@
 #define NUNIT_DEAD			            (255)
 
 
-typedef struct n_combatant {
-	n_byte speed_current;
+typedef struct n_combatant
+{
+    n_vect2 location;
+    
+	n_byte2 attacking;
+	n_byte2 distance_squ;
+    
+    n_byte speed_current;
 	n_byte direction_facing;
 	n_byte wounds;
 	n_byte combatant_state;
-
-	n_byte2 location_x;
-	n_byte2 location_y;
-	n_byte2 attacking;
-	n_byte2 distance_squ;
 }
 n_combatant;
 
@@ -145,7 +146,7 @@ typedef enum{
     BC_REGROUP
 }battle_command;
 
-n_byte board_clear(n_int ptx, n_int pty);
+n_byte board_clear(n_vect2 * pt);
 
 void * engine_init(n_uint random_init);
 

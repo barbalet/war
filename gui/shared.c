@@ -91,7 +91,7 @@ void battle_draw(n_unit *un)
 
 	while (loop < un->number_combatants) {
         if (comb[ loop ].wounds != NUNIT_DEAD) {
-            glVertex2i(comb[loop].location_x, comb[loop].location_y);
+            glVertex2i((GLint)comb[loop].location.x, (GLint)comb[loop].location.y);
         }
 		loop++;
 	}
