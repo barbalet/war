@@ -58,13 +58,9 @@ static n_int board_location_check(n_int px, n_int py)
         return SHOW_ERROR("board not initialized");
     }
     
-    if ((px< 0) || (px >= BATTLE_BOARD_WIDTH))
+    if (OUTSIDE_HEIGHT(py) || OUTSIDE_WIDTH(px))
     {
-        return SHOW_ERROR("px out of bounds");
-    }
-    if ((py< 0) || (py >= BATTLE_BOARD_HEIGHT))
-    {
-        return SHOW_ERROR("py out of bounds");
+        return SHOW_ERROR("point out of bounds");
     }
     
     return 0;

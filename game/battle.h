@@ -41,6 +41,9 @@
 #define BATTLE_BOARD_WIDTH              (1024)
 #define BATTLE_BOARD_HEIGHT             (768)
 
+#define OUTSIDE_WIDTH(num)   (((num) < 0) || ((num) >= BATTLE_BOARD_WIDTH))
+#define OUTSIDE_HEIGHT(num)  (((num) < 0) || ((num) >= BATTLE_BOARD_HEIGHT))
+
 #define BATTLE_BOARD_SIZE               (BATTLE_BOARD_WIDTH*BATTLE_BOARD_HEIGHT)
 
 #define NUNIT_NO_ATTACK                 0xffff

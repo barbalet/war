@@ -441,9 +441,7 @@ static void battle_combatant_move(n_combatant * comb, n_byte2 * gvar){
     
     vect2_d(&temp_location, &facing, loc_s, 26880);
 
-	if ((temp_location.x >= BATTLE_BOARD_WIDTH) ||
-        (temp_location.y >= BATTLE_BOARD_HEIGHT) ||
-        (temp_location.x < 0) || (temp_location.y < 0))
+    if (OUTSIDE_HEIGHT(temp_location.y) || OUTSIDE_WIDTH(temp_location.x))
     {
         comb->wounds = 0;
         return;
