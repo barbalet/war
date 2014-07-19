@@ -96,8 +96,7 @@ typedef struct n_unit {
 	n_byte  morale;
 	n_byte  angle;
 
-	n_byte2 average_x;
-	n_byte2 average_y;
+	n_byte2 average[2];
 
 	n_byte2 width;
 	n_byte2 number_combatants;

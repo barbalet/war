@@ -77,9 +77,6 @@ void battle_fill(n_unit * un)
 	const n_int		loc_angle  = (un->angle);
 	const n_int     loc_number = (un->number_combatants);
     
-	const n_int	    local_cos = ((13 * VECT_X( loc_angle ))/210);
-	const n_int	    local_sin = ((13 * VECT_Y( loc_angle ))/210);
-    
 	n_int dx = (UNIT_SIZE(un)+2)/2;
 	n_int dy = (UNIT_SIZE(un)+3)/2;
     
@@ -90,10 +87,14 @@ void battle_fill(n_unit * un)
 	n_int	        loc_width  = (un->width);
 	n_int		    loc_height;
     
-	n_int           pxx = 0, pxy = 0, pyx = 0, pyy = 0;
-	n_int	        edgex, edgey, px0, px1, py0, py1;
+	n_int	        edgex, edgey;
 	n_int           loop = 0;
 	n_int	        line = 0;
+    n_vect2         facing;
+    n_vect2         dpx, dpy;
+    n_vect2         px = {0}, py = {0};
+    
+    vect2_direction(&facing, loc_angle, 16);
     
 	if(loc_width > loc_number)
     {
@@ -111,22 +112,18 @@ void battle_fill(n_unit * un)
 		}
 	}
 	
-	px0 = (local_sin*dx);
-	px1 = (local_cos*dx);
-	
-	py0 = (local_cos*dy);
-	py1 = (local_sin*dy);
+    vect2_populate(&dpx, (facing.y * dx), (facing.x * dx));
+    vect2_populate(&dpy, (facing.x * dy), (facing.y * dy));
     
-	dx = (loc_width*dx);
-	dy = (loc_height*dy);
+	dx = (loc_width  * dx);
+	dy = (loc_height * dy);
 	
-	edgex = (un->average_x) - (((local_sin*dx) + (local_cos*dy)) >> 10);
-	edgey = (un->average_y) - (((local_cos*dx) - (local_sin*dy)) >> 10);
-	
+	edgex = (un->average[0]) - (((facing.y * dx) + (facing.x * dy)) >> 10);
+	edgey = (un->average[1]) - (((facing.x * dx) - (facing.y * dy)) >> 10);
     
 	while(loop < loc_number) {
-		n_int	pos_x = ((((pxx + pyx) >> 9) + edgex)&511);
-		n_int   pos_y = ((((pxy - pyy) >> 9) + edgey)&511);
+		n_int	pos_x = ((((px.x + py.x) >> 9) + edgex) % BATTLE_BOARD_WIDTH);
+		n_int   pos_y = ((((px.y - py.y) >> 9) + edgey) % BATTLE_BOARD_HEIGHT);
                 
 		if(board_add(&pos_x, &pos_y, color)) {
             
@@ -143,13 +140,12 @@ void battle_fill(n_unit * un)
 		
 		if(line == loc_width) {
 			line = 0;
-			pxx = 0;
-			pxy = 0;
-			pyx += py0;
-			pyy += py1;
+            
+            vect2_populate(&px, 0, 0);
+            
+            vect2_d(&py, &dpy, 1, 1);
 		} else {
-			pxx += px0;
-			pxy += px1;
+            vect2_d(&px, &dpx, 1, 1);
 		}
         
 	}
@@ -284,7 +280,7 @@ static void battle_combatant_declare(n_combatant * comb, n_byte2 * gvar,
     n_vect2 average;
     n_vect2 delta;
     
-    vect2_populate(&average, un_at->average_x, un_at->average_y);
+    vect2_populate(&average, un_at->average[0], un_at->average[1]);
     
     vect2_subtract(&delta, loc, &average);
     
@@ -381,8 +377,8 @@ void battle_declare(n_unit *un, n_byte2 * gvar)
 	}
 	{
 		/* the combatants being attacked */
-		n_int	delta_x = un_at->average_x - un->average_x;
-		n_int	delta_y = un_at->average_y - un->average_y;
+		n_int	delta_x = un_at->average[0] - un->average[0];
+		n_int	delta_y = un_at->average[1] - un->average[1];
         n_vect2 delta;
         vect2_populate(&delta, delta_x, delta_y);
         
@@ -501,8 +497,8 @@ void battle_remove_dead(n_unit *un) {
 	}
 	if(count != 0)
     {
-		un->average_x = (n_byte2)(sum.x / count);
-		un->average_y = (n_byte2)(sum.y / count);
+		un->average[0] = (n_byte2)(sum.x / count);
+		un->average[1] = (n_byte2)(sum.y / count);
 	}
 	un->number_living = count;
 }
@@ -534,8 +530,8 @@ n_byte battle_opponent(n_unit * un, n_uint	num) {
             
 			if (un_att == 0L)
             {
-				n_int	px = un[loop].average_x;
-				n_int	py = un[loop].average_y;
+				n_int	px = un[loop].average[0];
+				n_int	py = un[loop].average[1];
 				n_uint	min_dist_squ = 0xffffffff;
 				n_uint	loop2 = 0;
 				while (loop2 < num)
@@ -544,8 +540,8 @@ n_byte battle_opponent(n_unit * un, n_uint	num) {
                     {
 						if (((un[loop2].alignment)&1) != local_alignment)
                         {
-							n_int	tx = un[loop2].average_x;
-							n_int	ty = un[loop2].average_y;
+							n_int	tx = un[loop2].average[0];
+							n_int	ty = un[loop2].average[1];
 							n_uint   dist_squ;
 							tx -= px;
 							ty -= py;
