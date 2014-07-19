@@ -85,7 +85,7 @@ void battle_draw(n_unit *un)
     }
     else
     {
-        glColor3f(0, 0, 1);
+        glColor3f(0.3, 0.3, 1);
     }
     glBegin(GL_POINTS);
 

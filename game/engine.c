@@ -48,7 +48,9 @@
 
 n_byte          *local_board;
 
-static n_byte2  game_vars[ 7 ] = { 12345, 4321, 5, 0x7fff, 0xffff, 0xffff, 5 };
+/*static n_byte2  game_vars[ 7 ] = { 12345, 4321, 5, 0x7fff, 0xffff, 0xffff, 5 };*/
+
+static n_byte2  game_vars[ 7 ] = { 12345, 4321, 5, 8000, 0xffff, 0xffff, 5 };
 
 static n_unit	*units;
 static n_byte2	number_units;
