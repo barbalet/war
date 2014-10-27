@@ -12,7 +12,6 @@
 		5A1D4F09193CC1A500FD3B74 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 5A1D4F07193CC1A500FD3B74 /* Credits.rtf */; };
 		5A1D4F0F193CC1A500FD3B74 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5A1D4F0D193CC1A500FD3B74 /* MainMenu.xib */; };
 		5A1D4F11193CC1A500FD3B74 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5A1D4F10193CC1A500FD3B74 /* Images.xcassets */; };
-		5A1D4F18193CC1A500FD3B74 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5A1D4F17193CC1A500FD3B74 /* XCTest.framework */; };
 		5A1D4F19193CC1A500FD3B74 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5A1D4EF8193CC1A500FD3B74 /* Cocoa.framework */; };
 		5A1D4F21193CC1A500FD3B74 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 5A1D4F1F193CC1A500FD3B74 /* InfoPlist.strings */; };
 		5A1D4F23193CC1A500FD3B74 /* Noble_WarfareTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A1D4F22193CC1A500FD3B74 /* Noble_WarfareTests.m */; };
@@ -60,7 +59,6 @@
 		5A1D4F0E193CC1A500FD3B74 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		5A1D4F10193CC1A500FD3B74 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		5A1D4F16193CC1A500FD3B74 /* Noble WarfareTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Noble WarfareTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
-		5A1D4F17193CC1A500FD3B74 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		5A1D4F1E193CC1A500FD3B74 /* Noble WarfareTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Noble WarfareTests-Info.plist"; sourceTree = "<group>"; };
 		5A1D4F20193CC1A500FD3B74 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		5A1D4F22193CC1A500FD3B74 /* Noble_WarfareTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Noble_WarfareTests.m; sourceTree = "<group>"; };
@@ -103,7 +101,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				5A1D4F19193CC1A500FD3B74 /* Cocoa.framework in Frameworks */,
-				5A1D4F18193CC1A500FD3B74 /* XCTest.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -138,7 +135,6 @@
 			children = (
 				5A2EDEE319402B200013B073 /* OpenGL.framework */,
 				5A1D4EF8193CC1A500FD3B74 /* Cocoa.framework */,
-				5A1D4F17193CC1A500FD3B74 /* XCTest.framework */,
 				5A1D4EFA193CC1A500FD3B74 /* Other Frameworks */,
 			);
 			name = Frameworks;

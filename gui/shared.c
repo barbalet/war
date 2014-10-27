@@ -74,7 +74,7 @@ void battle_draw_init(void)
     glClear(GL_COLOR_BUFFER_BIT);
 }
 
-void battle_draw(n_unit *un)
+void battle_draw(n_unit *un, n_byte2 * gvar)
 {
 	n_combatant *comb = (n_combatant *)(un->combatants);
 	n_byte2 loop = 0;

@@ -127,8 +127,7 @@ typedef enum
     GVAR_DECLARE_CLOSE_ENOUGH_DSQ  /* val = 5 */
 }general_variables;
 
-typedef void (*battle_function)(n_unit * un);
-typedef void (*battle_function_gvar)(n_unit * un, n_byte2 * gvar);
+typedef void (*battle_function)(n_unit * un, n_byte2 * gvar);
 
 #define NUMBER_COMBATANTS_A     1024
 #define NUMBER_COMBATANTS_B     1024
@@ -158,16 +157,14 @@ n_int engine_update(n_byte update_condition);
 
 void engine_exit();
 
-void battle_fill(n_unit * un);
-
+void battle_fill(n_unit * un, n_byte2 * gvar);
 void battle_move(n_unit *un, n_byte2 * gvar);
 void battle_declare(n_unit *un, n_byte2 * gvar);
 void battle_attack(n_unit *un, n_byte2 * gvar);
-void battle_remove_dead(n_unit *un);
+void battle_remove_dead(n_unit *un, n_byte2 * gvar);
+void battle_draw(n_unit *un, n_byte2 * gvar);
 
-void  battle_loop(battle_function func, n_unit * un, const n_uint count);
-void  battle_loop_gvar(battle_function_gvar func, n_unit * un,
-                       const n_uint count , n_byte2 * gvar);
+void  battle_loop(battle_function func, n_unit * un, const n_uint count, n_byte2 * gvar);
 n_byte battle_opponent(n_unit * un, n_uint	num);
 
 void board_init(n_byte * value);
@@ -176,7 +173,6 @@ n_byte board_move(n_vect2 * fr, n_vect2 * pt);
 
 void battle_draw_init(void);
 
-void battle_draw(n_unit *un);
 
 
 

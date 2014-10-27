@@ -258,7 +258,7 @@ static n_int engine_conditions(n_string location)
 	}
 	/* get the drawing ready, fill the units with spaced combatants and draw it all */
     
-	battle_loop(&battle_fill, units, number_units);
+	battle_loop(&battle_fill, units, number_units, 0L);
 	engine_update(1);
 	return 0;
 }
@@ -318,14 +318,14 @@ n_int engine_update(n_byte update_condition)
     
     if (update_condition == 1)
     {
-		battle_loop_gvar(&battle_move, units, number_units, game_vars);
+		battle_loop(&battle_move, units, number_units, game_vars);
 
-		battle_loop_gvar(&battle_declare,units,number_units, game_vars);
-		battle_loop_gvar(&battle_attack, units, number_units, game_vars);
-		battle_loop(&battle_remove_dead,units,number_units);
+		battle_loop(&battle_declare, units, number_units, game_vars);
+		battle_loop(&battle_attack, units, number_units, game_vars);
+		battle_loop(&battle_remove_dead, units, number_units, 0L);
         
         battle_draw_init();        
-        battle_loop(&battle_draw,units,number_units);
+        battle_loop(&battle_draw, units, number_units, 0L);
 	}
 
 	return 0;

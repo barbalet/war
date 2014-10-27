@@ -46,19 +46,11 @@
 #define VECT_X(f)         	(OLD_SD_NEW_SD(((f)) + 64))
 #define VECT_Y(f)         	(OLD_SD_NEW_SD((f)))
 
-void  battle_loop(battle_function func, n_unit * un, const n_uint count)
+void  battle_loop(battle_function func, n_unit * un, const n_uint count , n_byte2 * gvar)
 {
 	n_uint loop = 0;
 	while(loop < count)
-		(*func)(&un[loop++]);
-}
-
-void  battle_loop_gvar(battle_function_gvar func, n_unit * un,
-                       const n_uint count , n_byte2 * gvar)
-{
-	n_uint loop = 0;
-	while(loop < count)
-		(*func)((&un[loop++]),gvar);
+		(*func)((&un[loop++]), gvar);
 }
 
 n_byte battle_alignment_color(n_unit * un)
@@ -70,7 +62,7 @@ n_byte battle_alignment_color(n_unit * un)
     return 255;
 }
 
-void battle_fill(n_unit * un)
+void battle_fill(n_unit * un, n_byte2 * gvar)
 {
 	const n_int     loc_order  = UNIT_ORDER(un);
 	const n_byte    loc_wounds = GET_TYPE(un)->wounds_per_combatant;
@@ -103,11 +95,15 @@ void battle_fill(n_unit * un)
     
 	loc_height = (loc_number + loc_width - (loc_number % loc_width)) / loc_width;
     
-	if((loc_order&1)==1) {
-		if(dx == dy) {
+	if((loc_order & 1) == 1)
+    {
+		if(dx == dy)
+        {
 			dx += 1;
 			dy += 1;
-		} else {
+		}
+        else
+        {
 			dx = dy;
 		}
 	}
@@ -121,12 +117,13 @@ void battle_fill(n_unit * un)
 	edgex = (un->average[0]) - (((facing.y * dx) + (facing.x * dy)) >> 10);
 	edgey = (un->average[1]) - (((facing.x * dx) - (facing.y * dy)) >> 10);
     
-	while(loop < loc_number) {
+	while(loop < loc_number)
+    {
 		n_int	pos_x = ((((px.x + py.x) >> 9) + edgex) % BATTLE_BOARD_WIDTH);
 		n_int   pos_y = ((((px.y - py.y) >> 9) + edgey) % BATTLE_BOARD_HEIGHT);
                 
-		if(board_add(&pos_x, &pos_y, color)) {
-            
+		if(board_add(&pos_x, &pos_y, color))
+        {
 			comb[loop].location.x = pos_x;
 			comb[loop].location.y = pos_y;
 			comb[loop].direction_facing = (n_byte)loc_angle;
@@ -138,13 +135,14 @@ void battle_fill(n_unit * un)
         
 		line ++;
 		
-		if(line == loc_width) {
+		if(line == loc_width)
+        {
 			line = 0;
-            
             vect2_populate(&px, 0, 0);
-            
             vect2_d(&py, &dpy, 1, 1);
-		} else {
+		}
+        else
+        {
             vect2_d(&px, &dpx, 1, 1);
 		}
         
@@ -473,7 +471,7 @@ void battle_move(n_unit *un, n_byte2 * gvar) {
 /* as combatants can continue to fight for the entire battle_cycle,
  the death condition only occurs when wounds == NUNIT_DEAD */
 
-void battle_remove_dead(n_unit *un) {
+void battle_remove_dead(n_unit *un, n_byte2 * gvar) {
 	n_combatant *comb = (n_combatant *)(un->combatants);
     n_vect2 sum = {0};
 	n_int   count = 0;
