@@ -161,7 +161,7 @@ void battle_fill(n_unit * un, n_byte2 * gvar);
 void battle_move(n_unit *un, n_byte2 * gvar);
 void battle_declare(n_unit *un, n_byte2 * gvar);
 void battle_attack(n_unit *un, n_byte2 * gvar);
-void battle_remove_dead(n_unit *un, n_byte2 * gvar);
+void battle_remove(n_unit *un, n_byte2 * gvar);
 void battle_draw(n_unit *un, n_byte2 * gvar);
 
 void  battle_loop(battle_function func, n_unit * un, const n_uint count, n_byte2 * gvar);

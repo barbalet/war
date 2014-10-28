@@ -165,8 +165,9 @@ void shared_draw(n_byte * outputBuffer, n_byte fIdentification, n_int dim_x, n_i
 
 n_int shared_new(n_uint seed)
 {
-    engine_update(0);
-    
+    engine_exit();
+    engine_init(seed);
+        
     return 0;
 }
 
