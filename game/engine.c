@@ -124,7 +124,7 @@ const noble_file_entry   battle_commands[]= { /* (number_commands<<3)|4 */
 	{"avery=", NW_UNIT | FILE_TYPE_BYTE2, 1, 6, "Average Y"}, /*average_y;*/
 
 	{"width=", NW_UNIT | FILE_TYPE_BYTE2, 1, 8, "Width"}, /*width;*/
-	{"numco='", NW_UNIT | FILE_TYPE_BYTE2, 1, 10, "Number Combatants"},/*number_combatants;*/
+	{"numco=", NW_UNIT | FILE_TYPE_BYTE2, 1, 10, "Number Combatants"},/*number_combatants;*/
 
 	{"align=", NW_UNIT | FILE_TYPE_BYTE2, 1, 12, "Alignment"},/*alignment;*/
 	{"misnu=", NW_UNIT | FILE_TYPE_BYTE2, 1, 14, "Missile Number"},/*missile_number;*/
