@@ -195,9 +195,8 @@ static n_int engine_conditions(n_string location)
 		return SHOW_ERROR("Read file failed");
 	}
 
-	io_whitespace(file_pass);  
-	file_pass->location = 0;
-	
+	io_whitespace(file_pass);
+    
     /* load the types first */
 	types = (n_type *) mem_use(0);
 	do {
@@ -207,8 +206,6 @@ static n_int engine_conditions(n_string location)
 	/* load the units next */
 	units = (n_unit *) mem_use(0);
 
-	file_pass->location = 0;
-
 	do {
 		ret_val = engine_filein(file_pass, NW_UNIT);
 	} while(ret_val == 0);
@@ -217,8 +214,6 @@ static n_int engine_conditions(n_string location)
     {
 		SHOW_ERROR("Type/Unit Logic Failed");
 	}
-
-	file_pass->location = 0;
 	
 	/* load the game variables last */
   
