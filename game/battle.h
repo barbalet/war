@@ -58,10 +58,10 @@ typedef struct n_combatant
 	n_byte2 attacking;
 	n_byte2 distance_squ;
     
-    n_byte speed_current;
-	n_byte direction_facing;
-	n_byte wounds;
-	n_byte combatant_state;
+    n_byte2 speed_current;
+	n_byte2 direction_facing;
+	n_byte2 wounds;
+	n_byte2 combatant_state;
 }
 n_combatant;
 
@@ -72,40 +72,40 @@ n_combatant;
 
 
 typedef struct n_type {
-	n_byte  defence;
-	n_byte  melee_attack;
-	n_byte  melee_damage;
-	n_byte  melee_armpie;
+	n_byte2  defence;
+	n_byte2  melee_attack;
+	n_byte2  melee_damage;
+	n_byte2  melee_armpie;
 
-	n_byte  missile_attack;
-	n_byte  missile_damage;
-	n_byte  missile_armpie;
-	n_byte  missile_rate;
+	n_byte2  missile_attack;
+	n_byte2  missile_damage;
+	n_byte2  missile_armpie;
+	n_byte2  missile_rate;
 
-	n_byte2 missile_range;
-	n_byte  speed_maximum;
-	n_byte  stature;
-	n_byte  leadership;
+	n_byte2  missile_range;
+	n_byte2  speed_maximum;
+	n_byte2  stature;
+	n_byte2  leadership;
 
-	n_byte  wounds_per_combatant;
-	n_byte  points_per_combatant;
+	n_byte2  wounds_per_combatant;
+	n_byte2  points_per_combatant;
 }
 n_type;
 
 typedef struct n_unit {
-	n_byte  morale;
-	n_byte  angle;
+	n_byte2  morale;
+	n_byte2  angle;
 
-	n_byte2 average[2];
+	n_byte2  average[2];
 
-	n_byte2 width;
-	n_byte2 number_combatants;
+	n_byte2  width;
+	n_byte2  number_combatants;
 
-	n_byte  alignment;
-	n_byte  missile_number;
+	n_byte2  alignment;
+	n_byte2  missile_number;
 
-	n_byte  missile_timer;
-	n_byte2 number_living;
+	n_byte2  missile_timer;
+	n_byte2  number_living;
 
 	void *unit_type;
 	void *combatants;
