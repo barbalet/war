@@ -471,7 +471,7 @@ void battle_move(n_unit *un, n_byte2 * gvar) {
 /* as combatants can continue to fight for the entire battle_cycle,
  the death condition only occurs when wounds == NUNIT_DEAD */
 
-void battle_remove(n_unit *un, n_byte2 * gvar) {
+void battle_remove_dead(n_unit *un, n_byte2 * gvar) {
 	n_combatant *comb = (n_combatant *)(un->combatants);
     n_vect2 sum = {0};
 	n_int   count = 0;
