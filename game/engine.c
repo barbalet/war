@@ -97,53 +97,52 @@ static n_byte * mem_use(n_uint size) {
 #define NW_GAME  (0x30)
 
 const noble_file_entry   battle_commands[]= { /* (number_commands<<3)|4 */
-    {{'n', 't', 'y', 'p', 'e', '{'}, NW_TYPE | 0,              0, 0,  "Unit Type"},    /* n_type */
-    {{'d', 'e', 'f', 'e', 'n', '='}, NW_TYPE | FILE_TYPE_BYTE, 1, 0,  "Defense Value"},/*defence;*/
-    {{'m', 'e', 'l', 'a', 't', '='}, NW_TYPE | FILE_TYPE_BYTE, 1, 1,  "Melee Attack"}, /*melee_attack;*/
-    {{'m', 'e', 'l', 'd', 'a', '='}, NW_TYPE | FILE_TYPE_BYTE, 1, 2,  "Melee Damage"}, /*melee_damage;*/
-	{{'m', 'e', 'l', 'a', 'p', '='}, NW_TYPE | FILE_TYPE_BYTE, 1, 3,  "Melee Armor Pierce"}, /*melee_armpie;*/
+    {"ntype{", NW_TYPE | 0,              0, 0,  "Unit Type"},    /* n_type */
+    {"defen=", NW_TYPE | FILE_TYPE_BYTE, 1, 0,  "Defense Value"},/*defence;*/
+    {"melat=", NW_TYPE | FILE_TYPE_BYTE, 1, 1,  "Melee Attack"}, /*melee_attack;*/
+    {"melda=", NW_TYPE | FILE_TYPE_BYTE, 1, 2,  "Melee Damage"}, /*melee_damage;*/
+    {"melap=", NW_TYPE | FILE_TYPE_BYTE, 1, 3,  "Melee Armor Pierce"}, /*melee_armpie;*/
 
-    {{'m', 'i', 's', 'a', 't', '='}, NW_TYPE | FILE_TYPE_BYTE, 1, 4,  "Missile Attack"},/*missile_attack;*/
-	{{'m', 'i', 's', 'd', 'a', '='}, NW_TYPE | FILE_TYPE_BYTE, 1, 5,  "Missile Damage"},/*missile_damage;*/
-    {{'m', 'i', 's', 'a', 'p', '='}, NW_TYPE | FILE_TYPE_BYTE, 1, 6,  "Missile Armor Pierce"},/*missile_armpie;*/
-	{{'m', 'i', 's', 'r', 't', '='}, NW_TYPE | FILE_TYPE_BYTE, 1, 7,  "Missile Rate"},/*missile_rate;*/
+    {"misat=", NW_TYPE | FILE_TYPE_BYTE, 1, 4,  "Missile Attack"},/*missile_attack;*/
+    {"misda=", NW_TYPE | FILE_TYPE_BYTE, 1, 5,  "Missile Damage"},/*missile_damage;*/
+    {"misap=", NW_TYPE | FILE_TYPE_BYTE, 1, 6,  "Missile Armor Pierce"},/*missile_armpie;*/
+    {"misrt=", NW_TYPE | FILE_TYPE_BYTE, 1, 7,  "Missile Rate"},/*missile_rate;*/
 
-    {{'m', 'i', 's', 'r', 'g', '='}, NW_TYPE | FILE_TYPE_BYTE2,1, 8,  "Missile Range"}, /*missile_range;*/
-    {{'s', 'p', 'e', 'e', 'd', '='}, NW_TYPE | FILE_TYPE_BYTE, 1, 10, "Speed Maximum"}, /*speed_maximum;*/
-    {{'s', 't', 'a', 't', 'u', '='}, NW_TYPE | FILE_TYPE_BYTE, 1, 11, "Stature"},/*stature;*/
-    {{'l', 'e', 'a', 'd', 'e', '='}, NW_TYPE | FILE_TYPE_BYTE, 1, 12, "Leadership"}, /*leadership;*/
+    {"misrg=", NW_TYPE | FILE_TYPE_BYTE2,1, 8,  "Missile Range"}, /*missile_range;*/
+    {"speed=", NW_TYPE | FILE_TYPE_BYTE, 1, 10, "Speed Maximum"}, /*speed_maximum;*/
+    {"statu=", NW_TYPE | FILE_TYPE_BYTE, 1, 11, "Stature"},/*stature;*/
+    {"leade=", NW_TYPE | FILE_TYPE_BYTE, 1, 12, "Leadership"}, /*leadership;*/
 
-    {{'w', 'e', 'a', 'p', 'c', '='}, NW_TYPE | FILE_TYPE_BYTE, 1, 13,  "Wounds per combatant"},/*wounds_per_combatant;*/
-    {{'t', 'y', 'i', 'd', 'n', '='}, NW_TYPE | FILE_TYPE_BYTE, 1, 14,  "Type ID number"}, /*type ID number*/
+    {"weapc=", NW_TYPE | FILE_TYPE_BYTE, 1, 13,  "Wounds per combatant"},/*wounds_per_combatant;*/
+    {"tyidn=", NW_TYPE | FILE_TYPE_BYTE, 1, 14,  "Type ID number"}, /*type ID number*/
 
-	
-	{{'n', 'u', 'n', 'i', 't', '{'}, NW_UNIT | 0, 0, 0, "Specific Unit"},/* n_unit */
-	  
-	{{'t', 'i', 'd', 'u', 'n', '='}, NW_UNIT | FILE_TYPE_BYTE, 1, 0,  "Type (ID number)"}, /*type (ID number)*/
-	{{'a', 'n', 'g', 'l', 'e', '='}, NW_UNIT | FILE_TYPE_BYTE, 1, 1,  "Angle"}, /*angle;*/
 
-	{{'a', 'v', 'e', 'r', 'x', '='}, NW_UNIT | FILE_TYPE_BYTE2, 1, 2, "Average X"}, /*average_x;*/
-	{{'a', 'v', 'e', 'r', 'y', '='}, NW_UNIT | FILE_TYPE_BYTE2, 1, 4, "Average Y"}, /*average_y;*/
+    {"nunit{", NW_UNIT | 0, 0, 0, "Specific Unit"},/* n_unit */
 
-	{{'w', 'i', 'd', 't', 'h', '='}, NW_UNIT | FILE_TYPE_BYTE2, 1, 6, "Width"}, /*width;*/
-	{{'n', 'u', 'm', 'c', 'o', '='}, NW_UNIT | FILE_TYPE_BYTE2, 1, 8, "Number Combatants"},/*number_combatants;*/
+    {"tidun=", NW_UNIT | FILE_TYPE_BYTE, 1, 0,  "Type (ID number)"}, /*type (ID number)*/
+    {"angle=", NW_UNIT | FILE_TYPE_BYTE, 1, 1,  "Angle"}, /*angle;*/
 
-	{{'a', 'l', 'i', 'g', 'n', '='}, NW_UNIT | FILE_TYPE_BYTE, 1, 10, "Alignment"},/*alignment;*/
-	{{'m', 'i', 's', 'n', 'u', '='}, NW_UNIT | FILE_TYPE_BYTE, 1, 11, "Missile Number"},/*missile_number;*/
+    {"averx=", NW_UNIT | FILE_TYPE_BYTE2, 1, 2, "Average X"}, /*average_x;*/
+    {"avery=", NW_UNIT | FILE_TYPE_BYTE2, 1, 4, "Average Y"}, /*average_y;*/
 
-	
-	{{'n', 'g', 'a', 'm', 'e', '{'}, NW_GAME | 0, 0, 0, "Game Variables"},/* game_vars */
-    
-	{{'r', 'a', 'n', 'd', 'v', '='}, NW_GAME | FILE_TYPE_BYTE2, 2, 0,   "Random values"},/*randoms;*/
-	{{'v', 'a', 'r', 'i', '1', '='}, NW_GAME | FILE_TYPE_BYTE2, 1, 4,   "Value 1"}, /*value_1;*/
-	{{'v', 'a', 'r', 'i', '2', '='}, NW_GAME | FILE_TYPE_BYTE2, 1, 6,   "Value 2"}, /*value_2;*/
-	{{'v', 'a', 'r', 'i', '3', '='}, NW_GAME | FILE_TYPE_BYTE2, 1, 8,   "Value 3"}, /*value_3;*/
-	{{'v', 'a', 'r', 'i', '4', '='}, NW_GAME | FILE_TYPE_BYTE2, 1, 10,  "Value 4"}, /*value_4;*/
-	{{'v', 'a', 'r', 'i', '5', '='}, NW_GAME | FILE_TYPE_BYTE2, 1, 12,  "Value 5"}, /*value_5;*/
+    {"width=", NW_UNIT | FILE_TYPE_BYTE2, 1, 6, "Width"}, /*width;*/
+    {"numco=", NW_UNIT | FILE_TYPE_BYTE2, 1, 8, "Number Combatants"},/*number_combatants;*/
 
-	{{0, 0, 0, 0, 0, 0},0, 0, 0} /* end commands */
+    {"align=", NW_UNIT | FILE_TYPE_BYTE, 1, 10, "Alignment"},/*alignment;*/
+    {"misnu=", NW_UNIT | FILE_TYPE_BYTE, 1, 11, "Missile Number"},/*missile_number;*/
+
+
+    {"ngame{", NW_GAME | 0, 0, 0, "Game Variables"},/* game_vars */
+
+    {"randv=", NW_GAME | FILE_TYPE_BYTE2, 2, 0,   "Random values"},/*randoms;*/
+    {"vari1=", NW_GAME | FILE_TYPE_BYTE2, 1, 4,   "Value 1"}, /*value_1;*/
+    {"vari2=", NW_GAME | FILE_TYPE_BYTE2, 1, 6,   "Value 2"}, /*value_2;*/
+    {"vari3=", NW_GAME | FILE_TYPE_BYTE2, 1, 8,   "Value 3"}, /*value_3;*/
+    {"vari4=", NW_GAME | FILE_TYPE_BYTE2, 1, 10,  "Value 4"}, /*value_4;*/
+    {"vari5=", NW_GAME | FILE_TYPE_BYTE2, 1, 12,  "Value 5"}, /*value_5;*/
+
+    {{0, 0, 0, 0, 0, 0},0, 0, 0} /* end commands */
 };
-
 
 static n_byte	engine_filein(n_file * file_pass, n_byte val) {
 	n_byte	temp_store[sizeof(n_unit)+sizeof(n_type)]={0};
