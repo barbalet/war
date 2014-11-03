@@ -258,7 +258,6 @@ static n_int engine_conditions(n_string location)
 	/* get the drawing ready, fill the units with spaced combatants and draw it all */
     
 	battle_loop(&battle_fill, units, number_units, 0L);
-	engine_update(1);
 	return 0;
 }
 
@@ -270,7 +269,7 @@ void * engine_init(n_uint random_init)
 
 	mem_init(1);
 
-	if (engine_update(0) == -1)
+	if (engine_new() == -1)
     {
 		return 0L;
     }
@@ -298,36 +297,39 @@ unsigned char engine_mouse(short px, short py)
 	return 1;
 }
 
-n_int engine_update(n_byte update_condition)
+
+n_int engine_new(void)
 {
-    n_byte result = 1;
-    
-	if (update_condition == 1)
+    if(engine_conditions(BATTLE_FILE_LOCATION) != 0)
     {
-		result = battle_opponent(units, number_units);
+        return SHOW_ERROR("Update conditions failed");
     }
+    return 0;
+}
+
+n_int engine_update(void)
+{
+    n_byte result = battle_opponent(units, number_units);
     
     if (result != 0)
     {
-        if(engine_conditions(BATTLE_FILE_LOCATION) != 0)
-        {
-            return SHOW_ERROR("Update conditions failed");
-        }
+        return engine_new();
     }
     
-    if (update_condition == 1)
-    {
-		battle_loop(&battle_move, units, number_units, game_vars);
+    battle_loop(&battle_move, units, number_units, game_vars);
 
-		battle_loop(&battle_declare, units, number_units, game_vars);
-		battle_loop(&battle_attack, units, number_units, game_vars);
-		battle_loop(&battle_remove_dead, units, number_units, 0L);
-        
-        battle_draw_init();        
-        battle_loop(&battle_draw, units, number_units, 0L);
-	}
-
+    battle_loop(&battle_declare, units, number_units, game_vars);
+    battle_loop(&battle_attack, units, number_units, game_vars);
+    battle_loop(&battle_remove_dead, units, number_units, 0L);
+    
 	return 0;
+}
+
+
+void engine_draw(void)
+{
+    draw_init();
+    battle_loop(&draw_cycle, units, number_units, 0L);
 }
 
 void engine_exit()

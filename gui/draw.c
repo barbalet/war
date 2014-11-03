@@ -1,6 +1,6 @@
 /****************************************************************
 
- shared.c
+draw.c
 
  =============================================================
 
@@ -41,38 +41,13 @@
 #include "battle.h"
 #include "shared.h"
 
-n_string_block open_file;
-
-void shared_saved_string(shared_saved_string_type ssst, n_string value)
-{
-    n_int loop = -1;
-    
-    if (ssst != SSS_OPEN)
-    {
-        return;
-    }
-    
-    if (value == 0L)
-    {
-        open_file[0] = 0;
-        return;
-    }
-    
-    do
-    {
-        loop++;
-        open_file[loop] = value[loop];
-        
-    }while(value[loop]);
-}
-
-void battle_draw_init(void)
+void draw_init(void)
 {
     glClearColor(0, 0.05, 0, 0);
     glClear(GL_COLOR_BUFFER_BIT);
 }
 
-void battle_draw(n_unit *un, n_byte2 * gvar)
+void draw_cycle(n_unit *un, n_byte2 * gvar)
 {
 	n_combatant *comb = (n_combatant *)(un->combatants);
 	n_byte2 loop = 0;
@@ -95,107 +70,3 @@ void battle_draw(n_unit *un, n_byte2 * gvar)
 	}
     glEnd();
 }
-
-shared_cycle_state shared_cycle(n_uint ticks, n_byte fIdentification, n_int dim_x, n_int dim_y)
-{
-    return SHARED_CYCLE_OK;
-}
-
-n_int shared_init(n_byte view, n_uint random)
-{
-    if (engine_init(random))
-    {
-        return 0;
-    }
-    
-    return -1;
-}
-
-void shared_close(void)
-{
-    engine_exit();
-}
-
-n_int shared_menu(n_int menuValue)
-{
-    return 0;
-}
-
-void shared_rotate(n_double num, n_byte wwind)
-{
-    
-}
-
-void shared_keyReceived(n_byte2 value, n_byte fIdentification)
-{
-    
-}
-
-void shared_keyUp(void)
-{
-    
-}
-
-void shared_mouseOption(n_byte option)
-{
-    
-}
-
-void shared_mouseReceived(n_int valX, n_int valY, n_byte fIdentification)
-{
-    engine_mouse(valX, valY);
-}
-void shared_mouseUp(void)
-{
-    
-}
-
-void shared_about(n_constant_string value)
-{
-    
-}
-
-void shared_draw(n_byte * outputBuffer, n_byte fIdentification, n_int dim_x, n_int dim_y)
-{
-    engine_update();
-    engine_draw();
-}
-
-n_int shared_new(n_uint seed)
-{
-    engine_new();
-    
-    return 0;
-}
-
-n_byte shared_openFileName(n_string cStringFileName, n_byte isScript)
-{
-    return 0;
-}
-
-void shared_saveFileName(n_string cStringFileName)
-{
-    
-}
-
-void shared_script_debug_handle(n_string cStringFileName)
-{
-    
-}
-
-n_uint shared_max_fps(void)
-{
-    return 60;
-}
-
-
-
-#ifndef	_WIN32
-
-n_int sim_thread_console_quit(void)
-{
-    return 0;
-}
-
-#endif
-
