@@ -46,6 +46,15 @@
 #define VECT_X(f)         	(OLD_SD_NEW_SD(((f)) + 64))
 #define VECT_Y(f)         	(OLD_SD_NEW_SD((f)))
 
+void  combatant_loop(combatant_function func, n_unit * un, n_byte2 * gvar, void * values)
+{
+    n_combatant *comb = (n_combatant *)(un->combatants);
+    n_byte2 loop = 0;
+    while (loop < un->number_combatants) {
+        (*func)((&comb[loop++]), gvar, values);
+    }
+}
+
 void  battle_loop(battle_function func, n_unit * un, const n_uint count , n_byte2 * gvar)
 {
 	n_uint loop = 0;
@@ -393,7 +402,7 @@ void battle_declare(n_unit *un, n_byte2 * gvar)
 }
 
 
-static void battle_combatant_move(n_combatant * comb, n_byte2 * gvar){
+static void combatant_move(n_combatant * comb, n_byte2 * gvar, void * values){
 	n_int   loc_s = comb->speed_current;
 	n_int   loc_f = comb->direction_facing;
 	n_byte2 loc_r = (n_byte2)(math_random(&gvar[GVAR_RANDOM_0]) & 31);
@@ -456,15 +465,8 @@ static void battle_combatant_move(n_combatant * comb, n_byte2 * gvar){
 /* this is currently fudged for the skirmish testing... it will be fixed
  in the future... honest... */
 
-void battle_move(n_unit *un, n_byte2 * gvar) {
-	n_combatant *comb       = un->combatants;
-	n_byte2      loc_number = un->number_combatants;
-	n_uint      loop = 0;
-	while (loop < loc_number)
-    {
-		battle_combatant_move(&comb[loop], gvar);
-		loop++;
-	}
+void battle_move(n_unit * un, n_byte2 * gvar) {
+    combatant_loop(&combatant_move, un, gvar, 0L);
 }
 
 

@@ -128,6 +128,7 @@ typedef enum
 }general_variables;
 
 typedef void (*battle_function)(n_unit * un, n_byte2 * gvar);
+typedef void (*combatant_function)(n_combatant * comb, n_byte2 * gvar, void * values);
 
 #define NUMBER_COMBATANTS_A     1024
 #define NUMBER_COMBATANTS_B     1024
@@ -168,6 +169,7 @@ void battle_remove_dead(n_unit *un, n_byte2 * gvar);
 void draw_init(void);
 void draw_cycle(n_unit *un, n_byte2 * gvar);
 
+void  combatant_loop(combatant_function func, n_unit * un, n_byte2 * gvar, void * values);
 void  battle_loop(battle_function func, n_unit * un, const n_uint count, n_byte2 * gvar);
 n_byte battle_opponent(n_unit * un, n_uint	num);
 

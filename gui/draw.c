@@ -47,11 +47,16 @@ void draw_init(void)
     glClear(GL_COLOR_BUFFER_BIT);
 }
 
+
+void draw_combatant(n_combatant * comb, n_byte2 *gvar, void * values)
+{
+    if (comb->wounds != NUNIT_DEAD) {
+        glVertex2i((GLint)comb->location.x, (GLint)comb->location.y);
+    }
+}
+
 void draw_cycle(n_unit *un, n_byte2 * gvar)
 {
-	n_combatant *comb = (n_combatant *)(un->combatants);
-	n_byte2 loop = 0;
-
     if (un->alignment)
     {
         glColor3f(1, 0, 0);
@@ -61,12 +66,7 @@ void draw_cycle(n_unit *un, n_byte2 * gvar)
         glColor3f(0.3, 0.3, 1);
     }
     glBegin(GL_POINTS);
-
-	while (loop < un->number_combatants) {
-        if (comb[ loop ].wounds != NUNIT_DEAD) {
-            glVertex2i((GLint)comb[loop].location.x, (GLint)comb[loop].location.y);
-        }
-		loop++;
-	}
+    
+    combatant_loop(&draw_combatant, un, gvar, 0L);
     glEnd();
 }
