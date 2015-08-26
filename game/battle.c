@@ -71,38 +71,87 @@ n_byte battle_alignment_color(n_unit * un)
     return 255;
 }
 
+typedef struct
+{
+    n_vect2 px;
+    n_vect2 py;
+    n_vect2 dpx;
+    n_vect2 dpy;
+    n_int   edgex;
+    n_int   edgey;
+    n_byte  color;
+    n_int   loc_angle;
+    n_byte  loc_wounds;
+    n_int   line;
+    n_int   loc_width;
+} battle_fill_struct;
+
+
+void combatant_fill(n_combatant * comb, n_byte2 * gvar, void * values)
+{
+    battle_fill_struct * local_bfs = (battle_fill_struct *)values;
+ 
+    n_int	pos_x = ((((local_bfs->px.x + local_bfs->py.x) >> 9) + local_bfs->edgex) % BATTLE_BOARD_WIDTH);
+    n_int   pos_y = ((((local_bfs->px.y - local_bfs->py.y) >> 9) + local_bfs->edgey) % BATTLE_BOARD_HEIGHT);
+    
+    if(board_add(&pos_x, &pos_y, local_bfs->color))
+    {
+        comb->location.x = pos_x;
+        comb->location.y = pos_y;
+        comb->direction_facing = (n_byte)local_bfs->loc_angle;
+        comb->attacking = NUNIT_NO_ATTACK;
+        comb->wounds = local_bfs->loc_wounds;
+        comb->speed_current = 0;
+    }
+    
+    local_bfs->line ++;
+    
+    if(local_bfs->line == local_bfs->loc_width)
+    {
+        local_bfs->line = 0;
+        vect2_populate(&local_bfs->px, 0, 0);
+        vect2_d(&local_bfs->py, &local_bfs->dpy, 1, 1);
+    }
+    else
+    {
+        vect2_d(&local_bfs->px, &local_bfs->dpx, 1, 1);
+    }
+}
+
+
 void battle_fill(n_unit * un, n_byte2 * gvar)
 {
-	const n_int     loc_order  = UNIT_ORDER(un);
-	const n_byte    loc_wounds = GET_TYPE(un)->wounds_per_combatant;
-	const n_int		loc_angle  = (un->angle);
-	const n_int     loc_number = (un->number_combatants);
+    battle_fill_struct local_bfs;
+    n_int   dx = (UNIT_SIZE(un)+2)/2;
+    n_int   dy = (UNIT_SIZE(un)+3)/2;
+    n_int   loc_angle  = (un->angle);
+	n_int   loc_order  = UNIT_ORDER(un);
+    n_int   loc_height;
+    n_vect2 facing;
+
+	local_bfs.loc_wounds = GET_TYPE(un)->wounds_per_combatant;
+   
+    local_bfs.color = battle_alignment_color(un);
     
-	n_int dx = (UNIT_SIZE(un)+2)/2;
-	n_int dy = (UNIT_SIZE(un)+3)/2;
     
-    n_byte          color = battle_alignment_color(un);
+	local_bfs.loc_width  = (un->width);
     
-	n_combatant    *comb  = (un->combatants);
+    local_bfs.line = 0;
     
-	n_int	        loc_width  = (un->width);
-	n_int		    loc_height;
+    local_bfs.px.x = 0;
+    local_bfs.px.y = 0;
     
-	n_int	        edgex, edgey;
-	n_int           loop = 0;
-	n_int	        line = 0;
-    n_vect2         facing;
-    n_vect2         dpx, dpy;
-    n_vect2         px = {0}, py = {0};
+    local_bfs.py.x = 0;
+    local_bfs.py.y = 0;
     
     vect2_direction(&facing, loc_angle, 16);
     
-	if(loc_width > loc_number)
+	if(local_bfs.loc_width > un->number_combatants)
     {
-		loc_width = loc_number;
+		local_bfs.loc_width = un->number_combatants;
 	}
     
-	loc_height = (loc_number + loc_width - (loc_number % loc_width)) / loc_width;
+	loc_height = (un->number_combatants + local_bfs.loc_width - (un->number_combatants % local_bfs.loc_width)) / local_bfs.loc_width;
     
 	if((loc_order & 1) == 1)
     {
@@ -117,45 +166,16 @@ void battle_fill(n_unit * un, n_byte2 * gvar)
 		}
 	}
 	
-    vect2_populate(&dpx, (facing.y * dx), (facing.x * dx));
-    vect2_populate(&dpy, (facing.x * dy), (facing.y * dy));
+    vect2_populate(&local_bfs.dpx, (facing.y * dx), (facing.x * dx));
+    vect2_populate(&local_bfs.dpy, (facing.x * dy), (facing.y * dy));
     
-	dx = (loc_width  * dx);
+	dx = (local_bfs.loc_width  * dx);
 	dy = (loc_height * dy);
 	
-	edgex = (un->average[0]) - (((facing.y * dx) + (facing.x * dy)) >> 10);
-	edgey = (un->average[1]) - (((facing.x * dx) - (facing.y * dy)) >> 10);
+	local_bfs.edgex = (un->average[0]) - (((facing.y * dx) + (facing.x * dy)) >> 10);
+	local_bfs.edgey = (un->average[1]) - (((facing.x * dx) - (facing.y * dy)) >> 10);
     
-	while(loop < loc_number)
-    {
-		n_int	pos_x = ((((px.x + py.x) >> 9) + edgex) % BATTLE_BOARD_WIDTH);
-		n_int   pos_y = ((((px.y - py.y) >> 9) + edgey) % BATTLE_BOARD_HEIGHT);
-                
-		if(board_add(&pos_x, &pos_y, color))
-        {
-			comb[loop].location.x = pos_x;
-			comb[loop].location.y = pos_y;
-			comb[loop].direction_facing = (n_byte)loc_angle;
-			comb[loop].attacking = NUNIT_NO_ATTACK;
-			comb[loop].wounds = loc_wounds;
-			comb[loop].speed_current = 0;
-			loop ++;
-		}
-        
-		line ++;
-		
-		if(line == loc_width)
-        {
-			line = 0;
-            vect2_populate(&px, 0, 0);
-            vect2_d(&py, &dpy, 1, 1);
-		}
-        else
-        {
-            vect2_d(&px, &dpx, 1, 1);
-		}
-        
-	}
+    combatant_loop(&combatant_fill, un, gvar, (void*)&local_bfs);
 }
 
 
@@ -402,7 +422,8 @@ void battle_declare(n_unit *un, n_byte2 * gvar)
 }
 
 
-static void combatant_move(n_combatant * comb, n_byte2 * gvar, void * values){
+static void combatant_move(n_combatant * comb, n_byte2 * gvar, void * values)
+{
 	n_int   loc_s = comb->speed_current;
 	n_int   loc_f = comb->direction_facing;
 	n_byte2 loc_r = (n_byte2)(math_random(&gvar[GVAR_RANDOM_0]) & 31);
