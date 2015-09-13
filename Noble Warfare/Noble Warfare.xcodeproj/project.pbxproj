@@ -34,6 +34,7 @@
 		5A7DAB50193D7E6C0058064F /* engine.c in Sources */ = {isa = PBXBuildFile; fileRef = 5A7DAB4C193D7E6C0058064F /* engine.c */; };
 		5AD6DA4C1A07539800BB6DD8 /* draw.c in Sources */ = {isa = PBXBuildFile; fileRef = 5AD6DA4B1A07539800BB6DD8 /* draw.c */; };
 		5AF04982193EFCC900568A55 /* shared.c in Sources */ = {isa = PBXBuildFile; fileRef = 5AF04981193EFCC900568A55 /* shared.c */; };
+		7B8CE0951BA5615E000450D7 /* NobleShared.m in Sources */ = {isa = PBXBuildFile; fileRef = 7B8CE0941BA5615E000450D7 /* NobleShared.m */; settings = {ASSET_TAGS = (); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -86,6 +87,8 @@
 		5A7DAB4C193D7E6C0058064F /* engine.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = engine.c; sourceTree = "<group>"; };
 		5AD6DA4B1A07539800BB6DD8 /* draw.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = draw.c; sourceTree = "<group>"; };
 		5AF04981193EFCC900568A55 /* shared.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = shared.c; sourceTree = "<group>"; };
+		7B8CE0931BA5615E000450D7 /* NobleShared.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NobleShared.h; sourceTree = "<group>"; };
+		7B8CE0941BA5615E000450D7 /* NobleShared.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NobleShared.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -194,6 +197,8 @@
 		5A7DAB29193D7E190058064F /* mac */ = {
 			isa = PBXGroup;
 			children = (
+				7B8CE0931BA5615E000450D7 /* NobleShared.h */,
+				7B8CE0941BA5615E000450D7 /* NobleShared.m */,
 				5A7DAB2A193D7E190058064F /* AppDelegate.h */,
 				5A7DAB2B193D7E190058064F /* AppDelegate.m */,
 				5A7DAB2C193D7E190058064F /* main.m */,
@@ -358,6 +363,7 @@
 				5A7DAB50193D7E6C0058064F /* engine.c in Sources */,
 				5A7DAB3E193D7E520058064F /* audio.c in Sources */,
 				5A7DAB42193D7E520058064F /* io.c in Sources */,
+				7B8CE0951BA5615E000450D7 /* NobleShared.m in Sources */,
 				5A7DAB4F193D7E6C0058064F /* board.c in Sources */,
 				5A7DAB45193D7E520058064F /* network.c in Sources */,
 				5A7DAB30193D7E190058064F /* AppDelegate.m in Sources */,
