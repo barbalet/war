@@ -33,25 +33,20 @@ draw.c
 
  ****************************************************************/
 
-#import <OpenGL/gl.h>
-#import <OpenGL/glext.h>
-#import <OpenGL/glu.h>
-#import <OpenGL/OpenGL.h>
-
 #include "battle.h"
 #include "shared.h"
 
 void draw_init(void)
 {
-    glClearColor(0, 0.05, 0, 0);
-    glClear(GL_COLOR_BUFFER_BIT);
+    gldraw_background_green();
 }
 
 
 void draw_combatant(n_combatant * comb, n_byte2 *gvar, void * values)
 {
-    if (comb->wounds != NUNIT_DEAD) {
-        glVertex2i((GLint)comb->location.x, (GLint)comb->location.y);
+    if (comb->wounds != NUNIT_DEAD)
+    {
+        gldraw_vertex(&comb->location);
     }
 }
 
@@ -59,14 +54,13 @@ void draw_cycle(n_unit *un, n_byte2 * gvar)
 {
     if (un->alignment)
     {
-        glColor3f(1, 0, 0);
+        gldraw_red();
     }
     else
     {
-        glColor3f(0.3, 0.3, 1);
+        gldraw_green();
     }
-    glBegin(GL_POINTS);
-    
+    gldraw_start_points();
     combatant_loop(&draw_combatant, un, gvar, 0L);
-    glEnd();
+    gldraw_end_points();
 }

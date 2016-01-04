@@ -33,43 +33,8 @@
 
  ****************************************************************/
 
-#import <OpenGL/gl.h>
-#import <OpenGL/glext.h>
-#import <OpenGL/glu.h>
-#import <OpenGL/OpenGL.h>
-
 #include "battle.h"
 #include "shared.h"
-
-void battle_draw_init(void)
-{
-    glClearColor(0, 0.05, 0, 0);
-    glClear(GL_COLOR_BUFFER_BIT);
-}
-
-void battle_draw(n_unit *un, n_byte2 * gvar)
-{
-	n_combatant *comb = (n_combatant *)(un->combatants);
-	n_byte2 loop = 0;
-
-    if (un->alignment)
-    {
-        glColor3f(1, 0, 0);
-    }
-    else
-    {
-        glColor3f(0.3, 0.3, 1);
-    }
-    glBegin(GL_POINTS);
-
-	while (loop < un->number_combatants) {
-        if (comb[ loop ].wounds != NUNIT_DEAD) {
-            glVertex2i((GLint)comb[loop].location.x, (GLint)comb[loop].location.y);
-        }
-		loop++;
-	}
-    glEnd();
-}
 
 shared_cycle_state shared_cycle(n_uint ticks, n_byte fIdentification, n_int dim_x, n_int dim_y)
 {

@@ -34,7 +34,8 @@
 		5A7DAB50193D7E6C0058064F /* engine.c in Sources */ = {isa = PBXBuildFile; fileRef = 5A7DAB4C193D7E6C0058064F /* engine.c */; };
 		5AD6DA4C1A07539800BB6DD8 /* draw.c in Sources */ = {isa = PBXBuildFile; fileRef = 5AD6DA4B1A07539800BB6DD8 /* draw.c */; };
 		5AF04982193EFCC900568A55 /* shared.c in Sources */ = {isa = PBXBuildFile; fileRef = 5AF04981193EFCC900568A55 /* shared.c */; };
-		7B8CE0951BA5615E000450D7 /* NobleShared.m in Sources */ = {isa = PBXBuildFile; fileRef = 7B8CE0941BA5615E000450D7 /* NobleShared.m */; settings = {ASSET_TAGS = (); }; };
+		7B13CE751C3A3C4B007FFB71 /* gldraw.c in Sources */ = {isa = PBXBuildFile; fileRef = 7B13CE741C3A3C4B007FFB71 /* gldraw.c */; };
+		7B8CE0951BA5615E000450D7 /* NobleShared.m in Sources */ = {isa = PBXBuildFile; fileRef = 7B8CE0941BA5615E000450D7 /* NobleShared.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -87,6 +88,7 @@
 		5A7DAB4C193D7E6C0058064F /* engine.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = engine.c; sourceTree = "<group>"; };
 		5AD6DA4B1A07539800BB6DD8 /* draw.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = draw.c; sourceTree = "<group>"; };
 		5AF04981193EFCC900568A55 /* shared.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = shared.c; sourceTree = "<group>"; };
+		7B13CE741C3A3C4B007FFB71 /* gldraw.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = gldraw.c; sourceTree = "<group>"; };
 		7B8CE0931BA5615E000450D7 /* NobleShared.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NobleShared.h; sourceTree = "<group>"; };
 		7B8CE0941BA5615E000450D7 /* NobleShared.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NobleShared.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -212,6 +214,7 @@
 		5A7DAB33193D7E520058064F /* noble */ = {
 			isa = PBXGroup;
 			children = (
+				7B13CE741C3A3C4B007FFB71 /* gldraw.c */,
 				5A7DAB34193D7E520058064F /* audio.c */,
 				5A7DAB35193D7E520058064F /* compress.c */,
 				5A7DAB36193D7E520058064F /* execute.c */,
@@ -354,6 +357,7 @@
 				5A7DAB31193D7E190058064F /* main.m in Sources */,
 				5A7DAB4D193D7E6C0058064F /* battle.c in Sources */,
 				5A7DAB40193D7E520058064F /* execute.c in Sources */,
+				7B13CE751C3A3C4B007FFB71 /* gldraw.c in Sources */,
 				5AD6DA4C1A07539800BB6DD8 /* draw.c in Sources */,
 				5A7DAB41193D7E520058064F /* interpret.c in Sources */,
 				5A7DAB46193D7E520058064F /* parse.c in Sources */,
