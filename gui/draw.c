@@ -46,7 +46,12 @@ void draw_combatant(n_combatant * comb, n_byte2 *gvar, void * values)
 {
     if (comb->wounds != NUNIT_DEAD)
     {
-        gldraw_vertex(&comb->location);
+        n_vect2 translation;
+        
+        translation.x = (comb->location.x * 800) >> 10;
+        translation.y = (comb->location.y * 800) >> 10;
+        
+        gldraw_vertex(&translation);
     }
 }
 
