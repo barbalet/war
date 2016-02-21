@@ -1,0 +1,30 @@
+{
+  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "86B5DC473BDD709CA7BB74AEC52DF4F5F355DFDB",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyRepositoryLocationsKey" : {
+
+  },
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
+    "F8F44F5CF0F7E4FD58C7DF1F25F319A07E944474" : 0,
+    "86B5DC473BDD709CA7BB74AEC52DF4F5F355DFDB" : 0
+  },
+  "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "13895C4F-66AB-4B21-B6DE-CAC8FD6B4FD0",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
+    "F8F44F5CF0F7E4FD58C7DF1F25F319A07E944474" : "nobleape\/",
+    "86B5DC473BDD709CA7BB74AEC52DF4F5F355DFDB" : "war\/"
+  },
+  "DVTSourceControlWorkspaceBlueprintNameKey" : "Noble Warfare",
+  "DVTSourceControlWorkspaceBlueprintVersion" : 204,
+  "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "Noble Warfare\/Noble Warfare.xcodeproj",
+  "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/barbalet\/war.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "86B5DC473BDD709CA7BB74AEC52DF4F5F355DFDB"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/barbalet\/nobleape.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "F8F44F5CF0F7E4FD58C7DF1F25F319A07E944474"
+    }
+  ]
+}

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4AF0794F1C5D3D8900BABE08 /* console.c in Sources */ = {isa = PBXBuildFile; fileRef = 4AF0794E1C5D3D8900BABE08 /* console.c */; };
 		5A1D4EF9193CC1A500FD3B74 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5A1D4EF8193CC1A500FD3B74 /* Cocoa.framework */; };
 		5A1D4F03193CC1A500FD3B74 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 5A1D4F01193CC1A500FD3B74 /* InfoPlist.strings */; };
 		5A1D4F09193CC1A500FD3B74 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 5A1D4F07193CC1A500FD3B74 /* Credits.rtf */; };
@@ -49,6 +50,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		4AF0794E1C5D3D8900BABE08 /* console.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = console.c; sourceTree = "<group>"; };
 		5A1222C61973576C003D424F /* shared.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = shared.h; sourceTree = "<group>"; };
 		5A1D4EF5193CC1A500FD3B74 /* Noble Warfare.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Noble Warfare.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		5A1D4EF8193CC1A500FD3B74 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
@@ -247,6 +249,7 @@
 		5AF04980193EFCC900568A55 /* gui */ = {
 			isa = PBXGroup;
 			children = (
+				4AF0794E1C5D3D8900BABE08 /* console.c */,
 				5AF04981193EFCC900568A55 /* shared.c */,
 				5AD6DA4B1A07539800BB6DD8 /* draw.c */,
 			);
@@ -366,6 +369,7 @@
 				5A7DAB44193D7E520058064F /* math.c in Sources */,
 				5A7DAB50193D7E6C0058064F /* engine.c in Sources */,
 				5A7DAB3E193D7E520058064F /* audio.c in Sources */,
+				4AF0794F1C5D3D8900BABE08 /* console.c in Sources */,
 				5A7DAB42193D7E520058064F /* io.c in Sources */,
 				7B8CE0951BA5615E000450D7 /* NobleShared.m in Sources */,
 				5A7DAB4F193D7E6C0058064F /* board.c in Sources */,
