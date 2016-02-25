@@ -36,11 +36,36 @@ draw.c
 #include "battle.h"
 #include "shared.h"
 
+static n_int px = 0;
+static n_int py = 0;
+static n_int pz = 0;
+
 void draw_init(void)
 {
     gldraw_background_green();
 }
 
+void draw_dpx(n_double dpx)
+{
+    n_int int_dpx = (n_int)(dpx * 100);
+    px += int_dpx;
+}
+
+void draw_dpy(n_double dpy)
+{
+    n_int int_dpy = (n_int)(dpy * 100);
+    py += int_dpy;
+}
+
+void draw_dpz(n_double dpz)
+{
+    n_int int_dpz = (n_int)(dpz * 100);
+    n_int total_zoom = pz + int_dpz;
+    if ((total_zoom > -100) && (total_zoom < 128))
+    {
+        pz = total_zoom;
+    }
+}
 
 void draw_combatant(n_combatant * comb, n_byte2 *gvar, void * values)
 {
@@ -51,6 +76,9 @@ void draw_combatant(n_combatant * comb, n_byte2 *gvar, void * values)
         translation.x = (comb->location.x * 800) >> 10;
         translation.y = (comb->location.y * 800) >> 10;
         
+        translation.x = ((translation.x + px)*(128+pz))>>7;
+        translation.y = ((translation.y + py)*(128+pz))>>7;
+
         gldraw_vertex(&translation);
     }
 }

@@ -63,12 +63,13 @@ n_int shared_menu(n_int menuValue)
 
 void shared_delta(n_double delta_x, n_double delta_y, n_byte wwind)
 {
-    
+    draw_dpx(delta_x);
+    draw_dpy(delta_y);
 }
 
 void shared_zoom(n_double num, n_byte wwind)
 {
-    
+    draw_dpz(num);
 }
 
 void shared_rotate(n_double num, n_byte wwind)

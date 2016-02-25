@@ -169,6 +169,10 @@ void battle_remove_dead(n_unit *un, n_byte2 * gvar);
 void draw_init(void);
 void draw_cycle(n_unit *un, n_byte2 * gvar);
 
+void draw_dpx(n_double dpx);
+void draw_dpy(n_double dpy);
+void draw_dpz(n_double dpz);
+
 void  combatant_loop(combatant_function func, n_unit * un, n_byte2 * gvar, void * values);
 void  battle_loop(battle_function func, n_unit * un, const n_uint count, n_byte2 * gvar);
 n_byte battle_opponent(n_unit * un, n_uint	num);
