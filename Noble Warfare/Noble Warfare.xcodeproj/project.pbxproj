@@ -22,7 +22,6 @@
 		5A7DAB32193D7E190058064F /* NobleMacView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A7DAB2E193D7E190058064F /* NobleMacView.m */; };
 		5A7DAB3E193D7E520058064F /* audio.c in Sources */ = {isa = PBXBuildFile; fileRef = 5A7DAB34193D7E520058064F /* audio.c */; };
 		5A7DAB3F193D7E520058064F /* compress.c in Sources */ = {isa = PBXBuildFile; fileRef = 5A7DAB35193D7E520058064F /* compress.c */; };
-		5A7DAB40193D7E520058064F /* execute.c in Sources */ = {isa = PBXBuildFile; fileRef = 5A7DAB36193D7E520058064F /* execute.c */; };
 		5A7DAB41193D7E520058064F /* interpret.c in Sources */ = {isa = PBXBuildFile; fileRef = 5A7DAB37193D7E520058064F /* interpret.c */; };
 		5A7DAB42193D7E520058064F /* io.c in Sources */ = {isa = PBXBuildFile; fileRef = 5A7DAB38193D7E520058064F /* io.c */; };
 		5A7DAB43193D7E520058064F /* land.c in Sources */ = {isa = PBXBuildFile; fileRef = 5A7DAB39193D7E520058064F /* land.c */; };
@@ -75,7 +74,6 @@
 		5A7DAB2E193D7E190058064F /* NobleMacView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NobleMacView.m; sourceTree = "<group>"; };
 		5A7DAB34193D7E520058064F /* audio.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = audio.c; sourceTree = "<group>"; };
 		5A7DAB35193D7E520058064F /* compress.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = compress.c; sourceTree = "<group>"; };
-		5A7DAB36193D7E520058064F /* execute.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = execute.c; sourceTree = "<group>"; };
 		5A7DAB37193D7E520058064F /* interpret.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = interpret.c; sourceTree = "<group>"; };
 		5A7DAB38193D7E520058064F /* io.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = io.c; sourceTree = "<group>"; };
 		5A7DAB39193D7E520058064F /* land.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = land.c; sourceTree = "<group>"; };
@@ -219,7 +217,6 @@
 				7B13CE741C3A3C4B007FFB71 /* gldraw.c */,
 				5A7DAB34193D7E520058064F /* audio.c */,
 				5A7DAB35193D7E520058064F /* compress.c */,
-				5A7DAB36193D7E520058064F /* execute.c */,
 				5A7DAB37193D7E520058064F /* interpret.c */,
 				5A7DAB38193D7E520058064F /* io.c */,
 				5A7DAB39193D7E520058064F /* land.c */,
@@ -359,7 +356,6 @@
 				5AF04982193EFCC900568A55 /* shared.c in Sources */,
 				5A7DAB31193D7E190058064F /* main.m in Sources */,
 				5A7DAB4D193D7E6C0058064F /* battle.c in Sources */,
-				5A7DAB40193D7E520058064F /* execute.c in Sources */,
 				7B13CE751C3A3C4B007FFB71 /* gldraw.c in Sources */,
 				5AD6DA4C1A07539800BB6DD8 /* draw.c in Sources */,
 				5A7DAB41193D7E520058064F /* interpret.c in Sources */,
