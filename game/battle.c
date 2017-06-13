@@ -94,10 +94,15 @@ void combatant_fill(n_combatant * comb, n_byte2 * gvar, void * values)
     n_int	pos_x = ((((local_bfs->px.x + local_bfs->py.x) >> 9) + local_bfs->edgex) % BATTLE_BOARD_WIDTH);
     n_int   pos_y = ((((local_bfs->px.y - local_bfs->py.y) >> 9) + local_bfs->edgey) % BATTLE_BOARD_HEIGHT);
     
-    if(board_add(&pos_x, &pos_y, local_bfs->color))
+    n_vect2 pos;
+    
+    pos.x = pos_x;
+    pos.y = pos_y;
+    
+    if(board_add(&pos, local_bfs->color))
     {
-        comb->location.x = pos_x;
-        comb->location.y = pos_y;
+        comb->location.x = pos.x;
+        comb->location.y = pos.y;
         comb->direction_facing = (n_byte)local_bfs->loc_angle;
         comb->attacking = NUNIT_NO_ATTACK;
         comb->wounds = local_bfs->loc_wounds;

@@ -178,8 +178,10 @@ void  battle_loop(battle_function func, n_unit * un, const n_uint count, n_byte2
 n_byte battle_opponent(n_unit * un, n_uint	num);
 
 void board_init(n_byte * value);
-n_byte board_add(n_int * ptx, n_int * pty, n_byte color);
-n_byte board_move(n_vect2 * fr, n_vect2 * pt);
+
+n_byte	board_add(n_vect2 * pt, n_byte color);
+n_byte	board_move(n_vect2 * fr, n_vect2 * pt);
+
 
 
 

@@ -44,21 +44,21 @@
 
 static n_byte	*board = 0L;
 
-#define		XY_BOARD(px, py)		board[(px) | ((py) * BATTLE_BOARD_WIDTH)]
+#define		XY_BOARD(pt)		board[(pt->x) | ((pt->y) * BATTLE_BOARD_WIDTH)]
 
 void board_init(n_byte * value)
 {
 	board = value;
 }
 
-static n_int board_location_check(n_int px, n_int py)
+static n_int board_location_check(n_vect2 * pt)
 {
     if (board == 0L)
     {
         return SHOW_ERROR("board not initialized");
     }
     
-    if (OUTSIDE_HEIGHT(py) || OUTSIDE_WIDTH(px))
+    if (OUTSIDE_HEIGHT(pt->y) || OUTSIDE_WIDTH(pt->x))
     {
         return SHOW_ERROR("point out of bounds");
     }
@@ -66,63 +66,65 @@ static n_int board_location_check(n_int px, n_int py)
     return 0;
 }
 
-static void board_fill(n_int px, n_int py, n_byte number)
+static void board_fill(n_vect2 * pt, n_byte number)
 {
-    if (board_location_check(px, py) == -1)
+    if (board_location_check(pt) == -1)
     {
         return;
     }
-    XY_BOARD(px, py) = number;
+    XY_BOARD(pt) = number;
 }
 
 n_byte board_clear(n_vect2 * pt)
 {
     n_byte value;
-    if (board_location_check(pt->x, pt->y) == -1)
+    if (board_location_check(pt) == -1)
     {
         return 0;
     }
-    value = XY_BOARD(pt->x, pt->y);
+    value = XY_BOARD(pt);
     
-    XY_BOARD(pt->x, pt->y) = 0;
+    XY_BOARD(pt) = 0;
     
     return value;
 }
 
-static n_int board_occupied(n_int px, n_int py)
+static n_int board_occupied(n_vect2 * pt)
 {
-    if (board_location_check(px, py) == -1)
+    if (board_location_check(pt) == -1)
     {
         return 1;
     }
-    return (XY_BOARD(px, py) > 127);
+    return (XY_BOARD(pt) > 127);
 }
 
-static	n_byte	board_find(n_int * ptx, n_int * pty) {
-	n_int px = *ptx;
-	n_int py = *pty;
+static	n_byte	board_find(n_vect2 * pt) {
 	n_uint	best_dsqu = 0xffffffff;
 	n_int	best_x = 0, best_y = 0;
 	n_int ly = -1;
     
-	px = (px + BATTLE_BOARD_WIDTH) % BATTLE_BOARD_WIDTH;
-	py = (py + BATTLE_BOARD_HEIGHT) % BATTLE_BOARD_HEIGHT;
+	pt->x = (pt->x + BATTLE_BOARD_WIDTH) % BATTLE_BOARD_WIDTH;
+	pt->y = (pt->y + BATTLE_BOARD_HEIGHT) % BATTLE_BOARD_HEIGHT;
     
-	if(board_occupied(px,py)==0) {
-		*ptx = px;
-		*pty = py;
+	if(board_occupied(pt)==0) {
 		return 1;
 	}
 	while(ly < 2)
     {
 		n_int	lx = -1;
-		n_int y_val = (py + ly + BATTLE_BOARD_HEIGHT) % BATTLE_BOARD_HEIGHT;
+		n_int y_val = (pt->y + ly + BATTLE_BOARD_HEIGHT) % BATTLE_BOARD_HEIGHT;
 		while(lx < 2)
         {
-			n_int x_val = (px + lx + BATTLE_BOARD_WIDTH) % BATTLE_BOARD_WIDTH;
-			if(board_occupied(x_val,y_val)==0) {
-				n_int dx = (px - lx);
-				n_int dy = (py - ly);
+			n_int x_val = (pt->x + lx + BATTLE_BOARD_WIDTH) % BATTLE_BOARD_WIDTH;
+            n_vect2 value;
+            
+            value.x = x_val;
+            value.y = y_val;
+            
+            
+			if(board_occupied(&value)==0) {
+				n_int dx = (pt->x - lx);
+				n_int dy = (pt->y - ly);
 				n_uint	dsqu = (dx*dx) + (dy*dy);
 				if(dsqu < best_dsqu) {
 					best_dsqu = dsqu;
@@ -135,37 +137,31 @@ static	n_byte	board_find(n_int * ptx, n_int * pty) {
 		ly++;
 	}
 	if(best_dsqu != 0xffffffff) {
-		*ptx = best_x;
-		*pty = best_y;
+		pt->x = best_x;
+		pt->y = best_y;
 		return 1;
 	}
 	return 0;
 }
 
-n_byte	board_add(n_int * ptx, n_int * pty, n_byte color) {
-	if(board_find(ptx, pty))
+n_byte	board_add(n_vect2 * pt, n_byte color) {
+	if(board_find(pt))
     {
-		board_fill(*ptx, *pty, color);
+		board_fill(pt, color);
 		return 1;
 	}
 	return 0;
 }
 
 n_byte	board_move(n_vect2 * fr, n_vect2 * pt) {
-    n_int ptx = pt->x;
-    n_int pty = pt->y;
-    
-    if (board_location_check(ptx, pty) == -1)
+    if (board_location_check(pt) == -1)
     {
         return 0;
     }
-    
-	if(board_find(&ptx, &pty))
+	if(board_find(pt))
     {
 		n_byte color = board_clear(fr);
-		board_fill(ptx, pty, color);
-        pt->x = ptx;
-        pt->y = pty;
+		board_fill(pt, color);
 		return 1;
 	}
 	return 0;
