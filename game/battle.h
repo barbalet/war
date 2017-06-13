@@ -114,6 +114,18 @@ typedef struct n_unit {
 n_unit;
 
 
+typedef struct n_general_variables {
+    n_byte2 random0;
+    n_byte2 random1;
+    n_byte2 attack_melee_dsq;
+    n_byte2 declare_group_facing_dsq;
+    n_byte2 declare_max_start_dsq;
+    n_byte2 declare_one_to_one_dsq;
+    n_byte2 declare_close_enough_dsq;
+}
+n_general_variables;
+
+
 typedef enum
 {
     GVAR_RANDOM_0 = 0,
@@ -127,8 +139,8 @@ typedef enum
     GVAR_DECLARE_CLOSE_ENOUGH_DSQ  /* val = 5 */
 }general_variables;
 
-typedef void (*battle_function)(n_unit * un, n_byte2 * gvar);
-typedef void (*combatant_function)(n_combatant * comb, n_byte2 * gvar, void * values);
+typedef void (*battle_function)(n_unit * un, n_general_variables * gvar);
+typedef void (*combatant_function)(n_combatant * comb, n_general_variables * gvar, void * values);
 
 #define NUMBER_COMBATANTS_A     1024
 #define NUMBER_COMBATANTS_B     1024
@@ -139,6 +151,10 @@ typedef void (*combatant_function)(n_combatant * comb, n_byte2 * gvar, void * va
 #define	TYPE_MEMORY	  (sizeof(n_type) * 2)
 
 #define SIZEOF_BUFFER (COMB_MEMORY + engine_MEMORY + UNIT_MEMORY + TYPE_MEMORY)
+
+#define BIG_INT (0xffffffff)
+
+#define NOTHING (0L)
 
 typedef enum{
     BC_NO_COMMAND = 0,
@@ -160,21 +176,21 @@ n_int engine_new(void);
 
 void engine_exit();
 
-void battle_fill(n_unit * un, n_byte2 * gvar);
-void battle_move(n_unit *un, n_byte2 * gvar);
-void battle_declare(n_unit *un, n_byte2 * gvar);
-void battle_attack(n_unit *un, n_byte2 * gvar);
-void battle_remove_dead(n_unit *un, n_byte2 * gvar);
+void battle_fill(n_unit * un, n_general_variables * gvar);
+void battle_move(n_unit *un, n_general_variables * gvar);
+void battle_declare(n_unit *un, n_general_variables * gvar);
+void battle_attack(n_unit *un, n_general_variables * gvar);
+void battle_remove_dead(n_unit *un, n_general_variables * gvar);
 
 void draw_init(void);
-void draw_cycle(n_unit *un, n_byte2 * gvar);
+void draw_cycle(n_unit *un, n_general_variables * gvar);
 
 void draw_dpx(n_double dpx);
 void draw_dpy(n_double dpy);
 void draw_dpz(n_double dpz);
 
-void  combatant_loop(combatant_function func, n_unit * un, n_byte2 * gvar, void * values);
-void  battle_loop(battle_function func, n_unit * un, const n_uint count, n_byte2 * gvar);
+void  combatant_loop(combatant_function func, n_unit * un, n_general_variables * gvar, void * values);
+void  battle_loop(battle_function func, n_unit * un, const n_uint count, n_general_variables * gvar);
 n_byte battle_opponent(n_unit * un, n_uint	num);
 
 void board_init(n_byte * value);

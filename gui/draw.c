@@ -83,7 +83,7 @@ void draw_combatant(n_combatant * comb, n_byte2 *gvar, void * values)
     }
 }
 
-void draw_cycle(n_unit *un, n_byte2 * gvar)
+void draw_cycle(n_unit *un, n_general_variables * gvar)
 {
     if (un->alignment)
     {
@@ -94,6 +94,6 @@ void draw_cycle(n_unit *un, n_byte2 * gvar)
         gldraw_green();
     }
     gldraw_start_points();
-    combatant_loop(&draw_combatant, un, gvar, 0L);
+    combatant_loop(&draw_combatant, un, gvar, NOTHING);
     gldraw_end_points();
 }

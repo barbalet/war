@@ -48,9 +48,7 @@
 
 n_byte          *local_board;
 
-/*static n_byte2  game_vars[ 7 ] = { 12345, 4321, 5, 0x7fff, 0xffff, 0xffff, 5 };*/
-
-static n_byte2  game_vars[ 7 ] = { 12345, 4321, 5, 8000, 0xffff, 0xffff, 5 };
+static n_general_variables  game_vars;
 
 static n_unit	*units;
 static n_byte2	number_units;
@@ -72,7 +70,7 @@ n_int draw_error(n_constant_string error_text, n_constant_string location, n_int
 
 static void mem_init(n_byte start) {
 	if(start) {		
-		memory_buffer = 0L;
+		memory_buffer = NOTHING;
 		memory_allocated = SIZEOF_MEMORY;
 		
 		memory_buffer = io_new_range((SIZEOF_MEMORY/4), &memory_allocated);
@@ -82,7 +80,7 @@ static void mem_init(n_byte start) {
 
 
 static n_byte * mem_use(n_uint size) {
-	n_byte * val = 0L;
+	n_byte * val = NOTHING;
 	if(size > (memory_allocated - memory_used)) {
 		engine_exit();
 		/*plat_close();*/
@@ -165,7 +163,7 @@ static n_byte	engine_filein(n_file * file_pass, n_byte val) {
 		}
 		if(val == NW_GAME)
         { /* game_vars */
-			io_copy(temp_store, (n_byte *)game_vars, ( sizeof(n_byte2) * 7 ) );
+			io_copy(temp_store, (n_byte *)&game_vars, ( sizeof(n_general_variables) ) );
 		}
 	}
 	return 0;
@@ -182,7 +180,7 @@ static n_int engine_conditions(n_string location)
 
 	local_board = (n_byte *)mem_use(BATTLE_BOARD_SIZE);
     
-    if (local_board == 0L)
+    if (local_board == NOTHING)
     {
         return SHOW_ERROR("Local board not allocated");
     }
@@ -257,21 +255,26 @@ static n_int engine_conditions(n_string location)
 	}
 	/* get the drawing ready, fill the units with spaced combatants and draw it all */
     
-	battle_loop(&battle_fill, units, number_units, 0L);
+	battle_loop(&battle_fill, units, number_units, NOTHING);
 	return 0;
 }
 
 void * engine_init(n_uint random_init)
 {
+	game_vars.random0 = (n_byte2) (random_init & 0xFFFF);
+	game_vars.random1 = (n_byte2) (random_init >> 16);
 
-	game_vars[ GVAR_RANDOM_0 ] = (n_byte2) (random_init & 0xFFFF);
-	game_vars[ GVAR_RANDOM_1 ] = (n_byte2) (random_init >> 16);
-
+    game_vars.attack_melee_dsq = 5;
+    game_vars.declare_group_facing_dsq = 8000;
+    game_vars.declare_max_start_dsq = 0xffff;
+    game_vars.declare_one_to_one_dsq = 0xffff;
+    game_vars.declare_close_enough_dsq = 5;
+    
 	mem_init(1);
 
 	if (engine_new() == -1)
     {
-		return 0L;
+		return NOTHING;
     }
 
 	return ((void *) local_board);
@@ -316,11 +319,11 @@ n_int engine_update(void)
         return engine_new();
     }
     
-    battle_loop(&battle_move, units, number_units, game_vars);
+    battle_loop(&battle_move, units, number_units, &game_vars);
 
-    battle_loop(&battle_declare, units, number_units, game_vars);
-    battle_loop(&battle_attack, units, number_units, game_vars);
-    battle_loop(&battle_remove_dead, units, number_units, 0L);
+    battle_loop(&battle_declare, units, number_units, &game_vars);
+    battle_loop(&battle_attack, units, number_units, &game_vars);
+    battle_loop(&battle_remove_dead, units, number_units, NOTHING);
     
 	return 0;
 }
@@ -329,7 +332,7 @@ n_int engine_update(void)
 void engine_draw(void)
 {
     draw_init();
-    battle_loop(&draw_cycle, units, number_units, 0L);
+    battle_loop(&draw_cycle, units, number_units, NOTHING);
 }
 
 void engine_exit()

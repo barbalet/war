@@ -42,7 +42,7 @@
 
 #include "battle.h"
 
-static n_byte	*board = 0L;
+static n_byte	*board = NOTHING;
 
 #define		XY_BOARD(pt)		board[(pt->x) | ((pt->y) * BATTLE_BOARD_WIDTH)]
 
@@ -53,7 +53,7 @@ void board_init(n_byte * value)
 
 static n_int board_location_check(n_vect2 * pt)
 {
-    if (board == 0L)
+    if (board == NOTHING)
     {
         return SHOW_ERROR("board not initialized");
     }
@@ -99,7 +99,7 @@ static n_int board_occupied(n_vect2 * pt)
 }
 
 static	n_byte	board_find(n_vect2 * pt) {
-	n_uint	best_dsqu = 0xffffffff;
+	n_uint	best_dsqu = BIG_INT;
 	n_int	best_x = 0, best_y = 0;
 	n_int ly = -1;
     
@@ -117,11 +117,8 @@ static	n_byte	board_find(n_vect2 * pt) {
         {
 			n_int x_val = (pt->x + lx + BATTLE_BOARD_WIDTH) % BATTLE_BOARD_WIDTH;
             n_vect2 value;
-            
             value.x = x_val;
             value.y = y_val;
-            
-            
 			if(board_occupied(&value)==0) {
 				n_int dx = (pt->x - lx);
 				n_int dy = (pt->y - ly);
@@ -136,7 +133,7 @@ static	n_byte	board_find(n_vect2 * pt) {
 		}
 		ly++;
 	}
-	if(best_dsqu != 0xffffffff) {
+	if(best_dsqu != BIG_INT) {
 		pt->x = best_x;
 		pt->y = best_y;
 		return 1;
