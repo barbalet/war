@@ -67,7 +67,7 @@ void draw_dpz(n_double dpz)
     }
 }
 
-void draw_combatant(n_combatant * comb, n_byte2 *gvar, void * values)
+void draw_combatant(n_combatant * comb, n_general_variables *gvar, void * values)
 {
     if (comb->wounds != NUNIT_DEAD)
     {

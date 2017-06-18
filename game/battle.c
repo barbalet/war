@@ -192,17 +192,10 @@ static n_int battle_calc_damage(n_int wounds, n_int damage)
 	return wounds;
 }
 
-typedef enum{
-    PROB_MEL = 0,
-    PROB_MIS,
-    DAMA_MEL,
-    DAMA_MIS,
-    SPED_MAX,
-    RANG_MIS
-} additional_variable_values;
-
 static void battle_combatant_attack(n_combatant * comb, n_combatant * comb_at,
-                                    n_general_variables * gvar, n_int *av){
+                                    n_general_variables * gvar, void *additional_variables){
+    
+    n_additional_variables * av = (n_additional_variables*)additional_variables;
 	/* which opponent combatant are they attacking */
 	const n_byte2	loc_attacking = comb->attacking;
 	/* what is the squared distance between them */
@@ -226,24 +219,24 @@ static void battle_combatant_attack(n_combatant * comb, n_combatant * comb_at,
 		/* stop if melee attacking */
 		comb->speed_current = 0;
 		/* melee hit */
-		if (dice_roll < av[PROB_MEL]) {
-			comb_at->wounds = (n_byte) battle_calc_damage(comb_at->wounds, av[DAMA_MEL]);
+		if (dice_roll < av->probability_melee) {
+			comb_at->wounds = (n_byte) battle_calc_damage(comb_at->wounds, av->damage_melee);
 		}
 		/* else if the distance is within the missle range */
-	} else if (distance_squared < av[RANG_MIS]) {
+	} else if (distance_squared < av->range_missile) {
 		/* missile hit */
-		if (dice_roll < av[PROB_MIS]) {
-			comb_at->wounds = (n_byte) battle_calc_damage(comb_at->wounds,av[DAMA_MIS]);
+		if (dice_roll < av->probability_missile) {
+			comb_at->wounds = (n_byte) battle_calc_damage(comb_at->wounds,av->damage_missile);
 		}
 	} else {
-		comb->speed_current = (n_byte)av[SPED_MAX];
+		comb->speed_current = (n_byte)av->speed_max;
 	}
 }
 
 
 void battle_attack(n_unit *un, n_general_variables * gvar) {
     
-	n_int		additional_variables[6];
+	n_additional_variables		additional_variables;
 	n_uint		loop = 0;
 	/* the combatants doing the attacking */
 	n_combatant  *comb = (n_combatant *)(un->combatants);
@@ -267,13 +260,13 @@ void battle_attack(n_unit *un, n_general_variables * gvar) {
         
 		/* the probabilities of causing damage to the attacked unit */
         
-		additional_variables[ PROB_MEL ] = (typ->melee_attack) * (16 - (typ_at->defence) + (typ->melee_armpie));
-		additional_variables[ PROB_MIS ] = (typ->missile_attack) * (16 - (typ_at->defence) + (typ->missile_armpie));
+		additional_variables.probability_melee = (typ->melee_attack) * (16 - (typ_at->defence) + (typ->melee_armpie));
+		additional_variables.probability_missile = (typ->missile_attack) * (16 - (typ_at->defence) + (typ->missile_armpie));
         
-		additional_variables[ DAMA_MEL ] = typ->melee_damage;
-		additional_variables[ DAMA_MIS ] = typ->missile_damage;
+		additional_variables.damage_melee = typ->melee_damage;
+		additional_variables.damage_missile = typ->missile_damage;
         
-		additional_variables[ SPED_MAX ] = typ->speed_maximum;
+		additional_variables.speed_max = typ->speed_maximum;
         
 		if(un->missile_number != 0) {
 			if(un->missile_timer == typ->missile_rate) {
@@ -285,11 +278,11 @@ void battle_attack(n_unit *un, n_general_variables * gvar) {
 				un->missile_timer++;
 		}
         
-		additional_variables[ RANG_MIS ] = rang_missile;
+		additional_variables.range_missile = rang_missile;
         
 	}
 	while (loop < un->number_combatants) {
-		battle_combatant_attack(&comb[loop],comb_at,gvar,additional_variables);
+		battle_combatant_attack(&comb[loop],comb_at,gvar,(void*)&additional_variables);
 		loop++;
 	}
 }
@@ -429,9 +422,9 @@ void battle_declare(n_unit *un, n_general_variables * gvar)
 
 static void combatant_move(n_combatant * comb, n_general_variables * gvar, void * values)
 {
-	n_int   loc_s = comb->speed_current;
-	n_int   loc_f = comb->direction_facing;
-	n_byte2 loc_r = (n_byte2)(math_random(&gvar->random0) & 31);
+	n_int   local_speed = comb->speed_current;
+	n_int   local_facing = comb->direction_facing;
+	n_byte2 random = (n_byte2)(math_random(&gvar->random0) & 31);
     n_vect2 old_location;
     n_vect2 temp_location;
     n_vect2 facing;
@@ -444,31 +437,31 @@ static void combatant_move(n_combatant * comb, n_general_variables * gvar, void 
 		return;
 	}
 
-    if (loc_s == 0)
+    if (local_speed == 0)
     {
 		return;
 	}
     
-	if (loc_r == 1)
+	if (random == 1)
     {
-		loc_f = (loc_f + 1) & 255;
+		local_facing = (local_facing + 1) & 255;
     }
-	if (loc_r == 2)
+	if (random == 2)
     {
-		loc_f = (loc_f + 255) & 255;
+		local_facing = (local_facing + 255) & 255;
     }
-	if (loc_r == 3)
+	if (random == 3)
     {
-		loc_f = (loc_f + 2) & 255;
+		local_facing = (local_facing + 2) & 255;
     }
-	if (loc_r == 4)
+	if (random == 4)
     {
-		loc_f = (loc_f + 254) & 255;
+		local_facing = (local_facing + 254) & 255;
     }
     
-    vect2_direction(&facing, loc_f, 1);
+    vect2_direction(&facing, local_facing, 1);
     
-    vect2_d(&temp_location, &facing, loc_s, 26880);
+    vect2_d(&temp_location, &facing, local_speed, 26880);
 
     if (OUTSIDE_HEIGHT(temp_location.y) || OUTSIDE_WIDTH(temp_location.x))
     {
@@ -484,8 +477,8 @@ static void combatant_move(n_combatant * comb, n_general_variables * gvar, void 
         }
     }
 
-	comb->direction_facing = (n_byte) loc_f;
-	comb->speed_current    = (n_byte) loc_s;
+	comb->direction_facing = (n_byte) local_facing;
+	comb->speed_current    = (n_byte) local_speed;
 }
 
 /* this is currently fudged for the skirmish testing... it will be fixed

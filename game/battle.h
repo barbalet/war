@@ -125,19 +125,14 @@ typedef struct n_general_variables {
 }
 n_general_variables;
 
-
-typedef enum
-{
-    GVAR_RANDOM_0 = 0,
-    GVAR_RANDOM_1,
-																			  
-    GVAR_ATTACK_MELEE_DSQ,         /* val = 5 */
-    
-    GVAR_DECLARE_GROUP_FACING_DSQ, /* val = 0x7fff */
-    GVAR_DECLARE_MAX_START_DSQ,    /* val = 0xffff */
-    GVAR_DECLARE_ONE_TO_ONE_DSQ,   /* val = 0xffff */
-    GVAR_DECLARE_CLOSE_ENOUGH_DSQ  /* val = 5 */
-}general_variables;
+typedef struct n_additional_variables{
+    n_int probability_melee;
+    n_int probability_missile;
+    n_int damage_melee;
+    n_int damage_missile;
+    n_int speed_max;
+    n_int range_missile;
+} n_additional_variables;
 
 typedef void (*battle_function)(n_unit * un, n_general_variables * gvar);
 typedef void (*combatant_function)(n_combatant * comb, n_general_variables * gvar, void * values);
