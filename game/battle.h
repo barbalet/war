@@ -169,7 +169,7 @@ void  engine_draw(void);
 n_int engine_update(void);
 n_int engine_new(void);
 
-void engine_exit();
+void engine_exit(void);
 
 void battle_fill(n_unit * un, n_general_variables * gvar);
 void battle_move(n_unit *un, n_general_variables * gvar);

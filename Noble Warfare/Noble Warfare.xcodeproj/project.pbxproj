@@ -7,11 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4A960DBF1F99C0B400D6E56B /* mac.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4A960DBE1F99C0B400D6E56B /* mac.xib */; };
 		4AF0794F1C5D3D8900BABE08 /* console.c in Sources */ = {isa = PBXBuildFile; fileRef = 4AF0794E1C5D3D8900BABE08 /* console.c */; };
 		5A1D4EF9193CC1A500FD3B74 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5A1D4EF8193CC1A500FD3B74 /* Cocoa.framework */; };
 		5A1D4F03193CC1A500FD3B74 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 5A1D4F01193CC1A500FD3B74 /* InfoPlist.strings */; };
 		5A1D4F09193CC1A500FD3B74 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 5A1D4F07193CC1A500FD3B74 /* Credits.rtf */; };
-		5A1D4F0F193CC1A500FD3B74 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5A1D4F0D193CC1A500FD3B74 /* MainMenu.xib */; };
 		5A1D4F11193CC1A500FD3B74 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5A1D4F10193CC1A500FD3B74 /* Images.xcassets */; };
 		5A1D4F19193CC1A500FD3B74 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5A1D4EF8193CC1A500FD3B74 /* Cocoa.framework */; };
 		5A1D4F21193CC1A500FD3B74 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 5A1D4F1F193CC1A500FD3B74 /* InfoPlist.strings */; };
@@ -49,6 +49,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		4A960DBE1F99C0B400D6E56B /* mac.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = mac.xib; sourceTree = "<group>"; };
 		4AF0794E1C5D3D8900BABE08 /* console.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = console.c; sourceTree = "<group>"; };
 		5A1222C61973576C003D424F /* shared.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = shared.h; sourceTree = "<group>"; };
 		5A1D4EF5193CC1A500FD3B74 /* Noble Warfare.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Noble Warfare.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -60,7 +61,6 @@
 		5A1D4F02193CC1A500FD3B74 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		5A1D4F06193CC1A500FD3B74 /* Noble Warfare-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Noble Warfare-Prefix.pch"; sourceTree = "<group>"; };
 		5A1D4F08193CC1A500FD3B74 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = en; path = en.lproj/Credits.rtf; sourceTree = "<group>"; };
-		5A1D4F0E193CC1A500FD3B74 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		5A1D4F10193CC1A500FD3B74 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		5A1D4F16193CC1A500FD3B74 /* Noble WarfareTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Noble WarfareTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		5A1D4F1E193CC1A500FD3B74 /* Noble WarfareTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Noble WarfareTests-Info.plist"; sourceTree = "<group>"; };
@@ -160,7 +160,6 @@
 		5A1D4EFE193CC1A500FD3B74 /* Noble Warfare */ = {
 			isa = PBXGroup;
 			children = (
-				5A1D4F0D193CC1A500FD3B74 /* MainMenu.xib */,
 				5A1D4F10193CC1A500FD3B74 /* Images.xcassets */,
 				5A1D4EFF193CC1A500FD3B74 /* Supporting Files */,
 			);
@@ -199,6 +198,7 @@
 		5A7DAB29193D7E190058064F /* mac */ = {
 			isa = PBXGroup;
 			children = (
+				4A960DBE1F99C0B400D6E56B /* mac.xib */,
 				7B8CE0931BA5615E000450D7 /* NobleShared.h */,
 				7B8CE0941BA5615E000450D7 /* NobleShared.m */,
 				5A7DAB2A193D7E190058064F /* AppDelegate.h */,
@@ -330,11 +330,11 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4A960DBF1F99C0B400D6E56B /* mac.xib in Resources */,
 				5A1D4F03193CC1A500FD3B74 /* InfoPlist.strings in Resources */,
 				5A1D4F11193CC1A500FD3B74 /* Images.xcassets in Resources */,
 				5A1D4F09193CC1A500FD3B74 /* Credits.rtf in Resources */,
 				5A7DAB4E193D7E6C0058064F /* battle.txt in Resources */,
-				5A1D4F0F193CC1A500FD3B74 /* MainMenu.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -408,14 +408,6 @@
 				5A1D4F08193CC1A500FD3B74 /* en */,
 			);
 			name = Credits.rtf;
-			sourceTree = "<group>";
-		};
-		5A1D4F0D193CC1A500FD3B74 /* MainMenu.xib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				5A1D4F0E193CC1A500FD3B74 /* Base */,
-			);
-			name = MainMenu.xib;
 			sourceTree = "<group>";
 		};
 		5A1D4F1F193CC1A500FD3B74 /* InfoPlist.strings */ = {
