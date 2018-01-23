@@ -34,6 +34,7 @@
  ****************************************************************/
 
 #include "noble.h"
+#include "gldraw.h"
 
 #define MELEE_ATTACK_DISTANCE_SQUARED	5
 #define LARGEST_DISTANCE_SQUARED 	    0xffff

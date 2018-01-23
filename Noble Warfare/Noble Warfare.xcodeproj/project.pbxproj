@@ -49,6 +49,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		4A3D31922016FE9100EC741F /* gldraw.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = gldraw.h; sourceTree = "<group>"; };
 		4A960DBE1F99C0B400D6E56B /* mac.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = mac.xib; sourceTree = "<group>"; };
 		4AF0794E1C5D3D8900BABE08 /* console.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = console.c; sourceTree = "<group>"; };
 		5A1222C61973576C003D424F /* shared.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = shared.h; sourceTree = "<group>"; };
@@ -214,6 +215,7 @@
 		5A7DAB33193D7E520058064F /* noble */ = {
 			isa = PBXGroup;
 			children = (
+				4A3D31922016FE9100EC741F /* gldraw.h */,
 				7B13CE741C3A3C4B007FFB71 /* gldraw.c */,
 				5A7DAB34193D7E520058064F /* audio.c */,
 				5A7DAB35193D7E520058064F /* compress.c */,
