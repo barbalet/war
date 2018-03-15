@@ -87,11 +87,11 @@ void draw_cycle(n_unit *un, n_general_variables * gvar)
 {
     if (un->alignment)
     {
-        gldraw_red();
+        gldraw_red_strong();
     }
     else
     {
-        gldraw_green();
+        gldraw_blue_strong();
     }
     gldraw_start_points();
     combatant_loop(&draw_combatant, un, gvar, NOTHING);
