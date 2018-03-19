@@ -173,6 +173,7 @@ static n_int engine_conditions(n_string location)
 {
 	n_byte    		ret_val;
 	n_file			*file_pass = io_file_new();
+    
 	number_units = 0;
 	number_types = 0;
 
@@ -188,15 +189,15 @@ static n_int engine_conditions(n_string location)
 	io_erase(local_board, BATTLE_BOARD_SIZE);
 	board_init(local_board);
     
-	if(io_disk_read(file_pass, location) != 0)
+	if (io_disk_read(file_pass, location) != 0)
     {
 		return SHOW_ERROR("Read file failed");
 	}
-
-	io_whitespace(file_pass);  
+    
+	io_whitespace(file_pass);
+    
 	file_pass->location = 0;
 	
-
   /* load the types first */
 	types = (n_type *) mem_use(0);
 	do {
