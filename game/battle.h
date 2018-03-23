@@ -187,7 +187,7 @@ void draw_dpz(n_double dpz);
 
 void  combatant_loop(combatant_function func, n_unit * un, n_general_variables * gvar, void * values);
 void  battle_loop(battle_function func, n_unit * un, const n_uint count, n_general_variables * gvar);
-n_byte battle_opponent(n_unit * un, n_uint	num);
+n_byte battle_opponent(n_unit * un, n_uint num, n_uint * no_movement);
 
 void board_init(n_byte * value);
 

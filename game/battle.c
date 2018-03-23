@@ -527,17 +527,31 @@ void battle_remove_dead(n_unit *un, n_general_variables * gvar) {
  returns 3 if both armies are all dead, and,
  returns 0 in all other cases */
 
-n_byte battle_opponent(n_unit * un, n_uint	num) {
+n_byte battle_opponent(n_unit * un, n_uint	num, n_uint * no_movement) {
 	n_uint	loop = 0;
 	n_uint	unit_count[2] = {0};
+    n_uint  unit_movement[2] = {0};
 	while (loop < num)
     {
 		if (un[loop].number_living > 0)
         {
 			n_unit	*un_att = un[loop].unit_attacking;
 			n_int	local_alignment = (un[loop].alignment) & 1;
-			
-			unit_count[local_alignment]++;
+            n_combatant *combatants = (n_combatant *)un[loop].combatants;
+            n_uint       number_combatants = un[loop].number_combatants;
+            n_uint       loop2 = 0;
+            n_uint       movement = 0;
+            while(loop2 < number_combatants)
+            {
+                if (combatants[loop2].speed_current != 0)
+                {
+                    movement = 1;
+                }
+                loop2++;
+            }
+            unit_count[local_alignment]++;
+
+			unit_movement[local_alignment] += movement;
             
 			if (un_att != NOTHING)
             {
@@ -584,7 +598,16 @@ n_byte battle_opponent(n_unit * un, n_uint	num) {
         }
 		loop++;
 	}
-	return (n_byte)((unit_count[0] == 0) + ((unit_count[1] == 0)<<1));
+    
+    if ((unit_movement[0] == 0) || (unit_movement[1] == 0))
+    {
+        *no_movement = *no_movement + 1;
+    }
+    else
+    {
+        *no_movement = 0;
+    }
+	return ((unit_count[0] == 0) | (unit_count[1] == 0));
 }
 
 

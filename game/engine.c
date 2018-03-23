@@ -55,6 +55,8 @@ static n_byte2	number_units;
 static n_type   *types;
 static n_byte2  number_types;
 
+static n_uint  no_movement;
+
 #define	SIZEOF_MEMORY	 (16*1024*1024)
 
 static n_byte	*memory_buffer;
@@ -262,6 +264,8 @@ static n_int engine_conditions(n_string location)
 
 void * engine_init(n_uint random_init)
 {
+    no_movement = 0;
+    
 	game_vars.random0 = (n_byte2) (random_init & 0xFFFF);
 	game_vars.random1 = (n_byte2) (random_init >> 16);
 
@@ -313,15 +317,14 @@ n_int engine_new(void)
 
 n_int engine_update(void)
 {
-    n_byte result = battle_opponent(units, number_units);
+    n_byte result = battle_opponent(units, number_units, &no_movement);
     
-    if (result != 0)
+    if ((result != 0) || (no_movement > 6))
     {
         return engine_new();
     }
     
     battle_loop(&battle_move, units, number_units, &game_vars);
-
     battle_loop(&battle_declare, units, number_units, &game_vars);
     battle_loop(&battle_attack, units, number_units, &game_vars);
     battle_loop(&battle_remove_dead, units, number_units, NOTHING);

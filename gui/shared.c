@@ -116,14 +116,12 @@ void shared_draw(n_byte * outputBuffer, n_byte fIdentification, n_int dim_x, n_i
 n_int shared_new(n_uint seed)
 {
     engine_new();
-    
     return 0;
 }
 
 n_int shared_new_agents(n_uint seed)
 {
     engine_new();
-    
     return 0;
 }
 
