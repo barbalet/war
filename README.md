@@ -1,3 +1,5 @@
+[![Noble Ape Sub-Project: Noble Warfare](http://i.ytimg.com/vi/TYqnYiKebKE/hqdefault.jpg)](//www.youtube.com/watch?v=TYqnYiKebKE "Noble Ape Sub-Project: Noble Warfare")
+
 ## DESCRIPTION
 
 There is no such thing as noble warfare. This development is not designed to glorify war, nor is it designed to provide graphic realism in the reality of war. Noble Warfare can be thought of more like a chess-like war game simulation. Where combatants are pieces rather than people.
