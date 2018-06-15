@@ -1,3 +1,5 @@
+[June 13 This is Noble Ape provides a musical account of the Noble Ape development!](https://www.amazon.com/June-13-This-Noble-Ape/dp/B07DPKG9YP/)
+
 [![Noble Ape Sub-Project: Noble Warfare](http://i.ytimg.com/vi/TYqnYiKebKE/hqdefault.jpg)](//www.youtube.com/watch?v=TYqnYiKebKE "Noble Ape Sub-Project: Noble Warfare")
 
 ## NOTICE
